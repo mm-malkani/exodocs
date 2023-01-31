@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.2.4](https://github.com/abhishekintern/exodocs/compare/v0.2.3...v0.2.4) (2023-01-31)
+
+
+### :recycle: Code Refactoring
+
+* **code eslint refactor:** removed unwanted issues with eslint ([3ce0a5a](https://github.com/abhishekintern/exodocs/commit/3ce0a5ae9a63485f5054c2b7b556421c738ddb5f))
+
 ### [0.2.3](https://github.com/abhishekintern/exodocs/compare/v0.2.2...v0.2.3) (2023-01-31)
 
 ### [0.2.2](https://github.com/abhishekintern/exodocs/compare/v0.2.1...v0.2.2) (2023-01-31)
