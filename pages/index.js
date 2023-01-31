@@ -1,4 +1,4 @@
-import { onAuthStateChanged, signOut } from "@firebase/auth"
+import { onAuthStateChanged } from "@firebase/auth"
 import Head from "next/head"
 import React, { useEffect, useState } from "react"
 import MainTemplatePage from "../components/MainTemplatePage"
@@ -20,18 +20,19 @@ const Home = () => {
 				setLogin(false)
 			}
 		})
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 
-	const handleSignout = () => {
-		signOut(auth)
-			.then(() => {
-				alert("SignOut Success")
-			})
-			.catch(err => {
-				console.log(err)
-				alert("signOut Failed")
-			})
-	}
+	// const handleSignout = () => {
+	// 	signOut(auth)
+	// 		.then(() => {
+	// 			alert("SignOut Success")
+	// 		})
+	// 		.catch(err => {
+	// 			console.log(err)
+	// 			alert("signOut Failed")
+	// 		})
+	// }
 
 	return (
 		<>

@@ -18,6 +18,7 @@ const Login = () => {
 				router.push("/")
 			}
 		})
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 
 	const [email, setEmail] = useState("")
@@ -25,7 +26,7 @@ const Login = () => {
 
 	const handleGoogleClick = () => {
 		signInWithPopup(auth, provider)
-			.then(user => {
+			.then(() => {
 				// console.log(user)
 				alert("Login Successfull")
 			})
@@ -37,7 +38,7 @@ const Login = () => {
 
 	const handleLoginClick = () => {
 		signInWithEmailAndPassword(auth, email, password)
-			.then(user => {
+			.then(() => {
 				// console.log(user)
 				alert("Login Successfull")
 			})

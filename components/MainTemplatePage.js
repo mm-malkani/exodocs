@@ -8,6 +8,7 @@ import EditablePage from "./EditablePage"
 
 const MainTemplatePage = () => {
 	const [activeTemplate, setActiveTemplate] = useState("pages")
+	setActiveTemplate("pages")
 
 	const { userObject } = userDataStore()
 

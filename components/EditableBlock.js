@@ -32,6 +32,9 @@ const EditableBlock = props => {
 	const onKeyDownHandler = e => {
 		if (e.key === CMD_KEY) {
 			setHtmlBackup(html)
+			if (htmlBackup) {
+				console.log(htmlBackup)
+			}
 		}
 		if (e.key === "Enter") {
 			if (previousKey !== "Shift") {

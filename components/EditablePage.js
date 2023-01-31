@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 import EditableBlock from "./EditableBlock"
 import uid from "./uid"
 

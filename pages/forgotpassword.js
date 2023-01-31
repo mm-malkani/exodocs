@@ -1,5 +1,4 @@
 import { onAuthStateChanged, sendPasswordResetEmail } from "@firebase/auth"
-import Link from "next/link"
 import { useRouter } from "next/router"
 import React, { useEffect, useState } from "react"
 import NavbarBasic from "../components/NavbarBasic"
@@ -13,6 +12,7 @@ const ForgotPassword = () => {
 				router.push("/")
 			}
 		})
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 	const [email, setEmail] = useState("")
 
