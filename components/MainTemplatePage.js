@@ -8,7 +8,7 @@ const MainTemplatePage = () => {
 	const { userObject } = userDataStore()
 	const [sidebarOpen, setSidebarOpen] = useState(true)
 	const sidebarButtonClicked = () => {
-		console.log("sidebar button clicked")
+		// console.log("sidebar button clicked")
 		setSidebarOpen(!sidebarOpen)
 	}
 
@@ -27,7 +27,7 @@ const MainTemplatePage = () => {
 
 	const downMenuClicked = () => {
 		setDownMenuOpen(!downMenuOpen)
-		console.log("Down Menu Clicked")
+		// console.log("Down Menu Clicked")
 	}
 
 	// console.log(userObject)
@@ -66,7 +66,7 @@ const MainTemplatePage = () => {
 					className={`p-5 mt-14 ${
 						!sidebarOpen
 							? "w-2/3 lg:w-3/4 xl:w-4/5 2xl:w-10/12 mr-4"
-							: "w-screen"
+							: "w-full"
 					}`}
 				>
 					<EditablePage></EditablePage>

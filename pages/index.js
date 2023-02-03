@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react"
 import MainTemplatePage from "../components/MainTemplatePage"
 import NavbarBasic from "../components/NavbarBasic"
 import { auth } from "../firebase/firebaseConfig"
+import KanbanLists from "../kanban/KanbanLists"
 import { userDataStore } from "../zustand/zustandStore"
 
 const Home = () => {
@@ -43,10 +44,18 @@ const Home = () => {
 					content="ExoDocs - Professional Docs Sharing App Online"
 				/>
 				<link
-					rel="icon"
-					href="/favicon.png"
+					rel="icon/png"
+					href="/favicon.ico"
+				/>
+				<link
+					rel="stylesheet"
+					href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+					integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+					crossorigin="anonymous"
 				/>
 			</Head>
+
+			{/* <KanbanLists /> */}
 
 			{!login && (
 				<>
