@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.3.0](https://github.com/abhishekintern/exodocs/compare/v0.2.4...v0.3.0) (2023-02-03)
+
+
+### ✨ Features
+
+* **Kanban Board:** Added Functionalities of Kanban Board like Add/update/view/delete ([af5c8ec](https://github.com/abhishekintern/exodocs/commit/af5c8ec0578bd8ebead2dea88eb2f242d23a1f97))
+* **kanban board:** adding the functionality of kanban board ([4924643](https://github.com/abhishekintern/exodocs/commit/4924643e45ea104673ce5c49ea26aaf5b7f0b329))
+
 ### [0.2.4](https://github.com/abhishekintern/exodocs/compare/v0.2.3...v0.2.4) (2023-01-31)
 
 
