@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.0](https://github.com/abhishekintern/exodocs/compare/v0.3.0...v0.4.0) (2023-02-06)
+
+
+### ✨ Features
+
+* **kanban:** kanban drag n drop added ([249c241](https://github.com/abhishekintern/exodocs/commit/249c2412616b4481d249cf212c9f0e3ffdf55c2c))
+
 ## [0.3.0](https://github.com/abhishekintern/exodocs/compare/v0.2.4...v0.3.0) (2023-02-03)
 
 
