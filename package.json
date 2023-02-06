@@ -9,9 +9,12 @@
 		"lint": "prettier --config prettier.config.js \"**/*.{js,ts,jsx,tsx,json}\" --write --ignore-unknown",
 		"prepare": "husky install",
 		"release": "release-it",
-		"postinstall": "is-ci || (npm run prepare && npm run lint)"
+		"postinstall": "is-ci || (npm run prepare && npm run lint)",
+		"next-lint": "next lint"
 	},
 	"dependencies": {
+		"@mdx-js/mdx": "^2.2.1",
+		"@mdx-js/react": "^2.2.1",
 		"firebase": "^9.16.0",
 		"next": "13.1.5",
 		"react": "18.2.0",

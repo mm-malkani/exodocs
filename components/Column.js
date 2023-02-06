@@ -8,7 +8,7 @@ const Column = ({ column, tasks }) => {
 				<h1 className="text-xl">{column.title}</h1>
 			</div>
 			<Droppable droppableId={column.id}>
-				{(droppableProvided, droppableSnapshot) => (
+				{droppableProvided => (
 					<div
 						className="flex flex-1 flex-col px-2 py-1 space-y-2"
 						ref={droppableProvided.innerRef}
@@ -20,7 +20,7 @@ const Column = ({ column, tasks }) => {
 								draggableId={`${task.id}`}
 								index={index}
 							>
-								{(draggableProvided, draggableSnapshot) => (
+								{draggableProvided => (
 									<div
 										className="flex bg-slate-600 h-fit w-full p-4 rounded"
 										ref={draggableProvided.innerRef}

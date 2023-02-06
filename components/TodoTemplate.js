@@ -15,9 +15,21 @@ const TodoTemplate = ({
 	forwardColumnClicked,
 	backColumnClicked,
 	viewTodoInfo,
+	dragStartHandle,
+	dragEnterHandle,
+	dragEndHandle,
 }) => {
 	return (
-		<div className="flex p-4 space-y-2 rounded">
+		<div
+			draggable
+			onDragStart={e => dragStartHandle(e, columnIndex, todoIndex)}
+			onDragEnter={e => dragEnterHandle(e, columnIndex, todoIndex)}
+			onDragEnd={e => dragEndHandle(e, columnIndex)}
+			onDragOver={e => {
+				e.preventDefault()
+			}}
+			className="flex p-4 space-y-2 rounded hover:scale-105 hover:cursor-pointer transition-all duration-200"
+		>
 			<div
 				className={`flex p-4 w-full rounded border-${todoLabel}-900 border text-slate-900 bg-${todoLabel}-400 flex-col`}
 			>

@@ -13,9 +13,9 @@ const ViewModal = ({ setViewModalVisible, allTodoInfo }) => {
 					<span
 						className={`bg-${allTodoInfo.todoLabel}-400 text-slate-700 font-semibold p-1 rounded mx-2 rounded-r-full rounded-l-full px-1.5 text-sm`}
 					>
-						{allTodoInfo.todoLabel === "yellow" && "Casual"}
-						{allTodoInfo.todoLabel === "green" && "Working"}
-						{allTodoInfo.todoLabel === "red" && "Urgent"}
+						{allTodoInfo.todoLabel === "red" && "Not-Started"}
+						{allTodoInfo.todoLabel === "yellow" && "In-Progress"}
+						{allTodoInfo.todoLabel === "green" && "Completed"}
 					</span>
 					<button
 						type="button"

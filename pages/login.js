@@ -24,6 +24,8 @@ const Login = () => {
 	const [email, setEmail] = useState("")
 	const [password, setPassword] = useState("")
 
+	// console.debug("Hola")
+
 	const handleGoogleClick = () => {
 		signInWithPopup(auth, provider)
 			.then(() => {
@@ -31,8 +33,11 @@ const Login = () => {
 				alert("Login Successfull")
 			})
 			.catch(err => {
-				console.log(err)
 				alert("Login Failed")
+				console.error(
+					`🚀 ~ file: login.js:39 ~ handleGoogleClick ~ err`,
+					err
+				)
 			})
 	}
 
@@ -122,7 +127,7 @@ const Login = () => {
 									/>
 								</div>
 							</div>
-							<div className="p-2 w-full flex justify-around items-center">
+							<div className="p-2 w-full flex justify-around items-center flex-col sm:flex-row space-y-1">
 								<button
 									onClick={handleLoginClick}
 									className="flex text-white bg-slate-500 border-0 py-2 px-8 focus:outline-none hover:bg-slate-600 rounded text-lg"

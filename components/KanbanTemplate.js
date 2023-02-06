@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useRef, useState } from "react"
 import { uid } from "uid"
 import EditModal from "./EditModal"
 import ModalTemplate from "./ModalTemplate"
@@ -18,7 +18,7 @@ const KanbanTemplate = () => {
 	const initialData = [
 		{
 			columnId: uid(),
-			columnName: "Todo",
+			columnName: "Not Started",
 			columnData: [
 				{
 					todoId: uid(),
@@ -26,7 +26,7 @@ const KanbanTemplate = () => {
 					todoDescription:
 						"Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quisquam nam itaque dolorem.",
 					todoCreationTime: "Wed Jan 01 2023 23:16:48",
-					todoUpdateTime: "Wed Feb 01 2023 23:16:48",
+					todoUpdateTime: "Haven't Updated Yet",
 					todoLabel: "red",
 				},
 				{
@@ -36,7 +36,7 @@ const KanbanTemplate = () => {
 						"Lorem ipsum dolor, sit amet nam itaque dolorem.",
 					todoCreationTime: "Wed Dec 27 2022 23:16:48",
 					todoUpdateTime: "Wed Feb 01 2023 23:16:48",
-					todoLabel: "green",
+					todoLabel: "red",
 				},
 			],
 		},
@@ -55,16 +55,26 @@ const KanbanTemplate = () => {
 				},
 			],
 		},
+		{
+			columnId: uid(),
+			columnName: "Completed",
+			columnData: [
+				{
+					todoId: uid(),
+					todoHeading: "Task 4",
+					todoDescription:
+						"Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quisquam nam itaque.",
+					todoCreationTime: "Wed Mar 16 2022 23:16:48",
+					todoUpdateTime: "Wed Feb 01 2023 23:16:48",
+					todoLabel: "green",
+				},
+			],
+		},
 	]
 
-	const [dataStore, setDataStore] = useState([])
+	const [dataStore, setDataStore] = useState(initialData)
 	const [currentIndex, setCurrentIndex] = useState("")
 	const [currentTodoId, setCurrentTodoId] = useState("")
-
-	useEffect(() => {
-		setDataStore(initialData)
-		// setTemporaryDataStore(dataStore)
-	}, [setDataStore])
 
 	// ---------------------- FUNCTIONING OF COLUMN RELATED ADD/DELETE COLUMN FORWARD/BACK COLUMN
 
@@ -191,6 +201,42 @@ const KanbanTemplate = () => {
 		setDataStore(tempDataStore)
 	}
 
+	// -----------------------------------------DRAG AND DROP FUNCTIONS
+	let todoitemDrag = useRef()
+	let todoitemDragOver = useRef()
+	let dragOverColumnIndex
+
+	const dragStartHandle = (e, columnIndex, todoIndex) => {
+		todoitemDrag.current = todoIndex
+	}
+
+	const dragEnterHandle = (e, columnIndex, todoIndex) => {
+		todoitemDragOver.current = todoIndex
+		dragOverColumnIndex = columnIndex
+		// console.log(columnIndex)
+	}
+
+	const dragEndHandle = (e, columnIndex) => {
+		// console.log(e.screenX)
+		let tempDataStore = [...dataStore]
+		let todoItemMain =
+			tempDataStore[columnIndex].columnData[todoitemDrag.current]
+		tempDataStore[columnIndex].columnData.splice(todoitemDrag.current, 1)
+		try {
+			tempDataStore[dragOverColumnIndex].columnData.splice(
+				todoitemDragOver.current,
+				0,
+				todoItemMain
+			)
+			todoitemDrag.current = null
+			todoitemDragOver.current = null
+			dragOverColumnIndex = null
+			setDataStore(tempDataStore)
+		} catch (err) {
+			console.log(err)
+		}
+	}
+
 	return (
 		<div className="flex flex-col bg-slate-100 space-y-4 justify-center items-center">
 			<div className="flex space-x-4 items-center">
@@ -215,7 +261,7 @@ const KanbanTemplate = () => {
 							strokeLinejoin="round"
 							d="M12 4.5v15m7.5-7.5h-15"
 						/>
-					</svg>{" "}
+					</svg>
 					Add a Column
 				</h1>
 			</div>
@@ -318,6 +364,9 @@ const KanbanTemplate = () => {
 											handleEditTodoClick={
 												handleEditTodoClick
 											}
+											dragStartHandle={dragStartHandle}
+											dragEnterHandle={dragEnterHandle}
+											dragEndHandle={dragEndHandle}
 											deleteTodoItem={deleteTodoItem}
 											setCurrentIndex={setCurrentIndex}
 											setCurrentTodoId={setCurrentTodoId}
@@ -340,28 +389,3 @@ const KanbanTemplate = () => {
 }
 
 export default KanbanTemplate
-
-// const updateTodoToData = (currentIndex) => {
-// 	let tempDataStore = dataStore;
-// 	tempDataStore[currentIndex].columnData[currentTodoId] = updatedTodoData
-// 	setDataStore(tempDataStore)
-// 	setEditModalVisible(false)
-// 	setTodoTitle("")
-// 	setTodoDescription("")
-// 	setLabelColor("yellow")
-// 	console.log(dataStore[currentIndex].columnData[currentTodoId])
-// }
-
-// const handleEditTodoClick = (columnIndex, todoId) => {
-// 	// console.log("EDIT TODO CLICKED");
-// 	setEditModalVisible(true)
-// 	setTodoTitle(`${dataStore[columnIndex].columnData[todoId].todoHeading}`)
-// 	setTodoDescription(`${dataStore[columnIndex].columnData[todoId].todoDescription}`)
-// 	setUpdatedTodoData({
-// 		todoId: uid(),
-// 		todoHeading: todoTitle,
-// 		todoDescription: todoDescription,
-// 		todoUpdateTime: timestamp,
-// 		todoLabel: labelColor,
-// 	})
-// }

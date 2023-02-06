@@ -139,10 +139,10 @@ const Signup = () => {
 									/>
 								</div>
 							</div>
-							<div className="p-2 w-full flex justify-around items-center">
+							<div className="p-2 w-full flex justify-around items-center flex-col sm:flex-row space-y-1">
 								<button
 									onClick={handleSignupClick}
-									className="flex text-white bg-slate-500 border-0 py-2 px-8 focus:outline-none hover:bg-slate-600 rounded text-lg"
+									className="flex text-white bg-slate-500 border-0 py-2 px-8 focus:outline-none hover:bg-slate-600 rounded text-lg lg:px-4"
 								>
 									Sign Up
 								</button>

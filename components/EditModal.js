@@ -101,7 +101,7 @@ const EditModal = ({
 										htmlFor="inline-2-radio"
 										className="ml-2 text-sm font-medium p-1 rounded bg-yellow-400 hover:bg-yellow-500"
 									>
-										Casual
+										In-Progress
 									</label>
 								</div>
 								<div className="flex items-center mr-4">
@@ -117,7 +117,7 @@ const EditModal = ({
 										htmlFor="inline-2-radio"
 										className="ml-2 text-sm font-medium p-1 rounded bg-green-400 hover:bg-green-500"
 									>
-										Working
+										Completed
 									</label>
 								</div>
 								<div className="flex items-center mr-4">
@@ -133,7 +133,7 @@ const EditModal = ({
 										htmlFor="inline-2-radio"
 										className="ml-2 text-sm font-medium p-1 rounded bg-red-400 hover:bg-red-500"
 									>
-										Urgent
+										Not Started
 									</label>
 								</div>
 							</div>

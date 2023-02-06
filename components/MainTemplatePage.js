@@ -3,6 +3,8 @@ import { userDataStore } from "../zustand/zustandStore"
 import EditablePage from "./EditablePage"
 import Navbar from "./Navbar"
 import Sidebar from "./Sidebar"
+import { auth } from "../firebase/firebaseConfig"
+import { signOut } from "firebase/auth"
 
 const MainTemplatePage = () => {
 	const { userObject } = userDataStore()
@@ -44,7 +46,7 @@ const MainTemplatePage = () => {
 	// }
 
 	return (
-		<div className="flex flex-row">
+		<div className="flex flex-row w-full">
 			{/* -----------------NAVBAR AND SIDEBAR-------------------- */}
 
 			{/* --------------------NAVBAR */}
@@ -55,7 +57,7 @@ const MainTemplatePage = () => {
 				downMenuOpen={downMenuOpen}
 			></Navbar>
 
-			<div className="flex justify-end">
+			<div className="flex justify-end w-full">
 				{/* --------------------SIDEBAR */}
 				<Sidebar
 					sidebarOpen={sidebarOpen}
@@ -63,9 +65,9 @@ const MainTemplatePage = () => {
 				></Sidebar>
 
 				<div
-					className={`p-5 mt-14 ${
+					className={`p-5 mt-14 bg-slate-400 ${
 						!sidebarOpen
-							? "w-2/3 lg:w-3/4 xl:w-4/5 2xl:w-10/12 mr-4"
+							? "w-2/3 lg:w-3/4 xl:w-4/5 2xl:w-10/12 pr-4"
 							: "w-full"
 					}`}
 				>
