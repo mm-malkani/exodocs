@@ -3,7 +3,6 @@ import React from "react"
 const ModalTemplate = ({
 	setModalVisible,
 	addTodoToData,
-	currentIndex,
 	setTodoTitle,
 	setTodoDescription,
 	todoTitle,
@@ -11,9 +10,9 @@ const ModalTemplate = ({
 	setLabelColor,
 }) => {
 	return (
-		<div className="absolute top-14 mx-auto max-w-2xl w-screen h-auto border-2 rounded border-purple-800 z-10">
+		<div className="absolute top-14 w-[280px] sm:w-[500px] h-auto border-2 rounded border-purple-800 z-10 mx-auto">
 			<div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
-				<div className="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600">
+				<div className="flex items-start justify-between p-2 border-b rounded-t dark:border-gray-600">
 					<h3 className="text-xl font-semibold text-gray-900 ">
 						TODO
 					</h3>
@@ -39,7 +38,7 @@ const ModalTemplate = ({
 					</button>
 				</div>
 				<div className="p-6 space-y-6">
-					<div className="flex- flex-col">
+					<div className="flex flex-col">
 						<div className="relative mb-4">
 							<label
 								htmlFor="name"
@@ -84,7 +83,7 @@ const ModalTemplate = ({
 								Current Time will be Updated
 							</label>
 
-							<div className="flex">
+							<div className="flex flex-wrap">
 								<div className="flex items-center mr-4">
 									<input
 										defaultChecked
@@ -140,10 +139,10 @@ const ModalTemplate = ({
 				</div>
 				<div className="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
 					<button
-						onClick={() => addTodoToData(currentIndex)}
+						onClick={() => addTodoToData()}
 						data-modal-hide="defaultModal"
 						type="button"
-						className=" bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-800"
+						className=" bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm p-2.5 text-center dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-800"
 					>
 						Add Todo
 					</button>

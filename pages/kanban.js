@@ -1,9 +1,7 @@
 import { signOut } from "firebase/auth"
 import React, { useState } from "react"
 import KanbanTemplate from "../components/KanbanTemplate"
-import Navbar from "../components/Navbar"
-import Sidebar from "../components/Sidebar"
-import { auth } from "../firebase/firebaseConfig"
+import { auth } from "../config/firebaseConfig"
 import { userDataStore } from "../zustand/zustandStore"
 
 const Kanban = () => {
@@ -34,27 +32,12 @@ const Kanban = () => {
 	}
 	return (
 		<div className="flex flex-row">
-			{/* -----------------NAVBAR AND SIDEBAR-------------------- */}
-
-			{/* --------------------NAVBAR */}
-			<Navbar
-				sidebarButtonClicked={sidebarButtonClicked}
-				handleSignout={handleSignout}
-				downMenuClicked={downMenuClicked}
-				downMenuOpen={downMenuOpen}
-			/>
-
-			<div className="flex justify-end">
-				{/* --------------------SIDEBAR */}
-				<Sidebar {...{ sidebarOpen, activeTemplate, userObject }} />
-
-				<div
-					className={`p-5 mt-14 ${
-						!sidebarOpen ? "w-screen" : "w-screen"
-					}`}
-				>
-					<KanbanTemplate />
-				</div>
+			<div
+				className={`p-5 mt-14 ${
+					!sidebarOpen ? "w-screen" : "w-screen"
+				}`}
+			>
+				<KanbanTemplate />
 			</div>
 		</div>
 	)

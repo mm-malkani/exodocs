@@ -28,3 +28,11 @@
 /* * {
 	background: rgb(241, 245, 249);
 } */
+
+/* *{
+	color: rgb(235, 235, 12);
+} */
+
+#kanbanScrollArea {
+	scroll-behavior: smooth;
+}

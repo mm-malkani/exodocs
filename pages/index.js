@@ -1,38 +1,25 @@
-import { onAuthStateChanged } from "@firebase/auth"
+import { onAuthStateChanged } from "firebase/auth"
 import Head from "next/head"
-import React, { useEffect, useState } from "react"
-import MainTemplatePage from "../components/MainTemplatePage"
-import NavbarBasic from "../components/NavbarBasic"
-import { auth } from "../firebase/firebaseConfig"
-import { userDataStore } from "../zustand/zustandStore"
+import { useEffect, useState } from "react"
+import LoadingBar from "react-top-loading-bar"
+import { auth } from "../config/firebaseConfig"
 
 const Home = () => {
-	const [login, setLogin] = useState(false)
-	const { setUserObject } = userDataStore()
+	const [login, setLogin] = useState("")
+	const [progress, setProgress] = useState(20)
 
 	useEffect(() => {
 		onAuthStateChanged(auth, user => {
 			if (user) {
 				setLogin(true)
-				setUserObject(user)
+				localStorage.setItem("user", JSON.stringify(user))
+				// setUserObject(user)
 				// console.log(user);
 			} else {
 				setLogin(false)
 			}
 		})
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
-
-	// const handleSignout = () => {
-	// 	signOut(auth)
-	// 		.then(() => {
-	// 			alert("SignOut Success")
-	// 		})
-	// 		.catch(err => {
-	// 			console.log(err)
-	// 			alert("signOut Failed")
-	// 		})
-	// }
 
 	return (
 		<>
@@ -47,24 +34,29 @@ const Home = () => {
 					href="/favicon.ico"
 				/>
 			</Head>
+			<LoadingBar
+				color="#f11946"
+				progress={progress}
+				onLoaderFinished={() => setProgress(0)}
+			/>
 
-			{/* <KanbanLists /> */}
+			{/* Content section */}
+			<main className="flex-1 overflow-y-auto">
+				{/* Navbar */}
 
-			{!login && (
-				<>
-					<NavbarBasic></NavbarBasic>
-					<div>
-						<p>You Must Login To Continue</p>
-					</div>
-				</>
-			)}
-
-			{login && (
-				<>
-					<MainTemplatePage></MainTemplatePage>
-					{/* <button onClick={handleSignout}>SignOut</button> */}
-				</>
-			)}
+				{/* Content section */}
+				<div className="p-4">
+					<h1
+						onClick={() => {
+							setProgress(100)
+						}}
+						className="text-2xl font-bold mb-4"
+					>
+						Content Section
+					</h1>
+					{/* Content section content goes here */}
+				</div>
+			</main>
 		</>
 	)
 }
