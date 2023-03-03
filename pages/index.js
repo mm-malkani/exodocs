@@ -52,7 +52,7 @@ const Home = () => {
 						}}
 						className="text-2xl font-bold mb-4"
 					>
-						Content Section
+						Content Section Login: {login}
 					</h1>
 					{/* Content section content goes here */}
 				</div>

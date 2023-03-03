@@ -28,7 +28,7 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
 				alert("Signout Success")
 				localStorage.removeItem("user")
 			})
-			.catch(e => {
+			.catch(() => {
 				alert("Signout Failed")
 			})
 	}

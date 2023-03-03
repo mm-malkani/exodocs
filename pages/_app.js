@@ -11,7 +11,7 @@ function MyApp({ Component, pageProps }) {
 	return (
 		<>
 			<Sidebar {...{ toggleSidebar, isSidebarOpen }}></Sidebar>
-			<Navbar {...{ toggleSidebar, isSidebarOpen }}></Navbar>
+			<Navbar {...{ toggleSidebar }}></Navbar>
 			<Component {...pageProps} />
 		</>
 	)

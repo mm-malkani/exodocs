@@ -22,10 +22,10 @@ const NewElement = ({
 	return (
 		<div
 			draggable
-			onDragStart={e => handleDragStart(e, index)}
-			onDragEnter={e => handleDragEnter(e, index)}
+			onDragStart={() => handleDragStart(index)}
+			onDragEnter={() => handleDragEnter(index)}
 			onDragOver={e => e.preventDefault()}
-			onDragEnd={e => handleDragEnd(e)}
+			onDragEnd={() => handleDragEnd()}
 			className="group flex bg-white hover:bg-customlight hover:text-custom-gray p-1.5 items-center justify-between rounded w-full"
 		>
 			<div className="flex space-x-1 items-center">

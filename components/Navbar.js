@@ -3,7 +3,7 @@ import Link from "next/link"
 import React, { useEffect, useState } from "react"
 import { auth } from "../config/firebaseConfig"
 
-const Navbar = ({ toggleSidebar, isSidebarOpen }) => {
+const Navbar = ({ toggleSidebar }) => {
 	const [login, setLogin] = useState("")
 
 	useEffect(() => {

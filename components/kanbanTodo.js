@@ -6,11 +6,8 @@ const KanbanTodo = ({
 	deleteTodoItem,
 	columnIndex,
 	todoIndex,
-	setCurrentIndex,
-	setCurrentTodoId,
 	forwardColumnClicked,
 	backColumnClicked,
-	viewTodoInfo,
 	dragStartHandle,
 	dragEnterHandle,
 	dragEndHandle,
@@ -51,9 +48,9 @@ const KanbanTodo = ({
 					<div className="flex space-x-2 flex-wrap">
 						{/* ----------------------VIEW TODO ICON------------------- */}
 						<svg
-							onClick={() => {
-								viewTodoInfo(columnIndex, todoIndex)
-							}}
+							// onClick={() => {
+							// 	viewTodoInfo(columnIndex, todoIndex)
+							// }}
 							xmlns="http://www.w3.org/2000/svg"
 							fill="none"
 							viewBox="0 0 24 24"
@@ -76,8 +73,6 @@ const KanbanTodo = ({
 						{/* ----------------------EDIT TODO ICON------------------- */}
 						<svg
 							onClick={() => {
-								setCurrentTodoId(todoIndex)
-								setCurrentIndex(columnIndex)
 								handleEditTodoClick(columnIndex, todoIndex)
 							}}
 							xmlns="http://www.w3.org/2000/svg"

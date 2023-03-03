@@ -1,6 +1,4 @@
-import { useRouter } from "next/router"
-import { useRef } from "react"
-import { useState } from "react"
+import { useRef, useState } from "react"
 import { uid } from "uid"
 import NewElement from "../../components/NewElement"
 
@@ -17,8 +15,8 @@ const initialData = {
 }
 
 const Post = () => {
-	const router = useRouter()
-	const { slug } = router.query
+	// const router = useRouter()
+	// const { slug } = router.query
 
 	const [dataStore, setDataStore] = useState(
 		initialData["571db831b7dacb7fcceea0872d7891db"]
@@ -36,9 +34,24 @@ const Post = () => {
 		setTimeout(() => {
 			let abc = document.getElementById("parentNewElement")
 			// console.log(Array.from(abc.children)[index + 1].querySelector("p"))
-			Array.from(abc.children)[index + 1].querySelector("p").focus()
+			try {
+				Array.from(abc.children)[index + 1].querySelector("p").focus()
+			} catch (error) {
+				Array.from(abc.children)[0].querySelector("p").focus()
+			}
 		}, 100)
 		// console.log(dataStore);
+	}
+
+	function setCaret(el) {
+		var range = document.createRange()
+		var sel = window.getSelection()
+
+		range.setStart(el, 1)
+		range.collapse(true)
+
+		sel.removeAllRanges()
+		sel.addRange(range)
 	}
 
 	const handleDeleteElement = (index, length) => {
@@ -54,16 +67,20 @@ const Post = () => {
 			setDataStore(tempDataStore)
 		}
 		setTimeout(() => {
-			let abc = document.getElementById("parentNewElement")
-			// console.log(index);
-			if (index == 0) {
-				Array.from(abc.children)[0]
-					.querySelector("div")
-					.nextSibling.focus()
-			} else {
-				Array.from(abc.children)
-					[index - 1].querySelector("div")
-					.nextSibling.focus()
+			try {
+				let abc = document.getElementById("parentNewElement")
+				// console.log(index);
+				let array = Array.from(abc.children)
+				if (index == 0) {
+					array[0].querySelector("div").nextSibling.focus()
+				} else {
+					let caretVar =
+						array[index - 1].querySelector("div").nextSibling
+					setCaret(caretVar)
+				}
+			} catch (error) {
+				// console.log(error)
+				handleAddElement(0)
 			}
 		}, 200)
 	}
@@ -126,17 +143,17 @@ const Post = () => {
 	let elementDrag = useRef()
 	let elementDragOver = useRef()
 
-	const handleDragStart = (e, index) => {
+	const handleDragStart = index => {
 		elementDrag.current = index
 		// console.log(index)
 	}
 
-	const handleDragEnter = (e, index) => {
+	const handleDragEnter = index => {
 		elementDragOver.current = index
 		// console.log(index)
 	}
 
-	const handleDragEnd = e => {
+	const handleDragEnd = () => {
 		// console.log(e)
 		let tempDataStore = { ...dataStore }
 		let elementCopy = tempDataStore.data[elementDrag.current]

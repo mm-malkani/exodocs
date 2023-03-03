@@ -79,6 +79,7 @@ const Kanban = () => {
 		if (!localStorage.getItem(slug)) {
 			localStorage.setItem(slug, JSON.stringify(initialData))
 		}
+		// eslint-disable-next-line
 	}, [router])
 
 	const sendToLocalStorage = () => {
@@ -90,9 +91,9 @@ const Kanban = () => {
 	}
 
 	const [dataStore, setDataStore] = useState(initialData.kanban)
-	const [currentIndex, setCurrentIndex] = useState("")
+	// const [currentIndex, setCurrentIndex] = useState("")
 	const [modalVisible, setModalVisible] = useState(false)
-	const [currentTodoId, setCurrentTodoId] = useState("")
+	// const [currentTodoId, setCurrentTodoId] = useState("")
 	const [editableTitle, setEditableTitle] = useState(initialData.title)
 	const [todoTitle, setTodoTitle] = useState("")
 	const [todoDescription, setTodoDescription] = useState("")
@@ -176,51 +177,51 @@ const Kanban = () => {
 	}
 
 	const handleAddTodo = () => {
-		setCurrentIndex(0)
+		// setCurrentIndex(0)
 		setModalVisible(true)
 	}
 
 	// -------------- VIEW TODO
-	const viewTodoInfo = (columnIndex, todoIndex) => {
-		// console.log(columnIndex, todoIndex)
-		let tempDataStore = [...dataStore]
-		setAllTodoInfo(tempDataStore[columnIndex].columnData[todoIndex])
-		// console.log(allTodoInfo);
-		setViewModalVisible(true)
-	}
+	// const viewTodoInfo = (columnIndex, todoIndex) => {
+	// 	// console.log(columnIndex, todoIndex)
+	// 	let tempDataStore = [...dataStore]
+	// 	// setAllTodoInfo(tempDataStore[columnIndex].columnData[todoIndex])
+	// 	// console.log(allTodoInfo);
+	// 	// setViewModalVisible(true)
+	// }
 
 	// -------------- UPDATE TODO
-	const updateTodoToData = (todoTitleValue, todoDescriptionValue) => {
-		const timestamp = Date().toString().slice(0, -30)
-		// console.log(todoTitleValue, todoDescriptionValue, labelColor);
-		let tempDataStore = [...dataStore]
-		tempDataStore[currentIndex].columnData[currentTodoId] = {
-			todoId: uid(),
-			todoHeading: todoTitleValue,
-			todoDescription: todoDescriptionValue,
-			todoCreationTime: todoCreationTime,
-			todoUpdateTime: timestamp,
-			todoLabel: labelColor,
-		}
-		setDataStore(tempDataStore)
-		sendToLocalStorage()
-		setEditModalVisible(false)
-		setTodoTitle("")
-		setTodoDescription("")
-		setTodoCreationTime("")
-	}
+	// const updateTodoToData = (todoTitleValue, todoDescriptionValue) => {
+	// 	const timestamp = Date().toString().slice(0, -30)
+	// 	// console.log(todoTitleValue, todoDescriptionValue, labelColor);
+	// 	let tempDataStore = [...dataStore]
+	// 	tempDataStore[currentIndex].columnData[currentTodoId] = {
+	// 		todoId: uid(),
+	// 		todoHeading: todoTitleValue,
+	// 		todoDescription: todoDescriptionValue,
+	// 		todoCreationTime: todoCreationTime,
+	// 		todoUpdateTime: timestamp,
+	// 		todoLabel: labelColor,
+	// 	}
+	// 	setDataStore(tempDataStore)
+	// 	sendToLocalStorage()
+	// 	setEditModalVisible(false)
+	// 	setTodoTitle("")
+	// 	setTodoDescription("")
+	// 	setTodoCreationTime("")
+	// }
 
 	const handleEditTodoClick = (columnIndex, todoIndex) => {
 		setTodoTitle(dataStore[columnIndex].columnData[todoIndex].todoHeading)
 		setTodoDescription(
 			dataStore[columnIndex].columnData[todoIndex].todoDescription
 		)
-		setTodoCreationTime(
-			dataStore[columnIndex].columnData[todoIndex].todoCreationTime
-		)
-		setCurrentIndex(columnIndex)
-		setCurrentTodoId(todoIndex)
-		setEditModalVisible(true)
+		// setTodoCreationTime(
+		// 	dataStore[columnIndex].columnData[todoIndex].todoCreationTime
+		// )
+		// setCurrentIndex(columnIndex)
+		// setCurrentTodoId(todoIndex)
+		// setEditModalVisible(true)
 	}
 
 	// -------------- DELETE TODO
@@ -386,11 +387,8 @@ const Kanban = () => {
 														dragStartHandle,
 														dragEnterHandle,
 														dragEndHandle,
-														setCurrentIndex,
-														setCurrentTodoId,
 														forwardColumnClicked,
 														backColumnClicked,
-														viewTodoInfo,
 														handleEditTodoClick,
 														deleteTodoItem,
 														todoData,
