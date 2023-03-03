@@ -1,5 +1,17 @@
 # Changelog
 
+### [0.4.1](https://github.com/abhishekintern/exodocs/compare/v0.4.0...v0.4.1) (2023-03-03)
+
+
+### :recycle: Code Refactoring
+
+* **soft reset:** Almost all the functionalities added ([6561464](https://github.com/abhishekintern/exodocs/commit/6561464aff52a6628c9577bdeb14c4fe6756987b))
+
+
+### 🗑️ Security
+
+* **unwanted files:** Removed Unwanted files and folders ([fdeae07](https://github.com/abhishekintern/exodocs/commit/fdeae072fe98add3985d4cf9e6698d7167545d07))
+
 ## [0.4.0](https://github.com/abhishekintern/exodocs/compare/v0.3.0...v0.4.0) (2023-02-06)
 
 
