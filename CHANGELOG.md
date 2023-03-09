@@ -1,3 +1,18 @@
+# Changelog
+
+### [0.5.4](https://github.com/abhishekintern/exodocs/compare/v0.5.2...v0.5.4) (2023-03-09)
+
+
+### * Chores
+
+* release v0.5.3 ([ca5430d](https://github.com/abhishekintern/exodocs/commit/ca5430d66cc90b13b78e2f3a93399879f9821f76))
+
+
+### 🐛 Bug Fixes
+
+* **code for sharing page:** Code Updated for sharing page of kanban and template) ([0e07cfd](https://github.com/abhishekintern/exodocs/commit/0e07cfd7d41a7a305e399f33959c5e55dc78fbf5))
+* **code for sharing page:** Code Updated for sharing page of kanban and template) ([1785b32](https://github.com/abhishekintern/exodocs/commit/1785b320bc362abad943d17d7cb993dddcbaecef))
+
 ### 🐛 Bug Fixes
 
 * **code for sharing page:** Code Updated for sharing page of kanban and template) ([1785b32](https://github.com/abhishekintern/exodocs/commit/1785b320bc362abad943d17d7cb993dddcbaecef))
