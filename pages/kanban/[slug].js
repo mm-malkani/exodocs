@@ -11,7 +11,7 @@ import KanbanTodo from "../../components/kanbanTodo"
 import LoginFirst from "../../components/LoginFirst"
 import ModalTemplate from "../../components/ModalTemplate"
 import OptionsButton from "../../components/molecules/OptionsButton"
-import ViewModal from "../../components/viewTodoBar"
+import ViewModal from "../../components/ViewTodoBar"
 import { auth, db } from "../../config/firebaseConfig"
 import { dataBase } from "../../data/kanbanMockData"
 
