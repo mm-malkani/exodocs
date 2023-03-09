@@ -41,6 +41,7 @@ const Kanban = () => {
 					console.log(error)
 				})
 		}
+		//eslint-disable-next-line
 	}, [router, slug])
 
 	return (

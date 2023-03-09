@@ -6,32 +6,6 @@ const ColorPicker = ({
 	fillColorOptions,
 	setFillColorOptions,
 }) => {
-	const colors = [
-		{
-			color: "red",
-		},
-		{
-			color: "blue",
-		},
-		{
-			color: "brown",
-		},
-		{
-			color: "gray",
-		},
-		{
-			color: "green",
-		},
-		{
-			color: "yellow",
-		},
-		{
-			color: "purple",
-		},
-		{
-			color: "white",
-		},
-	]
 	return (
 		<div
 			onMouseEnter={() => setFillColorOptions(true)}

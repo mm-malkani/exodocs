@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 import AutoSaveButton from "../atoms/AutoSaveButton"
 import FavouritesButton from "../atoms/FavouritesButton"
 import ShareButton from "../atoms/ShareButton"

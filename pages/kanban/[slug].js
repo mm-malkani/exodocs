@@ -36,13 +36,16 @@ const Kanban = () => {
 		onAuthStateChanged(auth, user => {
 			if (user) {
 				setUser(user)
+				if (!userObject) {
+					setUserObject(user)
+				}
 				setUserObject(user)
 				setLogin(true)
 			} else {
 				setLogin(false)
 			}
 		})
-	}, [])
+	}, [userObject])
 
 	const dbRef = ref(db)
 	useEffect(() => {
@@ -83,8 +86,8 @@ const Kanban = () => {
 					})
 			}
 			localStorage.removeItem("undefined")
-			// eslint-disable-next-line
 		}
+		// eslint-disable-next-line
 	}, [router, user])
 
 	const sendToLocalStorage = () => {
@@ -222,7 +225,7 @@ const Kanban = () => {
 	//
 	// }
 
-	const handleEditTodoClick = (columnIndex, todoIndex) => {}
+	// const handleEditTodoClick = (columnIndex, todoIndex) => {}
 
 	// -------------- DELETE TODO
 	const deleteTodoItem = (columnIndex, todoId) => {
@@ -482,7 +485,6 @@ const Kanban = () => {
 																dragEndHandle,
 																forwardColumnClicked,
 																backColumnClicked,
-																handleEditTodoClick,
 																deleteTodoItem,
 																todoData,
 															}}

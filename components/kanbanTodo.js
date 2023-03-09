@@ -2,7 +2,6 @@ import React from "react"
 
 const KanbanTodo = ({
 	todoData,
-	handleEditTodoClick,
 	deleteTodoItem,
 	columnIndex,
 	todoIndex,
@@ -73,9 +72,9 @@ const KanbanTodo = ({
 
 						{/* ----------------------EDIT TODO ICON------------------- */}
 						<svg
-							onClick={() => {
-								handleEditTodoClick(columnIndex, todoIndex)
-							}}
+							// onClick={() => {
+							// 	handleEditTodoClick(columnIndex, todoIndex)
+							// }}
 							xmlns="http://www.w3.org/2000/svg"
 							fill="none"
 							viewBox="0 0 24 24"

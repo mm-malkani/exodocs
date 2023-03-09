@@ -72,8 +72,8 @@ const Post = () => {
 					})
 			}
 			localStorage.removeItem("undefined")
-			// eslint-disable-next-line
 		}
+		// eslint-disable-next-line
 	}, [router, user])
 
 	const sendToLocalStorage = tempDataStore => {

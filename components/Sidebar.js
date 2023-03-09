@@ -10,7 +10,7 @@ import CreatePageButton from "./atoms/CreatePageButton"
 import SidebarList from "./atoms/SidebarList"
 import SignoutButton from "./atoms/signoutButton"
 
-const Sidebar = ({ isSidebarOpen, toggleSidebar, refresh, setRefresh }) => {
+const Sidebar = ({ isSidebarOpen, toggleSidebar, refresh }) => {
 	const [login, setLogin] = useState("")
 	const [userObject, setUserObject] = useState({})
 	const router = useRouter()
