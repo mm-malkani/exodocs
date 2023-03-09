@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.0](https://github.com/abhishekintern/exodocs/compare/v0.4.1...v0.5.0) (2023-03-09)
+
+
+### ✨ Features
+
+* **All DB Features and UI updates:** Features like auto-save,favourites,share added ([e854671](https://github.com/abhishekintern/exodocs/commit/e8546719906ae760042407c4519c33b152ce0b83))
+
 ### [0.4.1](https://github.com/abhishekintern/exodocs/compare/v0.4.0...v0.4.1) (2023-03-03)
 
 
