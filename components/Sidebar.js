@@ -8,7 +8,7 @@ import { auth, db } from "../config/firebaseConfig"
 import CreateKanbanButon from "./atoms/CreateKanbanButon"
 import CreatePageButton from "./atoms/CreatePageButton"
 import SidebarList from "./atoms/SidebarList"
-import SignoutButton from "./atoms/signoutButton"
+import SignoutButton from "./atoms/SignoutButton"
 
 const Sidebar = ({ isSidebarOpen, toggleSidebar, refresh }) => {
 	const [login, setLogin] = useState("")
