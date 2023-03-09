@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.5.2](https://github.com/abhishekintern/exodocs/compare/v0.5.1...v0.5.2) (2023-03-09)
+
+
+### ⬆️ Packages Upgrades
+
+* **Features like view todo, sidebar update:** View Todo, Realtime updateh ([e4dc6c1](https://github.com/abhishekintern/exodocs/commit/e4dc6c1f37be063b2ee2bbbddf87eafbd8be9098))
+
 ### [0.5.1](https://github.com/abhishekintern/exodocs/compare/v0.5.0...v0.5.1) (2023-03-09)
 
 
