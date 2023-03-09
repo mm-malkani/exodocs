@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.5.1](https://github.com/abhishekintern/exodocs/compare/v0.5.0...v0.5.1) (2023-03-09)
+
+
+### 🐛 Bug Fixes
+
+* **ESLint Errors:** Minor EsLint Errors ([11f1442](https://github.com/abhishekintern/exodocs/commit/11f1442484059ab63b27c46a58ece8dffcbd5376))
+
 ## [0.5.0](https://github.com/abhishekintern/exodocs/compare/v0.4.1...v0.5.0) (2023-03-09)
 
 
