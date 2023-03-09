@@ -1,7 +1,6 @@
 import { onAuthStateChanged } from "firebase/auth"
 import { child, get, ref } from "firebase/database"
 import Head from "next/head"
-import Link from "next/link"
 import { useRouter } from "next/router"
 import { useEffect, useRef, useState } from "react"
 import { uid } from "uid"
@@ -9,8 +8,10 @@ import PublishButton from "../../components/atoms/PublishButton"
 import ColorPicker from "../../components/ColorPicker"
 import { sendDataToFirebase } from "../../components/functions/sendToDb"
 import KanbanTodo from "../../components/kanbanTodo"
+import LoginFirst from "../../components/LoginFirst"
 import ModalTemplate from "../../components/ModalTemplate"
 import OptionsButton from "../../components/molecules/OptionsButton"
+import ViewModal from "../../components/viewTodoBar"
 import { auth, db } from "../../config/firebaseConfig"
 import { dataBase } from "../../data/kanbanMockData"
 
@@ -31,6 +32,7 @@ const Kanban = () => {
 	const [autoSave, setAutoSave] = useState(true)
 	const [userObject, setUserObject] = useState("")
 	const [login, setLogin] = useState(false)
+	const [viewTodoBar, setViewTodoBar] = useState(false)
 
 	useEffect(() => {
 		onAuthStateChanged(auth, user => {
@@ -92,8 +94,10 @@ const Kanban = () => {
 
 	const sendToLocalStorage = () => {
 		const { slug } = router.query
-		setinitialData({ ...initialData, kanban: [...dataStore] })
-		localStorage.setItem(slug, JSON.stringify(initialData))
+		let tempDataStore = { ...initialData }
+		tempDataStore.kanban = [...dataStore]
+		setinitialData(tempDataStore)
+		localStorage.setItem(slug, JSON.stringify(tempDataStore))
 	}
 
 	const publishData = () => {
@@ -203,11 +207,11 @@ const Kanban = () => {
 		// console.log(tempDataStore);
 		tempDataStore[0].columnData.splice(0, 0, newTodoData)
 		setDataStore(tempDataStore)
-		handleAutoSaveButton()
 		sendToLocalStorage()
 		setModalVisible(false)
 		setTodoTitle("")
 		setTodoDescription("")
+		handleAutoSaveButton()
 	}
 
 	const handleAddTodo = () => {
@@ -215,9 +219,14 @@ const Kanban = () => {
 	}
 
 	// -------------- VIEW TODO
-	// const viewTodoInfo = (columnIndex, todoIndex) => {
-	//
-	// }
+	const [allTodoInfo, setAllTodoInfo] = useState("")
+	const viewTodoInfo = (columnIndex, todoIndex) => {
+		// console.log(columnIndex, todoIndex)
+		let tempDataStore = [...dataStore]
+		setAllTodoInfo(tempDataStore[columnIndex].columnData[todoIndex])
+		// console.log(allTodoInfo)
+		setViewTodoBar(true)
+	}
 
 	// -------------- UPDATE TODO
 	// const updateTodoToData = (todoTitleValue, todoDescriptionValue) => {
@@ -234,8 +243,8 @@ const Kanban = () => {
 			columnIndex
 		].columnData.filter(todo => todo.todoId != todoId)
 		setDataStore(tempDataStore)
-		handleAutoSaveButton()
 		sendToLocalStorage()
+		handleAutoSaveButton()
 	}
 
 	// -----------------------------------------DRAG AND DROP FUNCTIONS
@@ -272,8 +281,8 @@ const Kanban = () => {
 			todoitemDragOver.current = null
 			dragOverColumnIndex = null
 			setDataStore(tempDataStore)
-			handleAutoSaveButton()
 			sendToLocalStorage()
+			handleAutoSaveButton()
 		} catch (err) {
 			console.log(err)
 		}
@@ -291,8 +300,8 @@ const Kanban = () => {
 		let tempDataStore = { ...initialData }
 		tempDataStore.title = eValue
 		setinitialData(tempDataStore)
-		handleAutoSaveButton()
 		localStorage.setItem(slug, JSON.stringify(tempDataStore))
+		handleAutoSaveButton()
 	}
 
 	const setFillColor = (color, index) => {
@@ -301,8 +310,8 @@ const Kanban = () => {
 		setDataStore(tempDataStore)
 		const { slug } = router.query
 		setinitialData({ ...initialData, kanban: [...dataStore] })
-		handleAutoSaveButton()
 		localStorage.setItem(slug, JSON.stringify(tempDataStore))
+		handleAutoSaveButton()
 	}
 
 	const toggleFavourites = () => {
@@ -311,7 +320,6 @@ const Kanban = () => {
 		tempDataStore.favourite = !tempDataStore.favourite
 		setinitialData(tempDataStore)
 		localStorage.setItem(slug, JSON.stringify(tempDataStore))
-		handleAutoSaveButton()
 		sendDataToFirebase(user.uid, "kanban", slug)
 	}
 
@@ -334,6 +342,12 @@ const Kanban = () => {
 									todoDescription,
 								}}
 							></ModalTemplate>
+						)}
+						{viewTodoBar && (
+							<ViewModal
+								setViewModalVisible={setViewTodoBar}
+								allTodoInfo={allTodoInfo}
+							></ViewModal>
 						)}
 					</div>
 
@@ -487,6 +501,7 @@ const Kanban = () => {
 																backColumnClicked,
 																deleteTodoItem,
 																todoData,
+																viewTodoInfo,
 															}}
 															key={todoIndex}
 															todoIndex={
@@ -507,36 +522,7 @@ const Kanban = () => {
 					</div>
 				</>
 			)}
-			{!login && (
-				<main className="flex-1 overflow-y-auto">
-					{/* Navbar */}
-
-					{/* Content section */}
-					<div className="p-4">
-						<h1 className="text-2xl text-center font-bold mb-4 flex space-x-2 justify-center">
-							<span>You must Login First</span>
-							<Link
-								href={"/login"}
-								className="inline-flex items-center border-0 px-3 focus:outline-none bg-slate-200 rounded text-base font-normal mt-0"
-							>
-								Login
-								<svg
-									fill="none"
-									stroke="currentColor"
-									strokeLinecap="round"
-									strokeLinejoin="round"
-									strokeWidth="2"
-									className="w-4 h-4 ml-1"
-									viewBox="0 0 24 24"
-								>
-									<path d="M5 12h14M12 5l7 7-7 7"></path>
-								</svg>
-							</Link>
-						</h1>
-						{/* Content section content goes here */}
-					</div>
-				</main>
-			)}
+			{!login && <LoginFirst />}
 		</>
 	)
 }

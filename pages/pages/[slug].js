@@ -1,12 +1,12 @@
 import { onAuthStateChanged } from "firebase/auth"
 import { child, get, ref } from "firebase/database"
 import Head from "next/head"
-import Link from "next/link"
 import { useRouter } from "next/router"
 import { useEffect, useRef, useState } from "react"
 import { uid } from "uid"
 import PublishButton from "../../components/atoms/PublishButton"
 import { sendDataToFirebase } from "../../components/functions/sendToDb"
+import LoginFirst from "../../components/LoginFirst"
 import OptionsButton from "../../components/molecules/OptionsButton"
 import NewElement from "../../components/NewElement"
 import { auth, db } from "../../config/firebaseConfig"
@@ -56,7 +56,7 @@ const Post = () => {
 							// console.log("No data available")
 							let dataToAdd = { ...initialData["tempPage"] }
 							dataToAdd.slug = `${slug}`
-							console.log(dataToAdd.slug)
+							// console.log(dataToAdd.slug)
 							localStorage.setItem(
 								slug,
 								JSON.stringify(dataToAdd)
@@ -132,12 +132,10 @@ const Post = () => {
 			let newElement = { id: uid(), tagName: "p", html: "" }
 			tempDataStore.data.splice(index, 1, newElement)
 			setDataStore(tempDataStore)
-			handleAutoSaveButton()
 		} else {
 			// console.log(tempDataStore.data);
 			tempDataStore.data.splice(index, 1)
 			setDataStore(tempDataStore)
-			handleAutoSaveButton()
 		}
 		setTimeout(() => {
 			try {
@@ -264,41 +262,11 @@ const Post = () => {
 		setDataStore(tempDataStore)
 		localStorage.setItem(slug, JSON.stringify(tempDataStore))
 		sendDataToFirebase(user.uid, "pages", slug)
-		handleAutoSaveButton()
 	}
 
 	return (
 		<>
-			{!login && (
-				<main className="flex-1 overflow-y-auto">
-					{/* Navbar */}
-
-					{/* Content section */}
-					<div className="p-4">
-						<h1 className="text-2xl text-center font-bold mb-4 flex space-x-2 justify-center">
-							<span>You must Login First</span>
-							<Link
-								href={"/login"}
-								className="inline-flex items-center border-0 px-3 focus:outline-none bg-slate-200 rounded text-base font-normal mt-0"
-							>
-								Login
-								<svg
-									fill="none"
-									stroke="currentColor"
-									strokeLinecap="round"
-									strokeLinejoin="round"
-									strokeWidth="2"
-									className="w-4 h-4 ml-1"
-									viewBox="0 0 24 24"
-								>
-									<path d="M5 12h14M12 5l7 7-7 7"></path>
-								</svg>
-							</Link>
-						</h1>
-						{/* Content section content goes here */}
-					</div>
-				</main>
-			)}
+			{!login && <LoginFirst />}
 			{login && (
 				<div className="w-full flex flex-col p-2 space-y-2 min-h-screen overflow-x-hidden">
 					<Head>

@@ -33,7 +33,7 @@ const Kanban = () => {
 						// console.log(tempDataStore)
 						setDataStore(tempDataStore.kanban)
 					} else {
-						console.log("No data available")
+						// console.log("No data available")
 						router.push(`${router.asPath}/notFound`)
 					}
 				})

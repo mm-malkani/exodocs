@@ -1,18 +1,48 @@
 import { onAuthStateChanged } from "firebase/auth"
+import { child, get, ref } from "firebase/database"
 import Head from "next/head"
-import Link from "next/link"
 import { useEffect, useState } from "react"
-import { auth } from "../config/firebaseConfig"
+import IndexPageCard from "../components/atoms/IndexPageCard"
+import LoginFirst from "../components/LoginFirst"
+import { auth, db } from "../config/firebaseConfig"
 
 const Home = () => {
 	const [login, setLogin] = useState("")
+	const [dataList, setDataList] = useState([])
 
 	useEffect(() => {
 		onAuthStateChanged(auth, user => {
 			if (user) {
 				setLogin(true)
 				localStorage.setItem("user", JSON.stringify(user))
-				// setUserObject(user)
+				let dataListArr = []
+				const dbRef = ref(db)
+				get(child(dbRef, `${user.uid}/`))
+					.then(snapshot => {
+						if (snapshot.exists()) {
+							setDataList([])
+							let data = Object.entries(snapshot.val())
+							data.map(obj => {
+								let objectArray = Object.values(obj[1])
+								// console.log(objectArray)
+								objectArray.map(finalArray => {
+									// console.log(finalArray)
+									let ArrayData = JSON.parse(
+										finalArray.storedData
+									)
+									dataListArr.push(ArrayData)
+									setDataList(dataListArr)
+									console.log(ArrayData)
+								})
+							})
+						} else {
+							setDataList([])
+							// console.log("No data available")
+						}
+					})
+					.catch(error => {
+						console.error(error)
+					})
 				// console.log(user);
 			} else {
 				setLogin(false)
@@ -34,37 +64,27 @@ const Home = () => {
 				/>
 			</Head>
 
-			{/* Content section */}
-			{!login && (
-				<main className="flex-1 overflow-y-auto">
-					{/* Navbar */}
-
-					{/* Content section */}
-					<div className="p-4">
-						<h1 className="text-2xl text-center font-bold mb-4 flex space-x-2 justify-center">
-							<span>You must Login First</span>
-							<Link
-								href={"/login"}
-								className="inline-flex items-center border-0 px-3 focus:outline-none bg-slate-200 rounded text-base font-normal mt-0"
-							>
-								Login
-								<svg
-									fill="none"
-									stroke="currentColor"
-									strokeLinecap="round"
-									strokeLinejoin="round"
-									strokeWidth="2"
-									className="w-4 h-4 ml-1"
-									viewBox="0 0 24 24"
-								>
-									<path d="M5 12h14M12 5l7 7-7 7"></path>
-								</svg>
-							</Link>
-						</h1>
-						{/* Content section content goes here */}
+			{login && (
+				<div className="container mx-auto p-2 md:p-8 sm:p-4 bg-customwhite">
+					<h3 className="font-bold mb-8 text-center">
+						Welcome to my ExoDocs - Your goto Todo builder and
+						Sharing App!
+					</h3>
+					<div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 gap-4">
+						{dataList.map((data, index) => {
+							return (
+								<IndexPageCard
+									title={data.title}
+									key={index}
+									slug={data.slug}
+									type={data.type}
+								/>
+							)
+						})}
 					</div>
-				</main>
+				</div>
 			)}
+			{!login && <LoginFirst />}
 		</>
 	)
 }

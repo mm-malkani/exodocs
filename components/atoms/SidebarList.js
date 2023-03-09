@@ -8,15 +8,20 @@ const SidebarList = ({ data, userUid }) => {
 	const router = useRouter()
 
 	const deleteFromDatabase = () => {
-		set(ref(db, `${userUid}/${data.type}/${data.slug}`), null)
-			.then(() => {
-				console.log("REMOVED")
-			})
-			.catch(err => console.log(err))
-		// console.log(router.asPath)
-		localStorage.removeItem(data.slug)
-		if (router.asPath == `/${data.type}/${data.slug}`) {
-			router.push("/")
+		// console.log(data.slug.length)
+		if (data.slug.length === 32) {
+			set(ref(db, `${userUid}/${data.type}/${data.slug}`), null)
+				.then(() => {
+					// console.log("REMOVED")
+				})
+				.catch(err => console.log(err))
+			// console.log(router.asPath)
+			localStorage.removeItem(data.slug)
+			if (router.asPath == `/${data.type}/${data.slug}`) {
+				router.push("/")
+			}
+		} else {
+			alert("Error Occured in Deleting Page Please Reload the Page")
 		}
 	}
 
@@ -60,7 +65,7 @@ const SidebarList = ({ data, userUid }) => {
 
 				<Link
 					href={`/${data.type}/${data.slug}`}
-					className="line-clamp-2"
+					className="line-clamp-2 max-w-[200px]"
 				>
 					{data.title}
 				</Link>

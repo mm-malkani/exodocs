@@ -26,6 +26,7 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar, refresh }) => {
 				get(child(dbRef, `${user.uid}/`))
 					.then(snapshot => {
 						if (snapshot.exists()) {
+							setDataList([])
 							let data = Object.entries(snapshot.val())
 							data.map(obj => {
 								let objectArray = Object.values(obj[1])
@@ -211,7 +212,7 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar, refresh }) => {
 									</ol>
 								</li>
 								<li>
-									<div className="flex items-center p-1.5 text-base font-normal rounded-lg rounded-b-none text-white bg-gray-700 cursor-pointer">
+									<div className="flex items-center p-1.5 text-base font-normal rounded-lg rounded-b-none text-white border-2 border-black bg-gray-700 cursor-pointer">
 										<svg
 											xmlns="http://www.w3.org/2000/svg"
 											fill="none"
@@ -231,7 +232,12 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar, refresh }) => {
 											All Pages
 										</span>
 									</div>
-									<ol className="space-y-1 md:space-y-2 p-1.5 bg-gray-700 rounded-b-lg">
+									<ol className="space-y-1 border-2 border-black border-t-0 md:space-y-2 p-1.5 bg-gray-700 rounded-b-lg">
+										{dataList.length <= 0 && (
+											<span className="flex text-customlight items-center justify-center">
+												No Pages to show
+											</span>
+										)}
 										{dataList.length >= 1 &&
 											dataList.map((data, index) => {
 												return (
@@ -242,11 +248,6 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar, refresh }) => {
 													/>
 												)
 											})}
-										{dataList.length <= 0 && (
-											<span className="flex text-customlight items-center justify-center">
-												No Pages to show
-											</span>
-										)}
 									</ol>
 								</li>
 							</ul>
