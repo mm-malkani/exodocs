@@ -30,7 +30,7 @@ const Login = () => {
 		signInWithPopup(auth, provider)
 			.then(user => {
 				// console.log(user)
-				alert("Login Successfull")
+				// alert("Login Successfull")
 				localStorage.setItem("user", JSON.stringify(user))
 			})
 			.catch(err => {
@@ -46,7 +46,7 @@ const Login = () => {
 		signInWithEmailAndPassword(auth, email, password)
 			.then(user => {
 				// console.log(user)
-				alert("Login Successfull")
+				// alert("Login Successfull")
 				localStorage.setItem("user", JSON.stringify(user))
 			})
 			.catch(err => {

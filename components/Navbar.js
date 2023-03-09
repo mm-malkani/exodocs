@@ -3,7 +3,7 @@ import Link from "next/link"
 import React, { useEffect, useState } from "react"
 import { auth } from "../config/firebaseConfig"
 
-const Navbar = ({ toggleSidebar }) => {
+const Navbar = ({ toggleSidebar, handleRefresh }) => {
 	const [login, setLogin] = useState("")
 
 	useEffect(() => {
@@ -19,7 +19,7 @@ const Navbar = ({ toggleSidebar }) => {
 	}, [])
 
 	return (
-		<nav className="bg-gray-700 p-4">
+		<nav className="bg-gray-700 p-4 overflow-x-hidden">
 			<div className="flex justify-between items-center">
 				<div className="flex space-x-2">
 					{login && (
@@ -49,11 +49,31 @@ const Navbar = ({ toggleSidebar }) => {
 					</h1>
 				</div>
 
+				{login && (
+					<div title="Reload Content">
+						<svg
+							onClick={handleRefresh}
+							xmlns="http://www.w3.org/2000/svg"
+							fill="none"
+							viewBox="0 0 24 24"
+							strokeWidth={1.5}
+							stroke="white"
+							className="w-6 h-6 cursor-pointer active:animate-spin"
+						>
+							<path
+								strokeLinecap="round"
+								strokeLinejoin="round"
+								d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"
+							/>
+						</svg>
+					</div>
+				)}
+
 				{!login && (
 					<div className="flex space-x-2">
 						<Link
 							href={"/login"}
-							className="inline-flex items-center bg-slate-100 border-0 py-1 px-3 focus:outline-none hover:bg-slate-200 rounded text-base mt-4 md:mt-0"
+							className="inline-flex items-center bg-slate-100 border-0 py-1 px-1 sm:px-2 md:px-3 focus:outline-none hover:bg-slate-200 rounded text-sm sm:text-base mt-0"
 						>
 							Login
 							<svg
@@ -70,7 +90,7 @@ const Navbar = ({ toggleSidebar }) => {
 						</Link>
 						<Link
 							href={"/signup"}
-							className="inline-flex items-center bg-slate-100 border-0 py-1 px-3 focus:outline-none hover:bg-slate-200 rounded text-base mt-4 md:mt-0"
+							className="inline-flex items-center bg-slate-100 border-0 py-1 px-1 sm:px-2 md:px-3 focus:outline-none hover:bg-slate-200 rounded text-sm sm:text-base mt-0"
 						>
 							SignUp
 							<svg

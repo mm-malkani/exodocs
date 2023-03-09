@@ -28,7 +28,7 @@ const Signup = () => {
 		signInWithPopup(auth, provider)
 			.then(() => {
 				// console.log(user)
-				alert("Login Successfull")
+				// alert("Login Successfull")
 			})
 			.catch(err => {
 				console.log(err)
@@ -123,7 +123,7 @@ const Signup = () => {
 									Re-Enter Password
 								</label>
 								<input
-									type="confirmPassword"
+									type="password"
 									value={confirmPassword}
 									onChange={e =>
 										setConfirmPassword(e.target.value)

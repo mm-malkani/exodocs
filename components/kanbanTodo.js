@@ -11,6 +11,7 @@ const KanbanTodo = ({
 	dragStartHandle,
 	dragEnterHandle,
 	dragEndHandle,
+	fillColor,
 }) => {
 	return (
 		<div
@@ -24,13 +25,13 @@ const KanbanTodo = ({
 			className="flex p-4 space-y-2 rounded hover:scale-105 hover:cursor-pointer transition-all duration-200"
 		>
 			<div
-				className={`flex p-4 w-full rounded border-2 border-customgray text-customblack flex-col`}
+				className={`flex p-4 w-full rounded border-2 border-customgray text-customblack flex-col `}
 			>
 				<div className="flex flex-wrap justify-between w-full">
 					<div className="flex space-x-2 items-center">
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
-							fill={todoData.todoLabel}
+							fill={fillColor}
 							viewBox="0 0 24 24"
 							strokeWidth={1.5}
 							stroke="currentColor"

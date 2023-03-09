@@ -18,8 +18,13 @@ const Profile = () => {
 	}, [])
 
 	return (
-		<div>
-			{login && <div>Logged In as {JSON.stringify(user)}</div>}
+		<div className="flex w-screen overflow-x-hidden">
+			{login && (
+				<div className="flex flex-col w-full">
+					Logged In as
+					<p className="bg-green w-full">{JSON.stringify(user)}</p>
+				</div>
+			)}
 			{!login && <div>Please Login First</div>}
 		</div>
 	)

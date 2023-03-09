@@ -7,7 +7,6 @@ const ModalTemplate = ({
 	setTodoDescription,
 	todoTitle,
 	todoDescription,
-	setLabelColor,
 }) => {
 	return (
 		<div className="absolute top-14 w-[280px] sm:w-[500px] h-auto border-2 rounded border-purple-800 z-10 mx-auto">
@@ -75,65 +74,13 @@ const ModalTemplate = ({
 								className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
 							/>
 						</div>
-						<div className="relative mb-4">
+						<div className="relative">
 							<label
 								htmlFor="text"
 								className="leading-7 text-sm text-gray-600"
 							>
 								Current Time will be Updated
 							</label>
-
-							<div className="flex flex-wrap">
-								<div className="flex items-center mr-4">
-									<input
-										defaultChecked
-										onClick={() => setLabelColor("yellow")}
-										id="inline-2-radio"
-										type="radio"
-										value=""
-										name="inline-radio-group"
-										className="w-4 h-4"
-									/>
-									<label
-										htmlFor="inline-2-radio"
-										className="ml-2 text-sm font-medium p-1 rounded bg-yellow-400 hover:bg-yellow-500"
-									>
-										Working
-									</label>
-								</div>
-								<div className="flex items-center mr-4">
-									<input
-										onClick={() => setLabelColor("green")}
-										id="inline-2-radio"
-										type="radio"
-										value=""
-										name="inline-radio-group"
-										className="w-4 h-4"
-									/>
-									<label
-										htmlFor="inline-2-radio"
-										className="ml-2 text-sm font-medium p-1 rounded bg-green-400 hover:bg-green-500"
-									>
-										Completed
-									</label>
-								</div>
-								<div className="flex items-center mr-4">
-									<input
-										onClick={() => setLabelColor("red")}
-										id="inline-2-radio"
-										type="radio"
-										value=""
-										name="inline-radio-group"
-										className="w-4 h-4"
-									/>
-									<label
-										htmlFor="inline-2-radio"
-										className="ml-2 text-sm font-medium p-1 rounded bg-red-400 hover:bg-red-500"
-									>
-										Not Started
-									</label>
-								</div>
-							</div>
 						</div>
 					</div>
 				</div>

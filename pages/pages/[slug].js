@@ -1,27 +1,96 @@
-import { useRef, useState } from "react"
+import { onAuthStateChanged } from "firebase/auth"
+import { child, get, ref } from "firebase/database"
+import Head from "next/head"
+import Link from "next/link"
+import { useRouter } from "next/router"
+import { useEffect, useRef, useState } from "react"
 import { uid } from "uid"
+import PublishButton from "../../components/atoms/PublishButton"
+import { sendDataToFirebase } from "../../components/functions/sendToDb"
+import OptionsButton from "../../components/molecules/OptionsButton"
 import NewElement from "../../components/NewElement"
-
-const initialData = {
-	"571db831b7dacb7fcceea0872d7891db": {
-		title: "Untitled hu bhai me",
-		data: [
-			{ id: uid(), tagName: "h1", html: "Ha me pagal hun" },
-			{ id: uid(), tagName: "h2", html: "Ha me nahi hu h2 hu" },
-			{ id: uid(), tagName: "p", html: "mujhe nahi pata me kon hu" },
-		],
-		creator: "abhiborana.a@gmail.com",
-	},
-}
+import { auth, db } from "../../config/firebaseConfig"
+import { initialData } from "../../data/pageInitialDat"
 
 const Post = () => {
-	// const router = useRouter()
-	// const { slug } = router.query
+	const router = useRouter()
+	const { slug } = router.query
+	const dbRef = ref(db)
 
-	const [dataStore, setDataStore] = useState(
-		initialData["571db831b7dacb7fcceea0872d7891db"]
-	)
+	const [dataStore, setDataStore] = useState(initialData["tempPage"])
+	const [autoSave, setAutoSave] = useState(true)
 	const [editableTitle, setEditableTitle] = useState(dataStore.title)
+	const [login, setLogin] = useState(false)
+
+	const [user, setUser] = useState("")
+
+	useEffect(() => {
+		onAuthStateChanged(auth, user => {
+			if (user) {
+				setUser(user)
+				setLogin(true)
+			} else {
+				setLogin(false)
+			}
+		})
+	}, [])
+
+	useEffect(() => {
+		const { slug } = router.query
+		if (slug) {
+			if (user.uid) {
+				get(child(dbRef, `${user.uid}/pages/${slug}`))
+					.then(snapshot => {
+						if (snapshot.exists()) {
+							// console.log(snapshot.val().storedData)
+							localStorage.setItem(
+								slug,
+								JSON.stringify(
+									JSON.parse(snapshot.val().storedData)
+								)
+							)
+							let data = JSON.parse(localStorage.getItem(slug))
+							setDataStore(data)
+							setEditableTitle(data.title)
+						} else {
+							// console.log("No data available")
+							let dataToAdd = { ...initialData["tempPage"] }
+							dataToAdd.slug = `${slug}`
+							console.log(dataToAdd.slug)
+							localStorage.setItem(
+								slug,
+								JSON.stringify(dataToAdd)
+							)
+							let data = dataToAdd
+							setDataStore(data)
+							setEditableTitle(data.title)
+							sendDataToFirebase(user.uid, "pages", slug)
+						}
+					})
+					.catch(error => {
+						console.error(error)
+					})
+			}
+			localStorage.removeItem("undefined")
+			// eslint-disable-next-line
+		}
+	}, [router, user])
+
+	const sendToLocalStorage = tempDataStore => {
+		const { slug } = router.query
+		localStorage.setItem(slug, JSON.stringify(tempDataStore))
+	}
+
+	const publishData = () => {
+		const { slug } = router.query
+		sendDataToFirebase(user.uid, "pages", slug)
+	}
+
+	const handleAutoSaveButton = () => {
+		if (autoSave) {
+			publishData()
+		} else return
+	}
 
 	const handleAddElement = index => {
 		// console.log(abc)
@@ -29,7 +98,7 @@ const Post = () => {
 		// console.log(tempDataStore);
 		let newElement = { id: uid(), tagName: "p", html: "" }
 		tempDataStore.data.splice(index + 1, 0, newElement)
-		console.log(tempDataStore.data[index + 1])
+		// console.log(tempDataStore.data[index + 1])
 		setDataStore(tempDataStore)
 		setTimeout(() => {
 			let abc = document.getElementById("parentNewElement")
@@ -40,6 +109,8 @@ const Post = () => {
 				Array.from(abc.children)[0].querySelector("p").focus()
 			}
 		}, 100)
+		sendToLocalStorage(tempDataStore)
+		handleAutoSaveButton()
 		// console.log(dataStore);
 	}
 
@@ -61,10 +132,12 @@ const Post = () => {
 			let newElement = { id: uid(), tagName: "p", html: "" }
 			tempDataStore.data.splice(index, 1, newElement)
 			setDataStore(tempDataStore)
+			handleAutoSaveButton()
 		} else {
 			// console.log(tempDataStore.data);
 			tempDataStore.data.splice(index, 1)
 			setDataStore(tempDataStore)
+			handleAutoSaveButton()
 		}
 		setTimeout(() => {
 			try {
@@ -83,19 +156,26 @@ const Post = () => {
 				handleAddElement(0)
 			}
 		}, 200)
+		sendToLocalStorage(tempDataStore)
+		handleAutoSaveButton()
 	}
 
 	const handleOnChangeHtml = (index, html) => {
 		let tempDataStore = { ...dataStore }
 		tempDataStore.data[index].html = html
 		setDataStore(tempDataStore)
+		sendToLocalStorage(tempDataStore)
+		handleAutoSaveButton()
 	}
 
 	const handleEditTitle = value => {
+		const { slug } = router.query
 		setEditableTitle(value)
 		let tempDataStore = { ...dataStore }
-		tempDataStore.title = editableTitle
+		tempDataStore.title = value
 		setDataStore(tempDataStore)
+		localStorage.setItem(slug, JSON.stringify(tempDataStore))
+		handleAutoSaveButton()
 	}
 
 	const handleOnKeyDown = (e, index, length) => {
@@ -115,28 +195,34 @@ const Post = () => {
 				handleDeleteElement(index, length)
 			}
 		} else {
-			console.log(e.keyCode)
+			// console.log(e.keyCode)
 		}
 	}
 
 	// ChANGE THE STYLE OF TEXT
 	const convertToH1 = index => {
-		console.log(index)
+		// console.log(index)
 		let tempDataStore = { ...dataStore }
 		tempDataStore.data[index].tagName = "h1"
 		setDataStore(tempDataStore)
+		sendToLocalStorage(tempDataStore)
+		handleAutoSaveButton()
 	}
 	const convertToH2 = index => {
-		console.log(index)
+		// console.log(index)
 		let tempDataStore = { ...dataStore }
 		tempDataStore.data[index].tagName = "h2"
 		setDataStore(tempDataStore)
+		sendToLocalStorage(tempDataStore)
+		handleAutoSaveButton()
 	}
 	const convertToP = index => {
-		console.log(index)
+		// console.log(index)
 		let tempDataStore = { ...dataStore }
 		tempDataStore.data[index].tagName = "p"
 		setDataStore(tempDataStore)
+		sendToLocalStorage(tempDataStore)
+		handleAutoSaveButton()
 	}
 
 	// DRAG AND DROP FUNCTIONALITY
@@ -163,54 +249,119 @@ const Post = () => {
 			elementDrag = null
 			elementDragOver = null
 			setDataStore(tempDataStore)
+			sendToLocalStorage(tempDataStore)
+			handleAutoSaveButton()
 		} catch (error) {
 			console.log(error)
 		}
 		// console.log(elementCopy)
 	}
 
-	return (
-		<div className="w-full flex flex-col p-2 space-y-2 min-h-screen overflow-x-hidden">
-			<div className="flex space-x-2 justify-between w-full overflow-x-auto">
-				<input
-					className="font-semibold w-3/4 p-1 text-2xl md:text-3xl lg:text-4xl rounded bg-customwhite"
-					onChange={e => handleEditTitle(e.target.value)}
-					value={editableTitle}
-				/>
-				<button className="border-customblack border rounded px-1 md:px-2 bg-lime-600 hover:bg-green text-customwhite transition-all duration-150">
-					Publish
-				</button>
-			</div>
+	const toggleFavourites = () => {
+		const { slug } = router.query
+		let tempDataStore = { ...dataStore }
+		tempDataStore.favourite = !tempDataStore.favourite
+		setDataStore(tempDataStore)
+		localStorage.setItem(slug, JSON.stringify(tempDataStore))
+		sendDataToFirebase(user.uid, "pages", slug)
+		handleAutoSaveButton()
+	}
 
-			<div
-				id="parentNewElement"
-				className="flex flex-col items-center justify-center w-full space-y-2 bg-white overflow-y-auto overflow-x-hidden"
-			>
-				{dataStore.data.map((data, index, arr) => {
-					// console.log(arr.length)
-					return (
-						<NewElement
-							length={arr.length}
-							key={data.id}
-							{...{
-								index,
-								handleAddElement,
-								handleDeleteElement,
-								data,
-								handleOnChangeHtml,
-								handleOnKeyDown,
-								convertToH1,
-								convertToH2,
-								convertToP,
-								handleDragEnd,
-								handleDragStart,
-								handleDragEnter,
-							}}
+	return (
+		<>
+			{!login && (
+				<main className="flex-1 overflow-y-auto">
+					{/* Navbar */}
+
+					{/* Content section */}
+					<div className="p-4">
+						<h1 className="text-2xl text-center font-bold mb-4 flex space-x-2 justify-center">
+							<span>You must Login First</span>
+							<Link
+								href={"/login"}
+								className="inline-flex items-center border-0 px-3 focus:outline-none bg-slate-200 rounded text-base font-normal mt-0"
+							>
+								Login
+								<svg
+									fill="none"
+									stroke="currentColor"
+									strokeLinecap="round"
+									strokeLinejoin="round"
+									strokeWidth="2"
+									className="w-4 h-4 ml-1"
+									viewBox="0 0 24 24"
+								>
+									<path d="M5 12h14M12 5l7 7-7 7"></path>
+								</svg>
+							</Link>
+						</h1>
+						{/* Content section content goes here */}
+					</div>
+				</main>
+			)}
+			{login && (
+				<div className="w-full flex flex-col p-2 space-y-2 min-h-screen overflow-x-hidden">
+					<Head>
+						<title>{`ExoDocs - ${editableTitle}`}</title>
+					</Head>
+					<div className="flex space-x-2 justify-between text-customblack">
+						<input
+							className="font-semibold p-1 text-2xl rounded w-1/2 bg-customwhite"
+							onChange={e => handleEditTitle(e.target.value)}
+							value={editableTitle}
 						/>
-					)
-				})}
-			</div>
-		</div>
+						<div className="flex items-center space-x-1 justify-center">
+							<PublishButton
+								autoSave={autoSave}
+								userId={user.uid}
+								type="pages"
+								slug={slug}
+							/>
+							<OptionsButton
+								{...{
+									toggleFavourites,
+									autoSave,
+									setAutoSave,
+									slug,
+								}}
+								favourite={dataStore.favourite}
+								userUid={user.uid}
+								type={"p"}
+							/>
+						</div>
+					</div>
+
+					<div
+						id="parentNewElement"
+						className="flex flex-col items-center justify-center w-full space-y-2 bg-white overflow-y-auto overflow-x-hidden"
+					>
+						{dataStore.data.map((data, index, arr) => {
+							// console.log(arr.length)
+							return (
+								<NewElement
+									length={arr.length}
+									key={data.id}
+									{...{
+										index,
+										handleAddElement,
+										handleDeleteElement,
+										data,
+										handleOnChangeHtml,
+										handleOnKeyDown,
+										convertToH1,
+										convertToH2,
+										convertToP,
+										handleDragEnd,
+										handleDragStart,
+										handleDragEnter,
+									}}
+								/>
+							)
+						})}
+					</div>
+				</div>
+			)}
+		</>
 	)
 }
 

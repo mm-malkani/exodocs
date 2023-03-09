@@ -14,7 +14,7 @@ const EditableContent = ({
 			{data.tagName === "h1" && (
 				<div
 					contentEditable
-					className="cursor-text max-w-full text-2xl sm:text-4xl xl:text-5xl focus:outline-custom-gray"
+					className="cursor-text max-w-full text-xl sm:text-4xl xl:text-5xl focus:outline-custom-gray"
 					onChange={e =>
 						handleOnChangeHtml(index, e.target.innerText)
 					}
@@ -26,7 +26,7 @@ const EditableContent = ({
 			{data.tagName === "h2" && (
 				<div
 					contentEditable
-					className="cursor-text max-w-full text-xl sm:text-2xl xl:text-4xl focus:outline-custom-gray"
+					className="cursor-text max-w-full text-lg sm:text-2xl xl:text-4xl focus:outline-custom-gray"
 					onChange={e =>
 						handleOnChangeHtml(index, e.target.innerText)
 					}

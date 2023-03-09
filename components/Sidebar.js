@@ -1,32 +1,67 @@
 import { onAuthStateChanged, signOut } from "firebase/auth"
+import { child, get, ref } from "firebase/database"
 import Link from "next/link"
 import { useRouter } from "next/router"
 import React, { useEffect, useState } from "react"
 import { uid } from "uid"
-import { auth } from "../config/firebaseConfig"
+import { auth, db } from "../config/firebaseConfig"
+import CreateKanbanButon from "./atoms/CreateKanbanButon"
+import CreatePageButton from "./atoms/CreatePageButton"
+import SidebarList from "./atoms/SidebarList"
+import SignoutButton from "./atoms/signoutButton"
 
-const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
+const Sidebar = ({ isSidebarOpen, toggleSidebar, refresh, setRefresh }) => {
 	const [login, setLogin] = useState("")
 	const [userObject, setUserObject] = useState({})
 	const router = useRouter()
+	const [dataList, setDataList] = useState([])
 
 	useEffect(() => {
 		onAuthStateChanged(auth, user => {
 			if (user) {
 				setLogin(true)
 				setUserObject(user)
+				let dataListArr = []
+				const dbRef = ref(db)
+				get(child(dbRef, `${user.uid}/`))
+					.then(snapshot => {
+						if (snapshot.exists()) {
+							let data = Object.entries(snapshot.val())
+							data.map(obj => {
+								let objectArray = Object.values(obj[1])
+								// console.log(objectArray)
+								objectArray.map(finalArray => {
+									// console.log(finalArray)
+									let ArrayData = JSON.parse(
+										finalArray.storedData
+									)
+									dataListArr.push(ArrayData)
+									setDataList(dataListArr)
+									// console.log(ArrayData)
+								})
+							})
+						} else {
+							setDataList([])
+							// console.log("No data available")
+						}
+					})
+					.catch(error => {
+						console.error(error)
+					})
 				// console.log(user);
 			} else {
 				setLogin(false)
+				setUserObject(null)
 			}
 		})
-	}, [])
+	}, [router, refresh, dataList])
 
 	const handleSignOutClick = () => {
 		signOut(auth)
 			.then(() => {
 				alert("Signout Success")
 				localStorage.removeItem("user")
+				localStorage.clear()
 			})
 			.catch(() => {
 				alert("Signout Failed")
@@ -64,7 +99,7 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
 					<div className="h-screen flex flex-col p-1.5 overflow-y-auto">
 						<div className="flex w-full justify-between items-center h-10">
 							<h1 className="text-white text-2xl font-bold p-1.5 cursor-pointer">
-								ExoDocs
+								<Link href={"/"}>ExoDocs</Link>
 							</h1>
 							{/* Mobile menu button */}
 							<button
@@ -117,82 +152,29 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
 									</Link>
 								</div>
 
-								<div
-									title="SignOut"
-									className="inline-flex items-center justify-start text-sm font-medium rounded cursor-pointer"
-									onClick={handleSignOutClick}
-								>
-									<svg
-										xmlns="http://www.w3.org/2000/svg"
-										fill="none"
-										viewBox="0 0 24 24"
-										strokeWidth="1.5"
-										stroke="currentColor"
-										className="w-6 h-6"
-									>
-										<path
-											strokeLinecap="round"
-											strokeLinejoin="round"
-											d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9"
-										/>
-									</svg>
-								</div>
+								<SignoutButton {...{ handleSignOutClick }} />
 							</div>
 
-							<ul>
+							<ul className="flex flex-col space-y-1">
 								<li>
 									<div className="flex items-center">
-										<button
-											onClick={createNewKanban}
-											className="flex flex-1 p-1.5 text-base font-normal rounded-lg text-white hover:bg-gray-700 cursor-pointer space-x-2"
-										>
-											<svg
-												xmlns="http://www.w3.org/2000/svg"
-												fill="none"
-												viewBox="0 0 24 24"
-												strokeWidth={1.5}
-												stroke="currentColor"
-												className="w-6 h-6"
-											>
-												<path
-													strokeLinecap="round"
-													strokeLinejoin="round"
-													d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
-												/>
-											</svg>
-											<span>Kanban</span>
-										</button>
-										<button
-											onClick={createNewPage}
-											className="flex flex-1 p-1.5 text-base font-normal rounded-lg text-white hover:bg-gray-700 cursor-pointer space-x-2"
-										>
-											<svg
-												xmlns="http://www.w3.org/2000/svg"
-												fill="none"
-												viewBox="0 0 24 24"
-												strokeWidth={1.5}
-												stroke="currentColor"
-												className="w-6 h-6"
-											>
-												<path
-													strokeLinecap="round"
-													strokeLinejoin="round"
-													d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
-												/>
-											</svg>
-											<span>Page</span>
-										</button>
+										<CreateKanbanButon
+											{...{ createNewKanban }}
+										/>
+										<CreatePageButton
+											{...{ createNewPage }}
+										/>
 									</div>
 								</li>
 
 								<li>
-									<div className="flex items-center p-1.5 text-base font-normal rounded-lg text-white hover:bg-gray-700 cursor-pointer">
+									<div className="flex items-center p-1.5 text-base font-normal rounded-lg text-white hover:bg-gray-700 cursor-pointer border border-b-0 rounded-b-none">
 										<svg
 											xmlns="http://www.w3.org/2000/svg"
-											fill="none"
+											fill="orange"
 											viewBox="0 0 24 24"
 											strokeWidth={1.5}
-											stroke="currentColor"
+											stroke="orange"
 											className="w-6 h-6"
 										>
 											<path
@@ -206,20 +188,30 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
 											Favourites
 										</span>
 									</div>
-									<ol className="space-y-1 p-1.5">
-										<li className="line-clamp-2">
-											Lorem ipsum dolor sit amet
-											consectetur adipisicing elit. Omnis,
-											error?
-										</li>
-										<li className="line-clamp-2">
-											Lorem ipsum dolor sit adsdasd
-											asdasdasd
-										</li>
+									<ol className="space-y-1 md:space-y-2 p-1.5 rounded-b-lg border ">
+										{!dataList.every(
+											item => item.favourites === false
+										) ||
+											(dataList.length <= 0 && (
+												<span className="flex text-customlight items-center justify-center">
+													No Favourites Added
+												</span>
+											))}
+										{dataList.map((data, index) => {
+											if (data.favourite) {
+												return (
+													<SidebarList
+														data={data}
+														key={index}
+														userUid={userObject.uid}
+													/>
+												)
+											}
+										})}
 									</ol>
 								</li>
 								<li>
-									<div className="flex items-center p-1.5 text-base font-normal rounded-lg text-white hover:bg-gray-700 cursor-pointer">
+									<div className="flex items-center p-1.5 text-base font-normal rounded-lg rounded-b-none text-white bg-gray-700 cursor-pointer">
 										<svg
 											xmlns="http://www.w3.org/2000/svg"
 											fill="none"
@@ -239,20 +231,22 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
 											All Pages
 										</span>
 									</div>
-									<ol className="space-y-1 p-1.5">
-										<li className="line-clamp-2">
-											Lorem ipsum dolor sit adsdasd
-											asdasdasd
-										</li>
-										<li className="line-clamp-2">
-											Lorem ipsum dolor sit adsdasd
-											asdasdasd
-										</li>
-										<li className="line-clamp-2">
-											Lorem ipsum dolor sit adsdasd
-											asdasdasd asdkjbhaslkdjbna
-											askldjadasdas
-										</li>
+									<ol className="space-y-1 md:space-y-2 p-1.5 bg-gray-700 rounded-b-lg">
+										{dataList.length >= 1 &&
+											dataList.map((data, index) => {
+												return (
+													<SidebarList
+														data={data}
+														key={index}
+														userUid={userObject.uid}
+													/>
+												)
+											})}
+										{dataList.length <= 0 && (
+											<span className="flex text-customlight items-center justify-center">
+												No Pages to show
+											</span>
+										)}
 									</ol>
 								</li>
 							</ul>

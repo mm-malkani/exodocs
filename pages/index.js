@@ -1,12 +1,11 @@
 import { onAuthStateChanged } from "firebase/auth"
 import Head from "next/head"
+import Link from "next/link"
 import { useEffect, useState } from "react"
-import LoadingBar from "react-top-loading-bar"
 import { auth } from "../config/firebaseConfig"
 
 const Home = () => {
 	const [login, setLogin] = useState("")
-	const [progress, setProgress] = useState(20)
 
 	useEffect(() => {
 		onAuthStateChanged(auth, user => {
@@ -34,29 +33,38 @@ const Home = () => {
 					href="/favicon.ico"
 				/>
 			</Head>
-			<LoadingBar
-				color="#f11946"
-				progress={progress}
-				onLoaderFinished={() => setProgress(0)}
-			/>
 
 			{/* Content section */}
-			<main className="flex-1 overflow-y-auto">
-				{/* Navbar */}
+			{!login && (
+				<main className="flex-1 overflow-y-auto">
+					{/* Navbar */}
 
-				{/* Content section */}
-				<div className="p-4">
-					<h1
-						onClick={() => {
-							setProgress(100)
-						}}
-						className="text-2xl font-bold mb-4"
-					>
-						Content Section Login: {login}
-					</h1>
-					{/* Content section content goes here */}
-				</div>
-			</main>
+					{/* Content section */}
+					<div className="p-4">
+						<h1 className="text-2xl text-center font-bold mb-4 flex space-x-2 justify-center">
+							<span>You must Login First</span>
+							<Link
+								href={"/login"}
+								className="inline-flex items-center border-0 px-3 focus:outline-none bg-slate-200 rounded text-base font-normal mt-0"
+							>
+								Login
+								<svg
+									fill="none"
+									stroke="currentColor"
+									strokeLinecap="round"
+									strokeLinejoin="round"
+									strokeWidth="2"
+									className="w-4 h-4 ml-1"
+									viewBox="0 0 24 24"
+								>
+									<path d="M5 12h14M12 5l7 7-7 7"></path>
+								</svg>
+							</Link>
+						</h1>
+						{/* Content section content goes here */}
+					</div>
+				</main>
+			)}
 		</>
 	)
 }
