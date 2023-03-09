@@ -126,9 +126,15 @@ const Kanban = () => {
 										(todoData, todoIndex) => {
 											return (
 												<SharedKanbanTodo
-													{...{
-														todoData,
-													}}
+													todoHeading={
+														todoData.todoHeading
+													}
+													todoDescription={
+														todoData.todoDescription
+													}
+													todoUpdateTime={
+														todoData.todoUpdateTime
+													}
 													key={todoIndex}
 													fillColor={column.color}
 												></SharedKanbanTodo>

@@ -64,10 +64,9 @@ const Pages = () => {
 						<SharedNewElement
 							length={arr.length}
 							key={data.id}
-							{...{
-								index,
-								data,
-							}}
+							html={data.html}
+							tagName={data.tagName}
+							index={index}
 						/>
 					)
 				})}

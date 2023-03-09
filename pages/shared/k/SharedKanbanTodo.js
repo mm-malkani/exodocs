@@ -1,6 +1,11 @@
 import React from "react"
 
-const SharedKanbanTodo = ({ todoData, fillColor }) => {
+const SharedKanbanTodo = ({
+	todoHeading,
+	todoDescription,
+	todoUpdateTime,
+	fillColor,
+}) => {
 	return (
 		<div className="flex p-4 space-y-2 rounded hover:scale-105 hover:cursor-default transition-all duration-200">
 			<div
@@ -23,7 +28,7 @@ const SharedKanbanTodo = ({ todoData, fillColor }) => {
 							/>
 						</svg>
 
-						<h6 className="text-md">{todoData.todoHeading}</h6>
+						<h6 className="text-md">{todoHeading}</h6>
 					</div>
 					<div className="flex space-x-2 flex-wrap">
 						{/* ----------------------VIEW TODO ICON------------------- */}
@@ -56,7 +61,7 @@ const SharedKanbanTodo = ({ todoData, fillColor }) => {
 					</div>
 				</div>
 				<div className="flex flex-col w-full mt-2">
-					<p>{todoData.todoDescription}</p>
+					<p>{todoDescription}</p>
 					<div className="flex justify-between mt-2 items-center">
 						<div className="flex items-center space-x-2">
 							{/* CLOCK ICON SVG */}
@@ -75,9 +80,7 @@ const SharedKanbanTodo = ({ todoData, fillColor }) => {
 								/>
 							</svg>
 
-							<span className="text-sm">
-								{todoData.todoUpdateTime}
-							</span>
+							<span className="text-sm">{todoUpdateTime}</span>
 						</div>
 					</div>
 				</div>
