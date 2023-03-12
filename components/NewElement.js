@@ -13,9 +13,7 @@ const NewElement = ({
 	index,
 	handleDeleteElement,
 	length,
-	convertToH1,
-	convertToH2,
-	convertToP,
+	convertTagName,
 	handleDragEnd,
 	handleDragStart,
 	handleDragEnter,
@@ -23,16 +21,16 @@ const NewElement = ({
 	const [caret, setCaret] = useState(false)
 
 	return (
-		<div
-			draggable
-			onDragStart={() => handleDragStart(index)}
-			onDragEnter={() => handleDragEnter(index)}
-			onDragOver={e => e.preventDefault()}
-			onDragEnd={() => handleDragEnd()}
-			className="group flex bg-white hover:bg-customlight hover:text-custom-gray p-1.5 items-center justify-between rounded w-full"
-		>
+		<div className="group flex bg-white hover:bg-customlight hover:text-custom-gray p-1.5 items-center rounded w-full">
 			<div className="flex space-x-1 items-center">
-				<SortElement />
+				<SortElement
+					{...{
+						handleDragEnter,
+						handleDragStart,
+						handleDragEnd,
+						index,
+					}}
+				/>
 				<div className="flex flex-col sm:flex-row space-x-1">
 					<AddElement {...{ index, handleAddElement }} />
 
@@ -41,9 +39,7 @@ const NewElement = ({
 							caret,
 							setCaret,
 							index,
-							convertToH1,
-							convertToH2,
-							convertToP,
+							convertTagName,
 						}}
 					/>
 				</div>
@@ -55,14 +51,8 @@ const NewElement = ({
 				html={data.html}
 				onChange={e => handleOnChangeHtml(index, e.target.value)}
 				onKeyDown={e => handleOnKeyDown(e, index, length)}
-				className="w-1/2 sm:w-3/5 md:w-3/4 xl:w-5/6 p-2 outline-custom-gray"
+				className="min-w-[60vw] max-w-[60vw] md:max-w-[75vw] md:min-w-[75vw] lg:min-w-[85vw] lg:max-w-[85vw] mx-auto p-2 outline-custom-gray"
 			/>
-
-			{/* <EditableContent
-                {...{ handleOnChangeHtml, handleOnKeyDown, index, data }}
-            /> */}
-
-			{/* <div className='w-auto max-w-screen-md' contentEditable>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Odio, blanditiis.</div> */}
 
 			<DeleteElement {...{ index, length, handleDeleteElement }} />
 		</div>

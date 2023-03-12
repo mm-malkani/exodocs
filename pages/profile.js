@@ -1,4 +1,5 @@
 import { onAuthStateChanged, sendPasswordResetEmail } from "firebase/auth"
+import Image from "next/image"
 import React, { useEffect, useState } from "react"
 import LoginFirst from "../components/LoginFirst"
 import { auth } from "../config/firebaseConfig"
@@ -36,11 +37,14 @@ const Profile = () => {
 					<h2 className="text-center">Profile</h2>
 					<div className="border p-1 flex flex-col items-center px-4 max-w-xs space-y-2">
 						{user.photoURL && (
-							<img
-								className="w-[100px] h-[100px] sm:w-[180px] sm:h-[180px] rounded-full"
-								src={user.photoURL}
-								alt="Profile Picture"
-							/>
+							<span className="relative w-[100px] h-[100px] sm:w-[180px] sm:h-[180px] rounded-full">
+								<Image
+									priority
+									fill
+									src={user.photoURL}
+									alt="Profile Picture"
+								/>
+							</span>
 						)}
 						{!user.photoURL && (
 							<svg

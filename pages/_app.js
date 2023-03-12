@@ -1,26 +1,38 @@
+import { onAuthStateChanged } from "firebase/auth"
 import { useRouter } from "next/router"
 import React, { useEffect, useState } from "react"
 import LoadingBar from "react-top-loading-bar"
 import Navbar from "../components/Navbar"
 import Sidebar from "../components/Sidebar"
+import { auth } from "../config/firebaseConfig"
 import "../styles/globals.css"
 
 function MyApp({ Component, pageProps }) {
 	const router = useRouter()
 	const [isSidebarOpen, setIsSidebarOpen] = useState(false)
+	// eslint-disable-next-line
 	const toggleSidebar = () => {
 		setIsSidebarOpen(!isSidebarOpen)
 	}
 	const [loading, setLoading] = useState(false)
 	const [refresh, setRefresh] = useState(false)
+	const [screenWidth, setScreenWidth] = useState()
+	const [login, setLogin] = useState(false)
 
-	const handleRefresh = () => {
-		setRefresh(!refresh)
-	}
+	useEffect(() => {
+		onAuthStateChanged(auth, user => {
+			if (user) {
+				setLogin(true)
+			} else {
+				setLogin(false)
+			}
+		})
+	}, [])
 
 	useEffect(() => {
 		const handleRouteChangeStart = () => setLoading(true)
 		const handleRouteChangeComplete = () => setLoading(false)
+		setScreenWidth(screen.width)
 
 		router.events.on("routeChangeStart", handleRouteChangeStart)
 		router.events.on("routeChangeComplete", handleRouteChangeComplete)
@@ -29,7 +41,7 @@ function MyApp({ Component, pageProps }) {
 			router.events.off("routeChangeStart", handleRouteChangeStart)
 			router.events.off("routeChangeComplete", handleRouteChangeComplete)
 		}
-	}, [router])
+	}, [router, toggleSidebar])
 	return (
 		<>
 			<LoadingBar
@@ -40,8 +52,20 @@ function MyApp({ Component, pageProps }) {
 			<Sidebar
 				{...{ toggleSidebar, isSidebarOpen, refresh, setRefresh }}
 			></Sidebar>
-			<Navbar {...{ toggleSidebar, handleRefresh }}></Navbar>
-			<Component {...pageProps} />
+			<Navbar {...{ toggleSidebar }}></Navbar>
+			<div
+				className={`${
+					!login
+						? "closeWidth"
+						: !isSidebarOpen
+						? "closeWidth"
+						: screenWidth > 420
+						? "openWidth"
+						: "closeWidth"
+				} transition-transform duration-300`}
+			>
+				<Component {...pageProps} />
+			</div>
 		</>
 	)
 }

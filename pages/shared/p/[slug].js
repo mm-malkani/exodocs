@@ -49,7 +49,7 @@ const Pages = () => {
 			<div className="flex space-x-2 justify-between text-customblack">
 				<input
 					disabled
-					className="font-semibold p-1 text-2xl rounded w-full bg-customwhite"
+					className="font-semibold p-1 text-sm rounded w-full bg-customwhite"
 					value={dataStore.title}
 				/>
 			</div>

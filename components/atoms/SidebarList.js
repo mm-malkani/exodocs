@@ -26,8 +26,8 @@ const SidebarList = ({ data, userUid }) => {
 	}
 
 	return (
-		<li className="group flex justify-between items-center hover:scale-105 transition-all duration-200 cursor-pointer">
-			<div className="flex space-x-2">
+		<li className="group flex justify-between items-center cursor-pointer">
+			<div className="flex space-x-2 items-center">
 				<span className="w-5">
 					{data.type == "kanban" && (
 						<svg
@@ -65,7 +65,8 @@ const SidebarList = ({ data, userUid }) => {
 
 				<Link
 					href={`/${data.type}/${data.slug}`}
-					className="line-clamp-2 max-w-[200px]"
+					title={data.title}
+					className="line-clamp-2 max-w-[200px] lineBreak group-hover:scale-105 transition"
 				>
 					{data.title}
 				</Link>

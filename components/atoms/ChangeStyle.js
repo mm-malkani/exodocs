@@ -1,14 +1,7 @@
 import React from "react"
 import ListOptions from "../ListOptions"
 
-const ChangeStyle = ({
-	caret,
-	setCaret,
-	index,
-	convertToH1,
-	convertToH2,
-	convertToP,
-}) => {
+const ChangeStyle = ({ caret, setCaret, index, convertTagName }) => {
 	return (
 		<span
 			onMouseEnter={() => setCaret(true)}
@@ -23,7 +16,7 @@ const ChangeStyle = ({
 				viewBox="0 0 24 24"
 				strokeWidth={1.5}
 				stroke="currentColor"
-				className={`hidden group-hover:block cursor-pointer w-6 h-6`}
+				className={`invisible group-hover:visible cursor-pointer w-6 h-6`}
 			>
 				<path
 					strokeLinecap="round"
@@ -36,9 +29,7 @@ const ChangeStyle = ({
 				{...{
 					caret,
 					index,
-					convertToH1,
-					convertToH2,
-					convertToP,
+					convertTagName,
 				}}
 			/>
 		</span>

@@ -3,11 +3,13 @@ const timestamp = Date().toString().slice(0, -30)
 
 export const dataBase = {
 	mockData: {
-		type: "kanban",
-		favourite: true,
-		slug: "",
+		createdOn: timestamp,
+		updatedOn: timestamp,
 		creator: "abhiborana.a@gmail.com",
-		title: "UNTITLED",
+		slug: "",
+		favourite: false,
+		type: "kanban",
+		title: timestamp,
 		kanban: [
 			{
 				columnId: uid(),
@@ -16,11 +18,11 @@ export const dataBase = {
 				columnData: [
 					{
 						todoId: uid(),
-						todoHeading: "Task 1",
-						todoDescription:
-							"Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quisquam nam itaque dolorem.",
+						todoHeading: "Add Todo Title",
+						todoDescription: "Todo Description will come here",
 						todoCreationTime: timestamp,
 						todoUpdateTime: "Haven't Updated Yet",
+						label: null,
 					},
 				],
 			},

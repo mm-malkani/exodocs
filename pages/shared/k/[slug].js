@@ -53,7 +53,7 @@ const Kanban = () => {
 			<div className="p-2 h-screen bg-customlight text-customblack">
 				<div className="flex space-x-2 justify-between">
 					<input
-						className="font-semibold p-1 text-2xl rounded bg-customwhite w-full"
+						className="font-semibold p-1 text-sm rounded bg-customwhite w-full"
 						value={initialData.title}
 						disabled
 					/>

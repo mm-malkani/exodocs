@@ -1,23 +1,17 @@
 import React from "react"
 
-const ListOptions = ({
-	caret,
-	index,
-	convertToH1,
-	convertToH2,
-	convertToP,
-}) => {
+const ListOptions = ({ caret, index, convertTagName }) => {
 	return (
 		<ul
 			className={`${
 				caret
-					? "bg-customlight border w-[150px] rounded h-[110px] absolute flex-col flex"
+					? "bg-customlight border w-[150px] rounded h-[150px] absolute flex-col flex"
 					: "hidden"
 			}`}
 		>
 			<li
 				onClick={() => {
-					convertToH1(index)
+					convertTagName(index, "h2")
 				}}
 				className="cursor-pointer rounded hover:bg-customwhite p-1.5 text-center font-bold"
 			>
@@ -25,15 +19,23 @@ const ListOptions = ({
 			</li>
 			<li
 				onClick={() => {
-					convertToH2(index)
+					convertTagName(index, "h3")
 				}}
-				className="cursor-pointer rounded hover:bg-customwhite p-1.5 text-center font-semibold"
+				className="cursor-pointer rounded hover:bg-customwhite p-1.5 text-center font-bold"
 			>
 				Heading 2
 			</li>
 			<li
 				onClick={() => {
-					convertToP(index)
+					convertTagName(index, "h4")
+				}}
+				className="cursor-pointer rounded hover:bg-customwhite p-1.5 text-center font-semibold"
+			>
+				Sub-Heading
+			</li>
+			<li
+				onClick={() => {
+					convertTagName(index, "p")
 				}}
 				className="cursor-pointer rounded hover:bg-customwhite p-1.5
                             text-center"

@@ -15,7 +15,7 @@ const AddElement = ({ index, handleAddElement }) => {
 				viewBox="0 0 24 24"
 				strokeWidth={1.5}
 				stroke="currentColor"
-				className={`hidden group-hover:block cursor-pointer w-6 h-6`}
+				className={`invisible group-hover:visible cursor-pointer w-6 h-6`}
 			>
 				<path
 					strokeLinecap="round"

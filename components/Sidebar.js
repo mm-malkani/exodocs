@@ -94,7 +94,7 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar, refresh }) => {
 						isSidebarOpen
 							? "translate-x-0 ease-out"
 							: "-translate-x-full ease-in"
-					} fixed bg-gray-800 h-screen w-72 transition duration-300 text-white transform z-30`}
+					} fixed bg-gray-800 h-screen w-[300px] transition duration-300 text-white transform z-30`}
 				>
 					{/* Sidebar */}
 					<div className="h-screen flex flex-col p-1.5 overflow-y-auto">
@@ -128,7 +128,7 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar, refresh }) => {
 							<div className="w-full flex items-center justify-between p-1.5 font-normal rounded-lg text-gray-200 border">
 								<div
 									title="Profile"
-									className="flex cursor-pointer"
+									className="flex cursor-pointer items-center"
 								>
 									<svg
 										xmlns="http://www.w3.org/2000/svg"
@@ -147,7 +147,7 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar, refresh }) => {
 									<Link
 										onClick={toggleSidebar}
 										href={"/profile"}
-										className="ml-1"
+										className="ml-1 max-w-[200px] lineBreak"
 									>
 										{userObject.email}
 									</Link>
@@ -199,14 +199,20 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar, refresh }) => {
 												</span>
 											))}
 										{dataList.map((data, index) => {
-											if (data.favourite) {
-												return (
-													<SidebarList
-														data={data}
-														key={index}
-														userUid={userObject.uid}
-													/>
-												)
+											if (data) {
+												if (data.slug.length > 0) {
+													if (data.favourite) {
+														return (
+															<SidebarList
+																data={data}
+																key={index}
+																userUid={
+																	userObject.uid
+																}
+															/>
+														)
+													}
+												}
 											}
 										})}
 									</ol>
@@ -240,13 +246,19 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar, refresh }) => {
 										)}
 										{dataList.length >= 1 &&
 											dataList.map((data, index) => {
-												return (
-													<SidebarList
-														data={data}
-														key={index}
-														userUid={userObject.uid}
-													/>
-												)
+												if (data) {
+													if (data.slug.length > 0) {
+														return (
+															<SidebarList
+																data={data}
+																key={index}
+																userUid={
+																	userObject.uid
+																}
+															/>
+														)
+													}
+												}
 											})}
 									</ol>
 								</li>

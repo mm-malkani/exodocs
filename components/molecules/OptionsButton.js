@@ -1,21 +1,13 @@
 import React, { useState } from "react"
 import AutoSaveButton from "../atoms/AutoSaveButton"
-import FavouritesButton from "../atoms/FavouritesButton"
+import DeletePageButton from "../atoms/DeletePageButton"
 import ShareButton from "../atoms/ShareButton"
 
-const OptionsButton = ({
-	favourite,
-	toggleFavourites,
-	autoSave,
-	setAutoSave,
-	userUid,
-	type,
-	slug,
-}) => {
+const OptionsButton = ({ autoSave, setAutoSave, userUid, type, slug }) => {
 	const [optionsMenu, setOptionsMenu] = useState(false)
 
 	return (
-		<div className="flex relative">
+		<div className="flex relative pl-1">
 			<div onClick={() => setOptionsMenu(!optionsMenu)}>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
@@ -41,7 +33,7 @@ const OptionsButton = ({
 			>
 				<AutoSaveButton {...{ autoSave, setAutoSave }} />
 				<ShareButton {...{ userUid, type, slug }} />
-				<FavouritesButton {...{ favourite, toggleFavourites }} />
+				<DeletePageButton {...{ userUid, type, slug }} />
 			</div>
 		</div>
 	)

@@ -3,11 +3,13 @@ const timestamp = Date().toString().slice(0, -30)
 
 export const initialData = {
 	tempPage: {
-		created: timestamp,
+		createdOn: timestamp,
+		updatedOn: timestamp,
+		creator: "",
 		slug: "",
-		favourite: true,
+		favourite: false,
 		type: "pages",
-		title: "Untitled",
+		title: timestamp,
 		data: [
 			{
 				id: uid(),
@@ -15,6 +17,5 @@ export const initialData = {
 				html: "Select Heading 1,2 or paragrapgh",
 			},
 		],
-		creator: "abhiborana.a@gmail.com",
 	},
 }

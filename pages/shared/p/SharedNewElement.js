@@ -8,7 +8,7 @@ const SharedNewElement = ({ html, tagName, index }) => {
 				id={index}
 				tagName={tagName}
 				html={html}
-				className="w-full p-1 outline-custom-gray"
+				className="w-full p-1 lineBreak outline-custom-gray"
 				disabled
 			/>
 		</div>

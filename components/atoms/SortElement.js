@@ -1,10 +1,20 @@
 import React from "react"
 
-const SortElement = () => {
+const SortElement = ({
+	handleDragEnter,
+	handleDragStart,
+	handleDragEnd,
+	index,
+}) => {
 	return (
 		<span
 			title="Sort"
 			className="cursor-move"
+			draggable
+			onDragStart={() => handleDragStart(index)}
+			onDragEnter={() => handleDragEnter(index)}
+			onDragOver={e => e.preventDefault()}
+			onDragEnd={() => handleDragEnd()}
 		>
 			<svg
 				xmlns="http://www.w3.org/2000/svg"

@@ -4,7 +4,9 @@ import Head from "next/head"
 import { useRouter } from "next/router"
 import { useEffect, useRef, useState } from "react"
 import { uid } from "uid"
+import FavouritesButton from "../../components/atoms/FavouritesButton"
 import PublishButton from "../../components/atoms/PublishButton"
+import TimerButton from "../../components/atoms/TimerButton"
 import { sendDataToFirebase } from "../../components/functions/sendToDb"
 import LoginFirst from "../../components/LoginFirst"
 import OptionsButton from "../../components/molecules/OptionsButton"
@@ -56,6 +58,7 @@ const Post = () => {
 							// console.log("No data available")
 							let dataToAdd = { ...initialData["tempPage"] }
 							dataToAdd.slug = `${slug}`
+							dataToAdd.creator = `${user.email}`
 							// console.log(dataToAdd.slug)
 							localStorage.setItem(
 								slug,
@@ -73,7 +76,13 @@ const Post = () => {
 			}
 			localStorage.removeItem("undefined")
 		}
-		// eslint-disable-next-line
+
+		return () => {
+			setDataStore(initialData["tempPage"])
+			setEditableTitle(dataStore.title)
+		}
+
+		//eslint-disable-next-line
 	}, [router, user])
 
 	const sendToLocalStorage = tempDataStore => {
@@ -95,11 +104,13 @@ const Post = () => {
 	const handleAddElement = index => {
 		// console.log(abc)
 		let tempDataStore = { ...dataStore }
-		// console.log(tempDataStore);
+		console.log(tempDataStore.title)
 		let newElement = { id: uid(), tagName: "p", html: "" }
 		tempDataStore.data.splice(index + 1, 0, newElement)
 		// console.log(tempDataStore.data[index + 1])
 		setDataStore(tempDataStore)
+		sendToLocalStorage(tempDataStore)
+		handleAutoSaveButton()
 		setTimeout(() => {
 			let abc = document.getElementById("parentNewElement")
 			// console.log(Array.from(abc.children)[index + 1].querySelector("p"))
@@ -109,8 +120,6 @@ const Post = () => {
 				Array.from(abc.children)[0].querySelector("p").focus()
 			}
 		}, 100)
-		sendToLocalStorage(tempDataStore)
-		handleAutoSaveButton()
 		// console.log(dataStore);
 	}
 
@@ -168,11 +177,11 @@ const Post = () => {
 
 	const handleEditTitle = value => {
 		const { slug } = router.query
-		setEditableTitle(value)
 		let tempDataStore = { ...dataStore }
 		tempDataStore.title = value
 		setDataStore(tempDataStore)
 		localStorage.setItem(slug, JSON.stringify(tempDataStore))
+		setEditableTitle(value)
 		handleAutoSaveButton()
 	}
 
@@ -198,26 +207,10 @@ const Post = () => {
 	}
 
 	// ChANGE THE STYLE OF TEXT
-	const convertToH1 = index => {
+	const convertTagName = (index, type) => {
 		// console.log(index)
 		let tempDataStore = { ...dataStore }
-		tempDataStore.data[index].tagName = "h1"
-		setDataStore(tempDataStore)
-		sendToLocalStorage(tempDataStore)
-		handleAutoSaveButton()
-	}
-	const convertToH2 = index => {
-		// console.log(index)
-		let tempDataStore = { ...dataStore }
-		tempDataStore.data[index].tagName = "h2"
-		setDataStore(tempDataStore)
-		sendToLocalStorage(tempDataStore)
-		handleAutoSaveButton()
-	}
-	const convertToP = index => {
-		// console.log(index)
-		let tempDataStore = { ...dataStore }
-		tempDataStore.data[index].tagName = "p"
+		tempDataStore.data[index].tagName = type
 		setDataStore(tempDataStore)
 		sendToLocalStorage(tempDataStore)
 		handleAutoSaveButton()
@@ -239,42 +232,50 @@ const Post = () => {
 
 	const handleDragEnd = () => {
 		// console.log(e)
-		let tempDataStore = { ...dataStore }
-		let elementCopy = tempDataStore.data[elementDrag.current]
-		tempDataStore.data.splice(elementDrag.current, 1)
-		try {
-			tempDataStore.data.splice(elementDragOver.current, 0, elementCopy)
-			elementDrag = null
-			elementDragOver = null
-			setDataStore(tempDataStore)
-			sendToLocalStorage(tempDataStore)
-			handleAutoSaveButton()
-		} catch (error) {
-			console.log(error)
+		if (elementDrag.current != elementDragOver.current) {
+			// console.log(elementDrag.current, elementDragOver.current)
+			let tempDataStore = { ...dataStore }
+			let elementCopy = tempDataStore.data[elementDrag.current]
+			tempDataStore.data.splice(elementDrag.current, 1)
+			try {
+				tempDataStore.data.splice(
+					elementDragOver.current,
+					0,
+					elementCopy
+				)
+				elementDrag = null
+				elementDragOver = null
+				setDataStore(tempDataStore)
+				sendToLocalStorage(tempDataStore)
+				handleAutoSaveButton()
+			} catch (error) {
+				console.log(error)
+			}
+			// console.log(elementCopy)
 		}
-		// console.log(elementCopy)
 	}
 
 	const toggleFavourites = () => {
 		const { slug } = router.query
 		let tempDataStore = { ...dataStore }
+		tempDataStore.slug = slug
 		tempDataStore.favourite = !tempDataStore.favourite
 		setDataStore(tempDataStore)
 		localStorage.setItem(slug, JSON.stringify(tempDataStore))
-		sendDataToFirebase(user.uid, "pages", slug)
+		publishData()
 	}
 
 	return (
 		<>
 			{!login && <LoginFirst />}
 			{login && (
-				<div className="w-full flex flex-col p-2 space-y-2 min-h-screen overflow-x-hidden">
+				<div className="w-full flex flex-col p-2 space-y-2 h-full overflow-x-hidden">
 					<Head>
 						<title>{`ExoDocs - ${editableTitle}`}</title>
 					</Head>
-					<div className="flex space-x-2 justify-between text-customblack">
+					<div className="flex space-x-2 justify-between screenNav text-customblack">
 						<input
-							className="font-semibold p-1 text-2xl rounded w-1/2 bg-customwhite"
+							className="font-semibold p-1 text-sm rounded w-1/2 bg-customwhite"
 							onChange={e => handleEditTitle(e.target.value)}
 							value={editableTitle}
 						/>
@@ -285,14 +286,20 @@ const Post = () => {
 								type="pages"
 								slug={slug}
 							/>
+							<FavouritesButton
+								{...{ toggleFavourites }}
+								favourite={dataStore.favourite}
+							/>
+							<TimerButton
+								createdTime={dataStore.createdOn}
+								updatedTime={dataStore.updatedOn}
+							/>
 							<OptionsButton
 								{...{
-									toggleFavourites,
 									autoSave,
 									setAutoSave,
 									slug,
 								}}
-								favourite={dataStore.favourite}
 								userUid={user.uid}
 								type={"p"}
 							/>
@@ -301,7 +308,7 @@ const Post = () => {
 
 					<div
 						id="parentNewElement"
-						className="flex flex-col items-center justify-center w-full space-y-2 bg-white overflow-y-auto overflow-x-hidden"
+						className="flex flex-col items-center screenNav justify-center w-full space-y-2 bg-white overflow-y-auto overflow-x-auto"
 					>
 						{dataStore.data.map((data, index, arr) => {
 							// console.log(arr.length)
@@ -316,9 +323,7 @@ const Post = () => {
 										data,
 										handleOnChangeHtml,
 										handleOnKeyDown,
-										convertToH1,
-										convertToH2,
-										convertToP,
+										convertTagName,
 										handleDragEnd,
 										handleDragStart,
 										handleDragEnter,

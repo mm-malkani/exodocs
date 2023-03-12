@@ -4,12 +4,15 @@ import Head from "next/head"
 import { useRouter } from "next/router"
 import { useEffect, useRef, useState } from "react"
 import { uid } from "uid"
+import AddTodoModal from "../../components/AddTodoModal"
+import FavouritesButton from "../../components/atoms/FavouritesButton"
 import PublishButton from "../../components/atoms/PublishButton"
+import TimerButton from "../../components/atoms/TimerButton"
 import ColorPicker from "../../components/ColorPicker"
+import EditTodoModal from "../../components/EditTodoModal"
 import { sendDataToFirebase } from "../../components/functions/sendToDb"
 import KanbanTodo from "../../components/kanbanTodo"
 import LoginFirst from "../../components/LoginFirst"
-import ModalTemplate from "../../components/ModalTemplate"
 import OptionsButton from "../../components/molecules/OptionsButton"
 import ViewModal from "../../components/ViewTodoBar"
 import { auth, db } from "../../config/firebaseConfig"
@@ -33,6 +36,7 @@ const Kanban = () => {
 	const [userObject, setUserObject] = useState("")
 	const [login, setLogin] = useState(false)
 	const [viewTodoBar, setViewTodoBar] = useState(false)
+	const [editTodoBar, setEditTodoBar] = useState(false)
 
 	useEffect(() => {
 		onAuthStateChanged(auth, user => {
@@ -72,6 +76,7 @@ const Kanban = () => {
 							let dataToAdd = { ...dataBase["mockData"] }
 							// console.log(dataToAdd)
 							dataToAdd.slug = slug
+							dataToAdd.creator = user.email
 							localStorage.setItem(
 								slug,
 								JSON.stringify(dataToAdd)
@@ -194,7 +199,7 @@ const Kanban = () => {
 	//  --------------------- FUNCITONING OF TODO RELATED ADD/VIEW/UPDATE/DELETE
 
 	// -------------- ADD TODO
-	const addTodoToData = () => {
+	const addTodoToData = (todoTitle, todoDescription, label) => {
 		const timestamp = Date().toString().slice(0, -30)
 		let tempDataStore = dataStore
 		const newTodoData = {
@@ -203,15 +208,14 @@ const Kanban = () => {
 			todoDescription: todoDescription,
 			todoCreationTime: timestamp,
 			todoUpdateTime: "Haven't Updated Yet",
+			label: label,
 		}
 		// console.log(tempDataStore);
 		tempDataStore[0].columnData.splice(0, 0, newTodoData)
 		setDataStore(tempDataStore)
 		sendToLocalStorage()
-		setModalVisible(false)
-		setTodoTitle("")
-		setTodoDescription("")
 		handleAutoSaveButton()
+		setModalVisible(false)
 	}
 
 	const handleAddTodo = () => {
@@ -229,12 +233,56 @@ const Kanban = () => {
 	}
 
 	// -------------- UPDATE TODO
-	// const updateTodoToData = (todoTitleValue, todoDescriptionValue) => {
-	// 	const timestamp = Date().toString().slice(0, -30)
-	//
-	// }
+	const [todoCreationTime, setTodoCreationTime] = useState("")
+	const [currentIndex, setCurrentIndex] = useState("")
+	const [currentTodoId, setCurrentTodoId] = useState("")
+	const [labelValue, setLabelValue] = useState("")
 
-	// const handleEditTodoClick = (columnIndex, todoIndex) => {}
+	const updateTodoToData = (
+		todoTitleValue,
+		todoDescriptionValue,
+		labelValue
+	) => {
+		const timestamp = Date().toString().slice(0, -30)
+		// console.log(todoTitleValue, todoDescriptionValue, labelValue)
+		// console.log(dataStore)
+		let tempDataStore = [...dataStore]
+		let newTodoData = {
+			todoId: uid(),
+			todoHeading: todoTitleValue,
+			todoDescription: todoDescriptionValue,
+			todoCreationTime: todoCreationTime,
+			todoUpdateTime: timestamp,
+			label: labelValue,
+		}
+		tempDataStore[currentIndex].columnData.splice(
+			currentTodoId,
+			1,
+			newTodoData
+		)
+		// console.log(tempDataStore[currentIndex].columnData[currentTodoId])
+		setDataStore(tempDataStore)
+		sendToLocalStorage()
+		publishData()
+		setEditTodoBar(false)
+		setTodoTitle("")
+		setTodoDescription("")
+		setTodoCreationTime("")
+	}
+
+	const handleEditTodoClick = (columnIndex, todoIndex) => {
+		setTodoTitle(dataStore[columnIndex].columnData[todoIndex].todoHeading)
+		setTodoDescription(
+			dataStore[columnIndex].columnData[todoIndex].todoDescription
+		)
+		setTodoCreationTime(
+			dataStore[columnIndex].columnData[todoIndex].todoCreationTime
+		)
+		setLabelValue(dataStore[columnIndex].columnData[todoIndex].label)
+		setCurrentIndex(columnIndex)
+		setCurrentTodoId(todoIndex)
+		setEditTodoBar(true)
+	}
 
 	// -------------- DELETE TODO
 	const deleteTodoItem = (columnIndex, todoId) => {
@@ -250,7 +298,7 @@ const Kanban = () => {
 	// -----------------------------------------DRAG AND DROP FUNCTIONS
 	let todoitemDrag = useRef()
 	let todoitemDragOver = useRef()
-	let dragOverColumnIndex
+	let dragOverColumnIndex = useRef()
 
 	const dragStartHandle = (e, columnIndex, todoIndex) => {
 		todoitemDrag.current = todoIndex
@@ -258,38 +306,56 @@ const Kanban = () => {
 
 	const dragEnterHandle = (e, columnIndex, todoIndex) => {
 		todoitemDragOver.current = todoIndex
-		dragOverColumnIndex = columnIndex
+		dragOverColumnIndex.current = columnIndex
 		// console.log(columnIndex)
 	}
 
 	const dragEndHandle = (e, columnIndex) => {
-		// console.log(e.screenX)
+		// console.log(dragOverColumnIndex.current, "DRAG OVER INDEX COLUMN")
 		let tempDataStore = [...dataStore]
 		let todoItemMain =
 			tempDataStore[columnIndex].columnData[todoitemDrag.current]
 		try {
-			tempDataStore[dragOverColumnIndex].columnData.splice(
-				todoitemDragOver.current,
-				0,
-				todoItemMain
-			)
-			tempDataStore[columnIndex].columnData.splice(
-				todoitemDrag.current,
-				1
-			)
+			if (columnIndex != dragOverColumnIndex.current) {
+				tempDataStore[dragOverColumnIndex.current].columnData.splice(
+					todoitemDragOver.current,
+					0,
+					todoItemMain
+				)
+				tempDataStore[columnIndex].columnData.splice(
+					todoitemDrag.current,
+					1
+				)
+				setDataStore(tempDataStore)
+				sendToLocalStorage()
+				handleAutoSaveButton()
+			} else {
+				if (todoitemDrag.current != todoitemDragOver.current) {
+					tempDataStore[
+						dragOverColumnIndex.current
+					].columnData.splice(
+						todoitemDragOver.current,
+						0,
+						todoItemMain
+					)
+					tempDataStore[columnIndex].columnData.splice(
+						todoitemDrag.current,
+						1
+					)
+					setDataStore(tempDataStore)
+					sendToLocalStorage()
+					handleAutoSaveButton()
+				}
+			}
 			todoitemDrag.current = null
 			todoitemDragOver.current = null
-			dragOverColumnIndex = null
-			setDataStore(tempDataStore)
-			sendToLocalStorage()
-			handleAutoSaveButton()
+			dragOverColumnIndex.current = null
 		} catch (err) {
 			console.log(err)
 		}
 	}
 
 	// ----------------------FOR MOBILE
-
 	const handleEditableTitle = eValue => {
 		const { slug } = router.query
 		// setEditableTitle(e.target.value)
@@ -301,16 +367,19 @@ const Kanban = () => {
 		tempDataStore.title = eValue
 		setinitialData(tempDataStore)
 		localStorage.setItem(slug, JSON.stringify(tempDataStore))
-		handleAutoSaveButton()
+		setTimeout(() => {
+			handleAutoSaveButton()
+			console.log("SAVED")
+		}, 1000)
 	}
 
 	const setFillColor = (color, index) => {
-		let tempDataStore = [...dataStore]
+		const { slug } = router.query
+		let tempDataStore = dataStore
 		tempDataStore[index].color = color
 		setDataStore(tempDataStore)
-		const { slug } = router.query
-		setinitialData({ ...initialData, kanban: [...dataStore] })
-		localStorage.setItem(slug, JSON.stringify(tempDataStore))
+		setinitialData({ ...initialData, kanban: [...tempDataStore] })
+		localStorage.setItem(slug, JSON.stringify(initialData))
 		handleAutoSaveButton()
 	}
 
@@ -332,32 +401,39 @@ const Kanban = () => {
 					</Head>
 					<div className="w-screen flex justify-center">
 						{modalVisible && (
-							<ModalTemplate
+							<AddTodoModal
 								{...{
 									setModalVisible,
 									addTodoToData,
-									setTodoTitle,
-									setTodoDescription,
-									todoTitle,
-									todoDescription,
 								}}
-							></ModalTemplate>
+							/>
 						)}
 						{viewTodoBar && (
 							<ViewModal
 								setViewModalVisible={setViewTodoBar}
 								allTodoInfo={allTodoInfo}
-							></ViewModal>
+							/>
+						)}
+						{editTodoBar && (
+							<EditTodoModal
+								{...{
+									setEditTodoBar,
+									updateTodoToData,
+									todoTitle,
+									todoDescription,
+									labelValue,
+								}}
+							/>
 						)}
 					</div>
 
 					<div className="p-2 h-screen bg-customlight text-customblack">
 						<div className="flex space-x-2 justify-between">
 							<input
-								className="font-semibold p-1 text-2xl rounded bg-customwhite w-1/2"
-								onChange={e =>
+								className="font-semibold p-1 text-sm rounded bg-customwhite w-1/2"
+								onChange={e => {
 									handleEditableTitle(e.target.value)
-								}
+								}}
 								value={editableTitle}
 							/>
 							<div className="flex items-center space-x-1 justify-center">
@@ -367,14 +443,20 @@ const Kanban = () => {
 									type="kanban"
 									slug={slug}
 								/>
+								<FavouritesButton
+									{...{ toggleFavourites }}
+									favourite={initialData.favourite}
+								/>
+								<TimerButton
+									createdTime={initialData.createdOn}
+									updatedTime={initialData.updatedOn}
+								/>
 								<OptionsButton
 									{...{
-										toggleFavourites,
 										autoSave,
 										setAutoSave,
 										slug,
 									}}
-									favourite={initialData.favourite}
 									userUid={user.uid}
 									type={"k"}
 								/>
@@ -502,6 +584,7 @@ const Kanban = () => {
 																deleteTodoItem,
 																todoData,
 																viewTodoInfo,
+																handleEditTodoClick,
 															}}
 															key={todoIndex}
 															todoIndex={

@@ -1,54 +1,70 @@
-import React from "react"
-
 const ViewModal = ({ setViewModalVisible, allTodoInfo }) => {
 	return (
-		<div
-			className={`absolute top-0 bg-customwhite right-0 mx-auto h-screen overflow-y-auto border-2 z-10 max-w-xs overflow-x-hidden`}
-		>
-			<div className="relative w-full">
-				<div className="flex items-start justify-between p-2 border-b">
-					<p className="text-xl font-semibold text-gray-900 max-w-[250px]">
-						{allTodoInfo.todoHeading}
-					</p>
-					<button
-						type="button"
-						className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg"
-						data-modal-hide="defaultModal"
+		<div>
+			{/* Overlay */}
+
+			<div className="fixed z-10 inset-0 overflow-y-auto">
+				<div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+					{/* Background */}
+					<div
+						className="fixed inset-0 transition-opacity"
+						aria-hidden="true"
 					>
-						<svg
-							aria-hidden="true"
-							className="w-5 h-5"
-							onClick={() => setViewModalVisible(false)}
-							fill="currentColor"
-							viewBox="0 0 20 20"
-							xmlns="http://www.w3.org/2000/svg"
+						<div className="absolute inset-0 bg-gray-500 opacity-75"></div>
+					</div>
+
+					{/* Modal */}
+					<div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+						<div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+							{/* Title */}
+							<div className="mb-2">
+								<div
+									id="title"
+									className="shadow appearance-none font-semibold rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+								>
+									{allTodoInfo.todoHeading}
+								</div>
+							</div>
+
+							{/* Description */}
+							<div className="mb-4">
+								<div
+									id="description"
+									className="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+								>
+									{allTodoInfo.todoDescription}
+								</div>
+							</div>
+							<div className="flex justify-between">
+								<div
+									htmlFor="label"
+									className="block appearance-none h-fit w-fit bg-gray-200 text-gray-700 py-1.5 p-3 rounded-full leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+								>
+									{allTodoInfo.label}
+								</div>
+								<div className="time flex flex-col">
+									<span>{`Updated - ${allTodoInfo.todoUpdateTime}`}</span>
+									<span>{`Created - ${allTodoInfo.todoCreationTime} `}</span>
+								</div>
+							</div>
+						</div>
+
+						<div
+							className={`bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse`}
 						>
-							<path
-								fillRule="evenodd"
-								d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-								clipRule="evenodd"
-							></path>
-						</svg>
-					</button>
-				</div>
-				<p className="p-3">{allTodoInfo.todoDescription}</p>
-				<div className="text-center py-2 border-t-2 bg-slate-300 font-normal">
-					<p>
-						Last Updated :-{" "}
-						<span className="font-semibold">
-							{allTodoInfo.todoUpdateTime}
-						</span>
-					</p>
-					<p>
-						Created At :-{" "}
-						<span className="font-semibold">
-							{allTodoInfo.todoCreationTime}
-						</span>
-					</p>
+							{/* Cancel button */}
+							<button
+								onClick={() => setViewModalVisible(false)}
+								type="button"
+								className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white transition-all duration-300 text-base font-medium text-gray-700 hover:bg-slate-700 hover:text-customlight sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+							>
+								Close
+							</button>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
 	)
 }
-
 export default ViewModal

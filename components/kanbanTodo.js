@@ -2,6 +2,7 @@ import React from "react"
 
 const KanbanTodo = ({
 	todoData,
+	handleEditTodoClick,
 	deleteTodoItem,
 	columnIndex,
 	todoIndex,
@@ -79,9 +80,9 @@ const KanbanTodo = ({
 
 							{/* ----------------------EDIT TODO ICON------------------- */}
 							<svg
-								// onClick={() => {
-								// 	handleEditTodoClick(columnIndex, todoIndex)
-								// }}
+								onClick={() => {
+									handleEditTodoClick(columnIndex, todoIndex)
+								}}
 								xmlns="http://www.w3.org/2000/svg"
 								fill="none"
 								viewBox="0 0 24 24"
@@ -117,7 +118,9 @@ const KanbanTodo = ({
 						</div>
 					</div>
 					<div className="flex flex-col w-full mt-2">
-						<p>{todoData.todoDescription}</p>
+						<p className="lineBreak w-full">
+							{todoData.todoDescription}
+						</p>
 						<div className="flex justify-between mt-2 items-center">
 							<div className="flex items-center space-x-2">
 								{/* CLOCK ICON SVG */}

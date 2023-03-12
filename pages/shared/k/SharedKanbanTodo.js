@@ -12,7 +12,7 @@ const SharedKanbanTodo = ({
 				className={`flex p-4 w-full rounded border-2 border-customgray text-customblack flex-col `}
 			>
 				<div className="flex flex-wrap justify-between w-full">
-					<div className="flex space-x-2 items-center">
+					<div className="flex space-x-2 items-center w-10/12">
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							fill={fillColor}
@@ -28,7 +28,9 @@ const SharedKanbanTodo = ({
 							/>
 						</svg>
 
-						<h6 className="text-md">{todoHeading}</h6>
+						<h6 className="text-md w-4/5 line-clamp-1">
+							{todoHeading}
+						</h6>
 					</div>
 					<div className="flex space-x-2 flex-wrap">
 						{/* ----------------------VIEW TODO ICON------------------- */}
@@ -61,7 +63,7 @@ const SharedKanbanTodo = ({
 					</div>
 				</div>
 				<div className="flex flex-col w-full mt-2">
-					<p>{todoDescription}</p>
+					<p className="w-full lineBreak">{todoDescription}</p>
 					<div className="flex justify-between mt-2 items-center">
 						<div className="flex items-center space-x-2">
 							{/* CLOCK ICON SVG */}

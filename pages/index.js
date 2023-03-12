@@ -1,6 +1,7 @@
 import { onAuthStateChanged } from "firebase/auth"
 import { child, get, ref } from "firebase/database"
 import Head from "next/head"
+import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import IndexPageCard from "../components/atoms/IndexPageCard"
 import LoginFirst from "../components/LoginFirst"
@@ -9,6 +10,7 @@ import { auth, db } from "../config/firebaseConfig"
 const Home = () => {
 	const [login, setLogin] = useState("")
 	const [dataList, setDataList] = useState([])
+	const router = useRouter()
 
 	useEffect(() => {
 		onAuthStateChanged(auth, user => {
@@ -32,7 +34,7 @@ const Home = () => {
 									)
 									dataListArr.push(ArrayData)
 									setDataList(dataListArr)
-									console.log(ArrayData)
+									// console.log(ArrayData)
 								})
 							})
 						} else {
@@ -48,7 +50,7 @@ const Home = () => {
 				setLogin(false)
 			}
 		})
-	}, [])
+	}, [router])
 
 	return (
 		<>
@@ -72,14 +74,19 @@ const Home = () => {
 					</h3>
 					<div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 gap-4">
 						{dataList.map((data, index) => {
-							return (
-								<IndexPageCard
-									title={data.title}
-									key={index}
-									slug={data.slug}
-									type={data.type}
-								/>
-							)
+							// console.log(data.slug.length)
+							if (data) {
+								if (data.slug.length > 0) {
+									return (
+										<IndexPageCard
+											title={data.title}
+											key={index}
+											slug={data.slug}
+											type={data.type}
+										/>
+									)
+								}
+							}
 						})}
 					</div>
 				</div>

@@ -3,7 +3,7 @@ import Link from "next/link"
 import React, { useEffect, useState } from "react"
 import { auth } from "../config/firebaseConfig"
 
-const Navbar = ({ toggleSidebar, handleRefresh }) => {
+const Navbar = ({ toggleSidebar }) => {
 	const [login, setLogin] = useState("")
 
 	useEffect(() => {
@@ -49,7 +49,7 @@ const Navbar = ({ toggleSidebar, handleRefresh }) => {
 					</h1>
 				</div>
 
-				{login && (
+				{/* {login && (
 					<div title="Reload Content">
 						<svg
 							onClick={handleRefresh}
@@ -67,7 +67,7 @@ const Navbar = ({ toggleSidebar, handleRefresh }) => {
 							/>
 						</svg>
 					</div>
-				)}
+				)} */}
 
 				{!login && (
 					<div className="flex space-x-2">
