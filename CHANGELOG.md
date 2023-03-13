@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.6.1](https://github.com/abhishekintern/exodocs/compare/v0.6.0...v0.6.1) (2023-03-13)
+
+
+### 🚀 Performance Improvements
+
+* **Project complete:** Code Improved and functionalities added ([cfe811f](https://github.com/abhishekintern/exodocs/commit/cfe811f35acb9561de22b3a5f6a2a7eb49250d64))
+
 ## [0.6.0](https://github.com/abhishekintern/exodocs/compare/v0.5.4...v0.6.0) (2023-03-12)
 
 
