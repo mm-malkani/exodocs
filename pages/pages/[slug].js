@@ -114,9 +114,7 @@ const Post = () => {
 				let abc = document.getElementById("parentNewElement")
 				// console.log(Array.from(abc.children)[index + 1].querySelector("p"))
 				try {
-					Array.from(abc.children)
-						[index + 1].querySelector("p")
-						.focus()
+					Array.from(abc.children)[index + 1].querySelector("p").focus()
 				} catch (error) {
 					Array.from(abc.children)[0].querySelector("p").focus()
 				}
