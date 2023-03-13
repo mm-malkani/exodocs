@@ -67,7 +67,7 @@ const Home = () => {
 			</Head>
 
 			{login && (
-				<div className="container mx-auto p-2 md:p-8 sm:p-4 bg-customwhite">
+				<div className="container mx-auto p-2 md:p-8 sm:p-4 bg-customwhite text-slate-800">
 					<h3 className="font-bold mb-8 text-center">
 						Welcome to my ExoDocs - Your goto Todo builder and
 						Sharing App!

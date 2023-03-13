@@ -2,6 +2,7 @@ import { ref, set } from "firebase/database"
 import Link from "next/link"
 import { useRouter } from "next/router"
 import React from "react"
+import { toast } from "react-toastify"
 import { db } from "../../config/firebaseConfig"
 
 const SidebarList = ({ data, userUid }) => {
@@ -21,12 +22,25 @@ const SidebarList = ({ data, userUid }) => {
 				router.push("/")
 			}
 		} else {
-			alert("Error Occured in Deleting Page Please Reload the Page")
+			// alert("Error Occured in Deleting Page Please Reload the Page")
+			toast.error(
+				"Error Occured in Deleting Page Please Reload the Page!",
+				{
+					position: "top-center",
+					autoClose: 3000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: false,
+					draggable: true,
+					progress: undefined,
+					theme: "dark",
+				}
+			)
 		}
 	}
 
 	return (
-		<li className="group flex justify-between items-center cursor-pointer">
+		<li className="group text-slate-800 dark:text-customwhite flex justify-between items-center cursor-pointer">
 			<div className="flex space-x-2 items-center">
 				<span className="w-5">
 					{data.type == "kanban" && (

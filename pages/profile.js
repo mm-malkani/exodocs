@@ -1,6 +1,7 @@
 import { onAuthStateChanged, sendPasswordResetEmail } from "firebase/auth"
 import Image from "next/image"
 import React, { useEffect, useState } from "react"
+import { toast } from "react-toastify"
 import LoginFirst from "../components/LoginFirst"
 import { auth } from "../config/firebaseConfig"
 
@@ -22,11 +23,34 @@ const Profile = () => {
 	const resetPassword = () => {
 		sendPasswordResetEmail(auth, user.email)
 			.then(() => {
-				alert("Password Reset Link Sent to Registered Email Address")
+				// alert("Password Reset Link Sent to Registered Email Address")
+				toast.success(
+					"Password Reset Link Sent to Registered Email Address!",
+					{
+						position: "top-center",
+						autoClose: 3000,
+						hideProgressBar: false,
+						closeOnClick: true,
+						pauseOnHover: false,
+						draggable: true,
+						progress: undefined,
+						theme: "dark",
+					}
+				)
 			})
 			.catch(err => {
 				console.log(err)
-				alert("Error Occured ! Please Try Again")
+				// alert("Error Occured ! Please Try Again")
+				toast.error("Error Occured ! Please Try Again!", {
+					position: "top-center",
+					autoClose: 3000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: false,
+					draggable: true,
+					progress: undefined,
+					theme: "dark",
+				})
 			})
 	}
 

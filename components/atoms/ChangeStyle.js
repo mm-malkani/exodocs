@@ -1,5 +1,5 @@
 import React from "react"
-import ListOptions from "../ListOptions"
+import ListOptions from "../molecules/ListOptions"
 
 const ChangeStyle = ({ caret, setCaret, index, convertTagName }) => {
 	return (

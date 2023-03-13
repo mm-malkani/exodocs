@@ -8,6 +8,7 @@ import { FcGoogle } from "react-icons/fc"
 import { useRouter } from "next/router"
 import Link from "next/link"
 import { auth, provider } from "../config/firebaseConfig"
+import { toast } from "react-toastify"
 
 const Login = () => {
 	const router = useRouter()
@@ -32,9 +33,29 @@ const Login = () => {
 				// console.log(user)
 				// alert("Login Successfull")
 				localStorage.setItem("user", JSON.stringify(user))
+				toast.success("Log in Success!", {
+					position: "top-center",
+					autoClose: 3000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: false,
+					draggable: true,
+					progress: undefined,
+					theme: "dark",
+				})
 			})
 			.catch(err => {
-				alert("Login Failed")
+				// alert("Login Failed")
+				toast.error("Log in Failed!", {
+					position: "top-center",
+					autoClose: 3000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: false,
+					draggable: true,
+					progress: undefined,
+					theme: "dark",
+				})
 				console.error(
 					`🚀 ~ file: login.js:39 ~ handleGoogleClick ~ err`,
 					err
@@ -48,10 +69,30 @@ const Login = () => {
 				// console.log(user)
 				// alert("Login Successfull")
 				localStorage.setItem("user", JSON.stringify(user))
+				toast.success("Log in Success!", {
+					position: "top-center",
+					autoClose: 3000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: false,
+					draggable: true,
+					progress: undefined,
+					theme: "dark",
+				})
 			})
 			.catch(err => {
 				console.log(err)
-				alert("Login Failed")
+				// alert("Login Failed")
+				toast.error("Log in Failed!", {
+					position: "top-center",
+					autoClose: 3000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: false,
+					draggable: true,
+					progress: undefined,
+					theme: "dark",
+				})
 			})
 	}
 

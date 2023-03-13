@@ -9,7 +9,7 @@ const AddTodoModal = ({ setModalVisible, addTodoToData }) => {
 		<>
 			{/* Overlay */}
 
-			<div className="fixed z-10 inset-0 overflow-y-auto">
+			<div className="fixed z-10 inset-0 overflow-y-auto text-slate-800 dark:text-customwhite">
 				<div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
 					{/* Background */}
 					<div
@@ -20,13 +20,13 @@ const AddTodoModal = ({ setModalVisible, addTodoToData }) => {
 					</div>
 
 					{/* Modal */}
-					<div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-						<div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+					<div className="inline-block align-top alignBase bg-white dark:bg-slate-600 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:max-w-lg sm:w-full">
+						<div className="px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
 							{/* Title */}
 							<div className="mb-2">
 								<label
 									htmlFor="title"
-									className="block text-gray-700 font-bold mb-2"
+									className="block font-bold mb-2"
 								>
 									Title*
 								</label>
@@ -34,7 +34,7 @@ const AddTodoModal = ({ setModalVisible, addTodoToData }) => {
 									required
 									type="text"
 									id="title"
-									className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+									className="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline text-slate-800"
 									placeholder="Title (Required)"
 									value={todoTitle}
 									onChange={e => setTodoTitle(e.target.value)}
@@ -45,14 +45,14 @@ const AddTodoModal = ({ setModalVisible, addTodoToData }) => {
 							<div className="mb-4">
 								<label
 									htmlFor="description"
-									className="block text-gray-700 font-bold mb-2"
+									className="block font-bold mb-2"
 								>
 									Description
 								</label>
 								<textarea
 									id="description"
 									rows={5}
-									className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+									className="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline text-slate-800"
 									placeholder="Description"
 									value={todoDescription}
 									onChange={e =>
@@ -62,7 +62,7 @@ const AddTodoModal = ({ setModalVisible, addTodoToData }) => {
 								></textarea>
 							</div>
 							<div className="mb-4">
-								<label className="block text-gray-700 font-bold mb-2">
+								<label className="block font-bold mb-2">
 									Choose a Label
 								</label>
 								<select
@@ -71,7 +71,7 @@ const AddTodoModal = ({ setModalVisible, addTodoToData }) => {
 										setLabelValue(e.target.value)
 									}
 									htmlFor="label"
-									className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-1.5 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+									className="block text-slate-800 appearance-none w-full bg-gray-200 border border-gray-200 py-1.5 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
 								>
 									<option
 										htmlFor="label"
@@ -102,7 +102,7 @@ const AddTodoModal = ({ setModalVisible, addTodoToData }) => {
 						</div>
 
 						<div
-							className={`bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse`}
+							className={`px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse`}
 						>
 							{/* Save button */}
 							<button
@@ -117,7 +117,7 @@ const AddTodoModal = ({ setModalVisible, addTodoToData }) => {
 									}
 								}}
 								type="submit"
-								className="w-full inline-flex disabled:opacity-40 disabled:cursor-not-allowed justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-slate-600 text-base font-medium text-white sm:ml-3 sm:w-auto sm:text-sm"
+								className="w-full inline-flex disabled:opacity-40 disabled:cursor-not-allowed justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-slate-600 text-base font-medium text-white sm:ml-3 sm:w-auto sm:text-sm dark:bg-white dark:text-slate-800"
 							>
 								Save
 							</button>

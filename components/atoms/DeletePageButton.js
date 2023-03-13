@@ -1,6 +1,7 @@
 import { ref, set } from "firebase/database"
 import { useRouter } from "next/router"
 import React from "react"
+import { toast } from "react-toastify"
 import { db } from "../../config/firebaseConfig"
 
 const DeletePageButton = ({ userUid, type, slug }) => {
@@ -24,12 +25,30 @@ const DeletePageButton = ({ userUid, type, slug }) => {
 					// 		type == "k" ? "kanban" : type == "p" ? "pages" : ""
 					// 	}/${slug}`
 					// )
+					try {
+						localStorage.removeItem(slug)
+					} catch (error) {
+						console.log(error)
+					}
 					router.push("/")
 					// console.log("REMOVED")
 				})
 				.catch(err => console.log(err))
 		} else {
-			alert("Error Occured in Deleting Page Please Reload the Page")
+			// alert("Error Occured in Deleting Page Please Reload the Page")
+			toast.error(
+				"Error Occured in Deleting Page Please Reload the Page",
+				{
+					position: "top-center",
+					autoClose: 3000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: false,
+					draggable: true,
+					progress: undefined,
+					theme: "dark",
+				}
+			)
 		}
 	}
 

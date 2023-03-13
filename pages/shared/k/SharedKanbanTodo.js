@@ -1,6 +1,10 @@
 import React from "react"
 
 const SharedKanbanTodo = ({
+	setViewTodoBar,
+	setAllInfoTodo,
+	index,
+	todoIndex,
 	todoHeading,
 	todoDescription,
 	todoUpdateTime,
@@ -35,9 +39,10 @@ const SharedKanbanTodo = ({
 					<div className="flex space-x-2 flex-wrap">
 						{/* ----------------------VIEW TODO ICON------------------- */}
 						<svg
-							// onClick={() => {
-							// 	viewTodoInfo(columnIndex, todoIndex)
-							// }}
+							onClick={() => {
+								setAllInfoTodo(index, todoIndex)
+								setViewTodoBar(true)
+							}}
 							xmlns="http://www.w3.org/2000/svg"
 							fill="none"
 							viewBox="0 0 24 24"

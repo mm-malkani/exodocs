@@ -1,6 +1,7 @@
 import { onAuthStateChanged, sendPasswordResetEmail } from "@firebase/auth"
 import { useRouter } from "next/router"
 import React, { useEffect, useState } from "react"
+import { toast } from "react-toastify"
 import { auth } from "../config/firebaseConfig"
 
 const ForgotPassword = () => {
@@ -20,11 +21,34 @@ const ForgotPassword = () => {
 		sendPasswordResetEmail(auth, email)
 			.then(() => {
 				setEmail("")
-				alert("Password Reset Link Sent to Registered Email Address")
+				// alert("Password Reset Link Sent to Registered Email Address")
+				toast.success(
+					"Password Reset Link Sent to Registered Email Address!",
+					{
+						position: "top-center",
+						autoClose: 3000,
+						hideProgressBar: false,
+						closeOnClick: true,
+						pauseOnHover: false,
+						draggable: true,
+						progress: undefined,
+						theme: "dark",
+					}
+				)
 			})
 			.catch(err => {
 				console.log(err)
-				alert("Error Occured ! Please Try Again")
+				// alert("Error Occured ! Please Try Again")
+				toast.error("Error Occured ! Please Try Again!", {
+					position: "top-center",
+					autoClose: 3000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: false,
+					draggable: true,
+					progress: undefined,
+					theme: "dark",
+				})
 			})
 	}
 

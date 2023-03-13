@@ -53,3 +53,6 @@
 /* #kanbanScrollArea {
 	scroll-behavior: smooth;
 } */
+.alignBase {
+	align-self: baseline;
+}

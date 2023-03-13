@@ -8,6 +8,7 @@ import {
 import { useRouter } from "next/router"
 import Link from "next/link"
 import { auth, provider } from "../config/firebaseConfig"
+import { toast } from "react-toastify"
 
 const Signup = () => {
 	const router = useRouter()
@@ -27,28 +28,78 @@ const Signup = () => {
 	const handleGoogleClick = () => {
 		signInWithPopup(auth, provider)
 			.then(() => {
+				toast.success("Signup Successfull!", {
+					position: "top-center",
+					autoClose: 3000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: false,
+					draggable: true,
+					progress: undefined,
+					theme: "dark",
+				})
 				// console.log(user)
 				// alert("Login Successfull")
 			})
 			.catch(err => {
 				console.log(err)
-				alert("Login Failed")
+				// alert("Login Failed")
+				toast.error("Log in Failed!", {
+					position: "top-center",
+					autoClose: 3000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: false,
+					draggable: true,
+					progress: undefined,
+					theme: "dark",
+				})
 			})
 	}
 
 	const handleSignupClick = () => {
 		if (password != confirmPassword) {
-			alert("Passwords Don't Match")
+			// alert("Passwords Don't Match")
+			toast.error("Passwords Don't Match!", {
+				position: "top-center",
+				autoClose: 3000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: false,
+				draggable: true,
+				progress: undefined,
+				theme: "dark",
+			})
 			return
 		}
 		createUserWithEmailAndPassword(auth, email, confirmPassword)
 			.then(() => {
 				// console.log(user)
-				alert("SignUp Successfull")
+				// alert("SignUp Successfull")
+				toast.success("Signup Successfull!", {
+					position: "top-center",
+					autoClose: 3000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: false,
+					draggable: true,
+					progress: undefined,
+					theme: "dark",
+				})
 			})
 			.catch(err => {
 				console.log(err)
-				alert("SignUp Failed")
+				// alert("SignUp Failed")
+				toast.error("Signup Failed!", {
+					position: "top-center",
+					autoClose: 3000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: false,
+					draggable: true,
+					progress: undefined,
+					theme: "dark",
+				})
 			})
 	}
 

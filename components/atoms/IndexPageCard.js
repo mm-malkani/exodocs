@@ -3,7 +3,7 @@ import Link from "next/link"
 
 const IndexPageCard = ({ title, slug, type }) => {
 	return (
-		<div className="bg-customlight shadow-md rounded-md p-2 flex flex-col justify-center items-center hover:scale-105 transition">
+		<div className="shadow-md rounded-md p-2 flex flex-col justify-center items-center hover:scale-105 transition">
 			<Image
 				height={230}
 				width={250}
@@ -16,7 +16,7 @@ const IndexPageCard = ({ title, slug, type }) => {
 			</h3>
 			<Link
 				href={`/${type}/${slug}`}
-				className="bg-slate-600 hover:bg-slate-500 transition text-customwhite rounded-md w-1/2 py-2 text-center"
+				className="bg-slate-600 text-customwhite hover:bg-slate-500 transition rounded-md w-1/2 py-2 text-center"
 			>
 				Open
 			</Link>

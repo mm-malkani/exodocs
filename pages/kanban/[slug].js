@@ -3,12 +3,12 @@ import { child, get, ref } from "firebase/database"
 import Head from "next/head"
 import { useRouter } from "next/router"
 import { useEffect, useRef, useState } from "react"
+import { toast } from "react-toastify"
 import { uid } from "uid"
 import AddTodoModal from "../../components/AddTodoModal"
 import FavouritesButton from "../../components/atoms/FavouritesButton"
 import PublishButton from "../../components/atoms/PublishButton"
-import TimerButton from "../../components/atoms/TimerButton"
-import ColorPicker from "../../components/ColorPicker"
+import ColorPicker from "../../components/molecules/ColorPicker"
 import EditTodoModal from "../../components/EditTodoModal"
 import { sendDataToFirebase } from "../../components/functions/sendToDb"
 import KanbanTodo from "../../components/kanbanTodo"
@@ -167,7 +167,17 @@ const Kanban = () => {
 	const forwardColumnClicked = (columnIndex, todoIndex) => {
 		// console.log(dataStore.length, columnIndex)
 		if (dataStore.length === columnIndex + 1) {
-			alert("Can't Find Next Column")
+			// alert("Can't Find Next Column")
+			toast.error("Can't Find Next Column!", {
+				position: "top-center",
+				autoClose: 3000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: false,
+				draggable: true,
+				progress: undefined,
+				theme: "dark",
+			})
 			return
 		} else {
 			try {
@@ -211,15 +221,44 @@ const Kanban = () => {
 			label: label,
 		}
 		// console.log(tempDataStore);
-		tempDataStore[0].columnData.splice(0, 0, newTodoData)
-		setDataStore(tempDataStore)
-		sendToLocalStorage()
-		handleAutoSaveButton()
-		setModalVisible(false)
+		try {
+			tempDataStore[0].columnData.splice(0, 0, newTodoData)
+			setDataStore(tempDataStore)
+			sendToLocalStorage()
+			handleAutoSaveButton()
+			setModalVisible(false)
+		} catch (error) {
+			toast.error("No Column found to add!", {
+				position: "top-center",
+				autoClose: 3000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: false,
+				draggable: true,
+				progress: undefined,
+				theme: "dark",
+			})
+			// console.log(error)
+			setModalVisible(false)
+		}
 	}
 
 	const handleAddTodo = () => {
-		setModalVisible(true)
+		let tempDataStore = dataStore
+		if (tempDataStore[0]) {
+			setModalVisible(true)
+		} else {
+			toast.error("No Column found to add!", {
+				position: "top-center",
+				autoClose: 3000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: false,
+				draggable: true,
+				progress: undefined,
+				theme: "dark",
+			})
+		}
 	}
 
 	// -------------- VIEW TODO
@@ -410,7 +449,7 @@ const Kanban = () => {
 						)}
 						{viewTodoBar && (
 							<ViewModal
-								setViewModalVisible={setViewTodoBar}
+								setViewTodoBar={setViewTodoBar}
 								allTodoInfo={allTodoInfo}
 							/>
 						)}
@@ -447,10 +486,28 @@ const Kanban = () => {
 									{...{ toggleFavourites }}
 									favourite={initialData.favourite}
 								/>
-								<TimerButton
-									createdTime={initialData.createdOn}
-									updatedTime={initialData.updatedOn}
-								/>
+								<div>
+									<button className="flex group items-center justify-between text-gray-700 font-medium outline-none hover:bg-customlight py-1 px-1 transition-all duration-200 rounded">
+										<svg
+											xmlns="http://www.w3.org/2000/svg"
+											fill="none"
+											viewBox="0 0 24 24"
+											strokeWidth={1}
+											stroke="currentColor"
+											className="w-6 h-6"
+										>
+											<path
+												strokeLinecap="round"
+												strokeLinejoin="round"
+												d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"
+											/>
+										</svg>
+										<span className="absolute bg-customwhite border-black border z-10 top-[100px] w-[320px] rounded right-0 p-1 invisible group-hover:visible">
+											{`Updated On ${initialData.updatedOn}`}
+											{`Created On ${initialData.createdOn}`}
+										</span>
+									</button>
+								</div>
 								<OptionsButton
 									{...{
 										autoSave,

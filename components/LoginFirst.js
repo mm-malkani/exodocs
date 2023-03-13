@@ -1,5 +1,5 @@
-import Link from "next/link"
 import React from "react"
+import LoginButton from "./atoms/LoginButton"
 
 const LoginFirst = () => {
 	return (
@@ -8,25 +8,9 @@ const LoginFirst = () => {
 
 			{/* Content section */}
 			<div className="p-4">
-				<h1 className="text-2xl text-center font-bold mb-4 flex space-x-2 justify-center">
+				<h1 className="text-2xl text-center font-bold mb-4 flex flex-col sm:flex-row space-x-2 justify-center items-center space-y-2">
 					<span>You must Login First</span>
-					<Link
-						href={"/login"}
-						className="inline-flex items-center border-0 px-3 focus:outline-none bg-slate-200 rounded text-base font-normal mt-0"
-					>
-						Login
-						<svg
-							fill="none"
-							stroke="currentColor"
-							strokeLinecap="round"
-							strokeLinejoin="round"
-							strokeWidth="2"
-							className="w-4 h-4 ml-1"
-							viewBox="0 0 24 24"
-						>
-							<path d="M5 12h14M12 5l7 7-7 7"></path>
-						</svg>
-					</Link>
+					<LoginButton />
 				</h1>
 				{/* Content section content goes here */}
 			</div>

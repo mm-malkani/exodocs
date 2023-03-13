@@ -4,7 +4,7 @@ const CreateKanbanButon = ({ createNewKanban }) => {
 	return (
 		<button
 			onClick={createNewKanban}
-			className="flex flex-1 p-1.5 text-base font-normal rounded-lg text-white hover:bg-gray-700 cursor-pointer space-x-2 hover:scale-105 transition-all duration-200"
+			className="flex flex-1 p-1.5 text-base font-normal rounded-lg hover:bg-customwhite  dark:hover:bg-gray-700 cursor-pointer space-x-2 hover:scale-105 transition-all duration-200"
 		>
 			<svg
 				xmlns="http://www.w3.org/2000/svg"

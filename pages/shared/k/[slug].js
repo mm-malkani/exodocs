@@ -3,6 +3,7 @@ import Head from "next/head"
 import { useRouter } from "next/router"
 import { useState } from "react"
 import { useEffect } from "react"
+import ViewModal from "../../../components/ViewTodoBar"
 import { db } from "../../../config/firebaseConfig"
 import { dataBase } from "../../../data/kanbanMockData"
 import SharedKanbanTodo from "./SharedKanbanTodo"
@@ -13,6 +14,14 @@ const Kanban = () => {
 
 	const [initialData, setInitialData] = useState(dataBase["mockData"])
 	const [dataStore, setDataStore] = useState(initialData.kanban)
+	const [viewTodoBar, setViewTodoBar] = useState(false)
+	const [todoInfo, setTodoInfo] = useState("")
+
+	const setAllInfoTodo = (column, todo) => {
+		let allData = dataStore[column].columnData[todo]
+		// console.log(allData)
+		setTodoInfo(allData)
+	}
 
 	const dbRef = ref(db)
 	useEffect(() => {
@@ -49,8 +58,14 @@ const Kanban = () => {
 			<Head>
 				<title>{`ExoDocs - ${initialData.title}`}</title>
 			</Head>
-
 			<div className="p-2 h-screen bg-customlight text-customblack">
+				{viewTodoBar && (
+					<ViewModal
+						setViewTodoBar={setViewTodoBar}
+						allTodoInfo={todoInfo}
+					/>
+				)}
+
 				<div className="flex space-x-2 justify-between">
 					<input
 						className="font-semibold p-1 text-sm rounded bg-customwhite w-full"
@@ -125,19 +140,26 @@ const Kanban = () => {
 									column.columnData.map(
 										(todoData, todoIndex) => {
 											return (
-												<SharedKanbanTodo
-													todoHeading={
-														todoData.todoHeading
-													}
-													todoDescription={
-														todoData.todoDescription
-													}
-													todoUpdateTime={
-														todoData.todoUpdateTime
-													}
-													key={todoIndex}
-													fillColor={column.color}
-												></SharedKanbanTodo>
+												<div key={todoIndex}>
+													<SharedKanbanTodo
+														{...{
+															setAllInfoTodo,
+															setViewTodoBar,
+															index,
+															todoIndex,
+														}}
+														todoHeading={
+															todoData.todoHeading
+														}
+														todoDescription={
+															todoData.todoDescription
+														}
+														todoUpdateTime={
+															todoData.todoUpdateTime
+														}
+														fillColor={column.color}
+													></SharedKanbanTodo>
+												</div>
 											)
 										}
 									)}

@@ -1,6 +1,7 @@
 import Link from "next/link"
 import React from "react"
 import { RiWhatsappFill } from "react-icons/ri"
+import { toast } from "react-toastify"
 
 const ShareButton = ({ userUid, type, slug }) => {
 	let host = "https://exodocs.vercel.app"
@@ -11,7 +12,17 @@ const ShareButton = ({ userUid, type, slug }) => {
 		try {
 			await navigator.clipboard.writeText(text)
 			// console.log("Content copied to clipboard")
-			alert(`Link Copied to Clipboard`)
+			// alert(`Link Copied to Clipboard`)
+			toast.success("Link Copied to Clipboard!", {
+				position: "top-center",
+				autoClose: 3000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: false,
+				draggable: true,
+				progress: undefined,
+				theme: "dark",
+			})
 		} catch (err) {
 			console.error("Failed to copy: ", err)
 		}

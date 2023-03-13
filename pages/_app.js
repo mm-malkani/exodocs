@@ -1,6 +1,8 @@
 import { onAuthStateChanged } from "firebase/auth"
 import { useRouter } from "next/router"
 import React, { useEffect, useState } from "react"
+import { ToastContainer } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
 import LoadingBar from "react-top-loading-bar"
 import Navbar from "../components/Navbar"
 import Sidebar from "../components/Sidebar"
@@ -44,6 +46,18 @@ function MyApp({ Component, pageProps }) {
 	}, [router, toggleSidebar])
 	return (
 		<>
+			<ToastContainer
+				position="top-center"
+				autoClose={3000}
+				hideProgressBar={false}
+				newestOnTop
+				closeOnClick
+				rtl={false}
+				pauseOnFocusLoss
+				draggable
+				pauseOnHover={false}
+				theme="dark"
+			/>
 			<LoadingBar
 				color="#1DB700"
 				height={3}

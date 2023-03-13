@@ -6,7 +6,6 @@ import { useEffect, useRef, useState } from "react"
 import { uid } from "uid"
 import FavouritesButton from "../../components/atoms/FavouritesButton"
 import PublishButton from "../../components/atoms/PublishButton"
-import TimerButton from "../../components/atoms/TimerButton"
 import { sendDataToFirebase } from "../../components/functions/sendToDb"
 import LoginFirst from "../../components/LoginFirst"
 import OptionsButton from "../../components/molecules/OptionsButton"
@@ -102,25 +101,27 @@ const Post = () => {
 	}
 
 	const handleAddElement = index => {
-		// console.log(abc)
-		let tempDataStore = { ...dataStore }
-		console.log(tempDataStore.title)
-		let newElement = { id: uid(), tagName: "p", html: "" }
-		tempDataStore.data.splice(index + 1, 0, newElement)
-		// console.log(tempDataStore.data[index + 1])
-		setDataStore(tempDataStore)
-		sendToLocalStorage(tempDataStore)
-		handleAutoSaveButton()
-		setTimeout(() => {
-			let abc = document.getElementById("parentNewElement")
-			// console.log(Array.from(abc.children)[index + 1].querySelector("p"))
-			try {
-				Array.from(abc.children)[index + 1].querySelector("p").focus()
-			} catch (error) {
-				Array.from(abc.children)[0].querySelector("p").focus()
-			}
-		}, 100)
-		// console.log(dataStore);
+		const { slug } = router.query
+		let tempDataStore = JSON.parse(localStorage.getItem(slug))
+		// console.log(dataStore)
+		if (tempDataStore.slug) {
+			let newElement = { id: uid(), tagName: "p", html: "" }
+			tempDataStore.data.splice(index + 1, 0, newElement)
+			setDataStore(tempDataStore)
+			sendToLocalStorage(tempDataStore)
+			handleAutoSaveButton()
+			setTimeout(() => {
+				let abc = document.getElementById("parentNewElement")
+				// console.log(Array.from(abc.children)[index + 1].querySelector("p"))
+				try {
+					Array.from(abc.children)
+						[index + 1].querySelector("p")
+						.focus()
+				} catch (error) {
+					Array.from(abc.children)[0].querySelector("p").focus()
+				}
+			}, 100)
+		}
 	}
 
 	function setCaret(el) {
@@ -190,6 +191,7 @@ const Post = () => {
 			e.preventDefault()
 			// console.log("ENTER PRESSES", index);
 			handleAddElement(index)
+			return
 		} else if (e.keyCode === 8) {
 			// handleDeleteElement(index)
 			let tempDataStore = { ...dataStore }
@@ -200,6 +202,7 @@ const Post = () => {
 			) {
 				e.preventDefault()
 				handleDeleteElement(index, length)
+				return
 			}
 		} else {
 			// console.log(e.keyCode)
@@ -290,10 +293,28 @@ const Post = () => {
 								{...{ toggleFavourites }}
 								favourite={dataStore.favourite}
 							/>
-							<TimerButton
-								createdTime={dataStore.createdOn}
-								updatedTime={dataStore.updatedOn}
-							/>
+							<div>
+								<button className="flex group items-center justify-between text-gray-700 font-medium outline-none hover:bg-customlight py-1 px-1 transition-all duration-200 rounded">
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										fill="none"
+										viewBox="0 0 24 24"
+										strokeWidth={1}
+										stroke="currentColor"
+										className="w-6 h-6"
+									>
+										<path
+											strokeLinecap="round"
+											strokeLinejoin="round"
+											d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"
+										/>
+									</svg>
+									<span className="absolute bg-customwhite border-black border z-10 top-[100px] w-[320px] rounded right-0 p-1 invisible group-hover:visible">
+										{`Updated On ${dataStore.updatedOn}`}
+										{`Created On ${dataStore.createdOn}`}
+									</span>
+								</button>
+							</div>
 							<OptionsButton
 								{...{
 									autoSave,

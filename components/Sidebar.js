@@ -3,6 +3,7 @@ import { child, get, ref } from "firebase/database"
 import Link from "next/link"
 import { useRouter } from "next/router"
 import React, { useEffect, useState } from "react"
+import { toast } from "react-toastify"
 import { uid } from "uid"
 import { auth, db } from "../config/firebaseConfig"
 import CreateKanbanButon from "./atoms/CreateKanbanButon"
@@ -60,12 +61,32 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar, refresh }) => {
 	const handleSignOutClick = () => {
 		signOut(auth)
 			.then(() => {
-				alert("Signout Success")
+				// alert("Signout Success")
+				toast.success("Signout Success!", {
+					position: "top-center",
+					autoClose: 3000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: false,
+					draggable: true,
+					progress: undefined,
+					theme: "dark",
+				})
 				localStorage.removeItem("user")
 				localStorage.clear()
 			})
 			.catch(() => {
-				alert("Signout Failed")
+				// alert("Signout Failed")
+				toast.erro("Signout Failed!", {
+					position: "top-center",
+					autoClose: 3000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: false,
+					draggable: true,
+					progress: undefined,
+					theme: "dark",
+				})
 			})
 	}
 
@@ -94,17 +115,17 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar, refresh }) => {
 						isSidebarOpen
 							? "translate-x-0 ease-out"
 							: "-translate-x-full ease-in"
-					} fixed bg-gray-800 h-screen w-[300px] transition duration-300 text-white transform z-30`}
+					} fixed h-screen w-[300px] transition duration-300 bg-customlight dark:bg-gray-800 text-customblack dark:text-white transform z-30`}
 				>
 					{/* Sidebar */}
 					<div className="h-screen flex flex-col p-1.5 overflow-y-auto">
 						<div className="flex w-full justify-between items-center h-10">
-							<h1 className="text-white text-2xl font-bold p-1.5 cursor-pointer">
+							<h1 className="text-2xl font-bold p-1.5 cursor-pointer">
 								<Link href={"/"}>ExoDocs</Link>
 							</h1>
 							{/* Mobile menu button */}
 							<button
-								className="text-white focus:outline-none"
+								className="focus:outline-none"
 								onClick={toggleSidebar}
 							>
 								<svg
@@ -125,7 +146,7 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar, refresh }) => {
 						</div>
 						{/* Sidebar content goes here */}
 						<div className="flex flex-col my-2 space-y-2">
-							<div className="w-full flex items-center justify-between p-1.5 font-normal rounded-lg text-gray-200 border">
+							<div className="w-full flex items-center justify-between p-1.5 font-normal rounded-lg border border-slate-800 dark:border-customwhite">
 								<div
 									title="Profile"
 									className="flex cursor-pointer items-center"
@@ -169,7 +190,7 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar, refresh }) => {
 								</li>
 
 								<li>
-									<div className="flex items-center p-1.5 text-base font-normal rounded-lg text-white hover:bg-gray-700 cursor-pointer border border-b-0 rounded-b-none">
+									<div className="flex items-center p-1.5 text-base font-normal rounded-lg cursor-pointer border border-slate-800 dark:border-customwhite border-b-0 rounded-b-none">
 										<svg
 											xmlns="http://www.w3.org/2000/svg"
 											fill="orange"
@@ -189,12 +210,12 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar, refresh }) => {
 											Favourites
 										</span>
 									</div>
-									<ol className="space-y-1 md:space-y-2 p-1.5 rounded-b-lg border ">
+									<ol className="space-y-1 md:space-y-2 p-1.5 rounded-b-lg border border-slate-800 dark:border-customwhite">
 										{!dataList.every(
 											item => item.favourites === false
 										) ||
 											(dataList.length <= 0 && (
-												<span className="flex text-customlight items-center justify-center">
+												<span className="flex items-center justify-center">
 													No Favourites Added
 												</span>
 											))}
@@ -218,7 +239,7 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar, refresh }) => {
 									</ol>
 								</li>
 								<li>
-									<div className="flex items-center p-1.5 text-base font-normal rounded-lg rounded-b-none text-white border-2 border-black bg-gray-700 cursor-pointer">
+									<div className="flex items-center p-1.5 text-base font-normal rounded-lg rounded-b-none dark:text-white border-2 dark:border-black dark:bg-gray-700 cursor-pointer text-slate-800 border-slate-800">
 										<svg
 											xmlns="http://www.w3.org/2000/svg"
 											fill="none"
@@ -238,9 +259,9 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar, refresh }) => {
 											All Pages
 										</span>
 									</div>
-									<ol className="space-y-1 border-2 border-black border-t-0 md:space-y-2 p-1.5 bg-gray-700 rounded-b-lg">
+									<ol className="space-y-1 border-2 dark:border-black border-t-0 md:space-y-2 p-1.5 dark:bg-gray-700 rounded-b-lg text-slate-800 bg-customwhite border-slate-800">
 										{dataList.length <= 0 && (
-											<span className="flex text-customlight items-center justify-center">
+											<span className="flex text-slate-800 dark:text-customlight items-center justify-center">
 												No Pages to show
 											</span>
 										)}
