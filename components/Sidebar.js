@@ -31,26 +31,26 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar, refresh }) => {
 							let data = Object.entries(snapshot.val())
 							data.map(obj => {
 								let objectArray = Object.values(obj[1])
-								// console.log(objectArray)
+								// console.debug(objectArray)
 								objectArray.map(finalArray => {
-									// console.log(finalArray)
+									// console.debug(finalArray)
 									let ArrayData = JSON.parse(
 										finalArray.storedData
 									)
 									dataListArr.push(ArrayData)
 									setDataList(dataListArr)
-									// console.log(ArrayData)
+									// console.debug(ArrayData)
 								})
 							})
 						} else {
 							setDataList([])
-							// console.log("No data available")
+							// console.debug("No data available")
 						}
 					})
 					.catch(error => {
 						console.error(error)
 					})
-				// console.log(user);
+				// console.debug(user);
 			} else {
 				setLogin(false)
 				setUserObject(null)

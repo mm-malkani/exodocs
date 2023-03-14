@@ -37,7 +37,7 @@ const ForgotPassword = () => {
 				)
 			})
 			.catch(err => {
-				console.log(err)
+				console.debug(err)
 				// alert("Error Occured ! Please Try Again")
 				toast.error("Error Occured ! Please Try Again!", {
 					position: "top-center",

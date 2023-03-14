@@ -8,7 +8,7 @@ const DeletePageButton = ({ userUid, type, slug }) => {
 	const router = useRouter()
 
 	const deleteFromDatabase = () => {
-		// console.log(data.slug.length)
+		// console.debug(data.slug.length)
 		if (slug.length === 32) {
 			set(
 				ref(
@@ -20,7 +20,7 @@ const DeletePageButton = ({ userUid, type, slug }) => {
 				null
 			)
 				.then(() => {
-					// console.log(
+					// console.debug(
 					// 	`${userUid}/${
 					// 		type == "k" ? "kanban" : type == "p" ? "pages" : ""
 					// 	}/${slug}`
@@ -28,12 +28,12 @@ const DeletePageButton = ({ userUid, type, slug }) => {
 					try {
 						localStorage.removeItem(slug)
 					} catch (error) {
-						console.log(error)
+						console.debug(error)
 					}
 					router.push("/")
-					// console.log("REMOVED")
+					// console.debug("REMOVED")
 				})
-				.catch(err => console.log(err))
+				.catch(err => console.debug(err))
 		} else {
 			// alert("Error Occured in Deleting Page Please Reload the Page")
 			toast.error(

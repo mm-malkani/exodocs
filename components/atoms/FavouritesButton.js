@@ -5,7 +5,7 @@ const FavouritesButton = ({ favourite, toggleFavourites }) => {
 		<button
 			title="Add/Remove from Favourites"
 			onClick={() => toggleFavourites()}
-			className="flex items-center justify-between text-gray-700 font-medium outline-none hover:bg-customlight py-1 px-1 transition-all duration-200 rounded"
+			className="flex items-center justify-between text-gray-700 font-medium outline-none hover:bg-customlight dark:hover:bg-customgray py-1 px-1 transition-all duration-200 rounded"
 		>
 			<svg
 				xmlns="http://www.w3.org/2000/svg"

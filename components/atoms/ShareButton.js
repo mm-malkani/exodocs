@@ -11,7 +11,7 @@ const ShareButton = ({ userUid, type, slug }) => {
 		let text = `${host}/shared/${type}/${slug}-${userUid}`
 		try {
 			await navigator.clipboard.writeText(text)
-			// console.log("Content copied to clipboard")
+			// console.debug("Content copied to clipboard")
 			// alert(`Link Copied to Clipboard`)
 			toast.success("Link Copied to Clipboard!", {
 				position: "top-center",
@@ -26,8 +26,8 @@ const ShareButton = ({ userUid, type, slug }) => {
 		} catch (err) {
 			console.error("Failed to copy: ", err)
 		}
-		// console.log(userUid, type, slug)
-		// console.log(`${host}/shared/${type}/${slug}-${userUid}`)
+		// console.debug(userUid, type, slug)
+		// console.debug(`${host}/shared/${type}/${slug}-${userUid}`)
 	}
 
 	const handleLinkShare = () => {

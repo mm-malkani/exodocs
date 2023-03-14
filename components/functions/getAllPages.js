@@ -1,4 +1,4 @@
-import { ref, child, get } from "firebase/database"
+import { child, get, ref } from "firebase/database"
 import { db } from "../../config/firebaseConfig"
 
 export const getAllPages = uid => {
@@ -6,9 +6,9 @@ export const getAllPages = uid => {
 	get(child(dbRef, `${uid}/`))
 		.then(snapshot => {
 			if (snapshot.exists()) {
-				// console.log(snapshot.val())
+				// console.debug(snapshot.val())
 			} else {
-				// console.log("No data available")
+				// console.debug("No data available")
 			}
 		})
 		.catch(error => {

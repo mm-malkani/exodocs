@@ -1,14 +1,14 @@
 import {
-	signInWithPopup,
-	signInWithEmailAndPassword,
 	onAuthStateChanged,
+	signInWithEmailAndPassword,
+	signInWithPopup,
 } from "@firebase/auth"
+import Link from "next/link"
+import { useRouter } from "next/router"
 import React, { useEffect, useState } from "react"
 import { FcGoogle } from "react-icons/fc"
-import { useRouter } from "next/router"
-import Link from "next/link"
-import { auth, provider } from "../config/firebaseConfig"
 import { toast } from "react-toastify"
+import { auth, provider } from "../config/firebaseConfig"
 
 const Login = () => {
 	const router = useRouter()
@@ -30,7 +30,7 @@ const Login = () => {
 	const handleGoogleClick = () => {
 		signInWithPopup(auth, provider)
 			.then(user => {
-				// console.log(user)
+				// console.debug(user)
 				// alert("Login Successfull")
 				localStorage.setItem("user", JSON.stringify(user))
 				toast.success("Log in Success!", {
@@ -66,7 +66,7 @@ const Login = () => {
 	const handleLoginClick = () => {
 		signInWithEmailAndPassword(auth, email, password)
 			.then(user => {
-				// console.log(user)
+				// console.debug(user)
 				// alert("Login Successfull")
 				localStorage.setItem("user", JSON.stringify(user))
 				toast.success("Log in Success!", {
@@ -81,7 +81,7 @@ const Login = () => {
 				})
 			})
 			.catch(err => {
-				console.log(err)
+				console.debug(err)
 				// alert("Login Failed")
 				toast.error("Log in Failed!", {
 					position: "top-center",

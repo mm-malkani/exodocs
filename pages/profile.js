@@ -55,11 +55,11 @@ const Profile = () => {
 	}
 
 	return (
-		<div className="flex w-screen overflow-x-hidden bg-customwhite h-full min-h-[570px] py-2">
+		<div className="flex w-screen overflow-x-hidden bg-customwhite dark:bg-customgray h-full screenNav">
 			{login && (
 				<div className="flex flex-col w-full items-center rounded-lg space-y-2">
-					<h2 className="text-center">Profile</h2>
-					<div className="border p-1 flex flex-col items-center px-4 max-w-xs space-y-2">
+					<h2 className="text-center pt-2">Profile</h2>
+					<div className="border dark:border-gray p-1 flex flex-col items-center px-4 max-w-xs space-y-2">
 						{user.photoURL && (
 							<span className="relative w-[100px] h-[100px] sm:w-[180px] sm:h-[180px] rounded-full">
 								<Image
@@ -88,7 +88,7 @@ const Profile = () => {
 							{user.displayName}
 						</span>
 					</div>
-					<div className="card flex flex-col bg-customlight font-medium p-2 text-lg rounded">
+					<div className="card flex flex-col bg-customlight dark:bg-customgray font-medium p-2 text-lg rounded">
 						<div className="flex">
 							<span>Email : {user.email}</span>
 						</div>

@@ -29,7 +29,7 @@ const DarkModeButton = () => {
 	}
 
 	return (
-		<div className="flex items-center justify-between space-x-2 py-1 px-2">
+		<div className="flex flex-col sm:flex-row items-center justify-center sm:justify-between space-y-1 sm:space-x-1">
 			<div className="text-gray-700 font-medium">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"

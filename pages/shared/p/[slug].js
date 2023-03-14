@@ -23,26 +23,26 @@ const Pages = () => {
 			)
 				.then(snapshot => {
 					if (snapshot.exists()) {
-						// console.log(snapshot.val().storedData)
+						// console.debug(snapshot.val().storedData)
 						let tempDataStore = JSON.parse(
 							snapshot.val().storedData
 						)
 						setDataStore(tempDataStore)
-						// console.log(tempDataStore)
+						// console.debug(tempDataStore)
 					} else {
-						console.log("No data available")
+						console.debug("No data available")
 						router.push(`${router.asPath}/notFound`)
 					}
 				})
 				.catch(error => {
-					console.log(error)
+					console.debug(error)
 				})
 		}
 		//eslint-disable-next-line
 	}, [router, slug])
 
 	return (
-		<div className="w-full flex flex-col p-2 space-y-2 min-h-screen overflow-x-hidden">
+		<div className="w-full flex flex-col p-2 space-y-2 min-h-screen overflow-x-hidden dark:bg-customgray">
 			<Head>
 				<title>{`ExoDocs - ${dataStore.title}`}</title>
 			</Head>
@@ -56,10 +56,10 @@ const Pages = () => {
 
 			<div
 				id="parentNewElement"
-				className="flex flex-col items-center justify-center w-full space-y-2 bg-white overflow-y-auto overflow-x-hidden"
+				className="flex flex-col items-center justify-center w-full space-y-2 bg-white overflow-y-auto overflow-x-hidden dark:bg-customgray"
 			>
 				{dataStore.data.map((data, index, arr) => {
-					// console.log(arr.length)
+					// console.debug(arr.length)
 					return (
 						<SharedNewElement
 							length={arr.length}

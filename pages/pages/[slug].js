@@ -43,7 +43,7 @@ const Post = () => {
 				get(child(dbRef, `${user.uid}/pages/${slug}`))
 					.then(snapshot => {
 						if (snapshot.exists()) {
-							// console.log(snapshot.val().storedData)
+							// console.debug(snapshot.val().storedData)
 							localStorage.setItem(
 								slug,
 								JSON.stringify(
@@ -54,11 +54,11 @@ const Post = () => {
 							setDataStore(data)
 							setEditableTitle(data.title)
 						} else {
-							// console.log("No data available")
+							// console.debug("No data available")
 							let dataToAdd = { ...initialData["tempPage"] }
 							dataToAdd.slug = `${slug}`
 							dataToAdd.creator = `${user.email}`
-							// console.log(dataToAdd.slug)
+							// console.debug(dataToAdd.slug)
 							localStorage.setItem(
 								slug,
 								JSON.stringify(dataToAdd)
@@ -103,22 +103,23 @@ const Post = () => {
 	const handleAddElement = index => {
 		const { slug } = router.query
 		let tempDataStore = JSON.parse(localStorage.getItem(slug))
-		// console.log(dataStore)
+		// console.debug(dataStore)
 		if (tempDataStore.slug) {
 			let newElement = { id: uid(), tagName: "p", html: "" }
 			tempDataStore.data.splice(index + 1, 0, newElement)
 			setDataStore(tempDataStore)
 			sendToLocalStorage(tempDataStore)
 			handleAutoSaveButton()
+			let abc = document.getElementById("parentNewElement")
+			// console.debug(Array.from(abc.children)[index + 1].querySelector("p"))
 			setTimeout(() => {
-				let abc = document.getElementById("parentNewElement")
-				// console.log(Array.from(abc.children)[index + 1].querySelector("p"))
 				try {
-					Array.from(abc.children)
-						[index + 1].querySelector("p")
-						.focus()
+					// prettier-ignore
+					Array.from(abc.children)[index + 1].querySelector("p").focus()
 				} catch (error) {
-					Array.from(abc.children)[0].querySelector("p").focus()
+					console.log(Array.from(abc.children)[0])
+					// prettier-ignore
+					Array.from(abc.children)[0].querySelector("div").nextElementSibling.focus()
 				}
 			}, 100)
 		}
@@ -136,21 +137,21 @@ const Post = () => {
 	}
 
 	const handleDeleteElement = (index, length) => {
-		// console.log(index);
+		// console.debug(index);
 		let tempDataStore = { ...dataStore }
 		if (length <= 1) {
 			let newElement = { id: uid(), tagName: "p", html: "" }
 			tempDataStore.data.splice(index, 1, newElement)
 			setDataStore(tempDataStore)
 		} else {
-			// console.log(tempDataStore.data);
+			// console.debug(tempDataStore.data);
 			tempDataStore.data.splice(index, 1)
 			setDataStore(tempDataStore)
 		}
 		setTimeout(() => {
 			try {
 				let abc = document.getElementById("parentNewElement")
-				// console.log(index);
+				// console.debug(index);
 				let array = Array.from(abc.children)
 				if (index == 0) {
 					array[0].querySelector("div").nextSibling.focus()
@@ -160,7 +161,7 @@ const Post = () => {
 					setCaret(caretVar)
 				}
 			} catch (error) {
-				// console.log(error)
+				// console.debug(error)
 				handleAddElement(0)
 			}
 		}, 200)
@@ -189,13 +190,13 @@ const Post = () => {
 	const handleOnKeyDown = (e, index, length) => {
 		if (e.keyCode === 13) {
 			e.preventDefault()
-			// console.log("ENTER PRESSES", index);
+			// console.debug("ENTER PRESSES", index);
 			handleAddElement(index)
 			return
 		} else if (e.keyCode === 8) {
 			// handleDeleteElement(index)
 			let tempDataStore = { ...dataStore }
-			// console.log(tempDataStore.data[index].html.length)
+			// console.debug(tempDataStore.data[index].html.length)
 			if (
 				!tempDataStore.data[index].html.length ||
 				tempDataStore.data[index].html.length <= 0
@@ -205,13 +206,13 @@ const Post = () => {
 				return
 			}
 		} else {
-			// console.log(e.keyCode)
+			// console.debug(e.keyCode)
 		}
 	}
 
 	// ChANGE THE STYLE OF TEXT
 	const convertTagName = (index, type) => {
-		// console.log(index)
+		// console.debug(index)
 		let tempDataStore = { ...dataStore }
 		tempDataStore.data[index].tagName = type
 		setDataStore(tempDataStore)
@@ -225,18 +226,18 @@ const Post = () => {
 
 	const handleDragStart = index => {
 		elementDrag.current = index
-		// console.log(index)
+		// console.debug(index)
 	}
 
 	const handleDragEnter = index => {
 		elementDragOver.current = index
-		// console.log(index)
+		// console.debug(index)
 	}
 
 	const handleDragEnd = () => {
-		// console.log(e)
+		// console.debug(e)
 		if (elementDrag.current != elementDragOver.current) {
-			// console.log(elementDrag.current, elementDragOver.current)
+			// console.debug(elementDrag.current, elementDragOver.current)
 			let tempDataStore = { ...dataStore }
 			let elementCopy = tempDataStore.data[elementDrag.current]
 			tempDataStore.data.splice(elementDrag.current, 1)
@@ -252,9 +253,9 @@ const Post = () => {
 				sendToLocalStorage(tempDataStore)
 				handleAutoSaveButton()
 			} catch (error) {
-				console.log(error)
+				console.debug(error)
 			}
-			// console.log(elementCopy)
+			// console.debug(elementCopy)
 		}
 	}
 
@@ -272,11 +273,11 @@ const Post = () => {
 		<>
 			{!login && <LoginFirst />}
 			{login && (
-				<div className="w-full flex flex-col p-2 space-y-2 h-full overflow-x-hidden">
+				<div className="w-full flex flex-col p-2 space-y-2 h-full overflow-x-hidden dark:bg-customgray">
 					<Head>
 						<title>{`ExoDocs - ${editableTitle}`}</title>
 					</Head>
-					<div className="flex space-x-2 justify-between screenNav text-customblack">
+					<div className="flex space-x-2 justify-between text-customblack">
 						<input
 							className="font-semibold p-1 text-sm rounded w-1/2 bg-customwhite"
 							onChange={e => handleEditTitle(e.target.value)}
@@ -329,10 +330,10 @@ const Post = () => {
 
 					<div
 						id="parentNewElement"
-						className="flex flex-col items-center screenNav justify-center w-full space-y-2 bg-white overflow-y-auto overflow-x-auto"
+						className="flex flex-col items-center screenNav justify-start w-full space-y-2 bg-white dark:bg-customgray overflow-y-auto overflow-x-auto"
 					>
 						{dataStore.data.map((data, index, arr) => {
-							// console.log(arr.length)
+							// console.debug(arr.length)
 							return (
 								<NewElement
 									length={arr.length}

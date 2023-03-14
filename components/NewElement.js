@@ -21,7 +21,7 @@ const NewElement = ({
 	const [caret, setCaret] = useState(false)
 
 	return (
-		<div className="group flex bg-white hover:bg-customlight hover:text-custom-gray p-1.5 items-center rounded w-full">
+		<div className="group flex bg-white dark:bg-customgray dark:hover:bg-hovergray hover:bg-customlight hover:text-custom-gray p-1.5 items-center rounded w-full">
 			<div className="flex space-x-1 items-center">
 				<SortElement
 					{...{

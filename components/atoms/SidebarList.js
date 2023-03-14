@@ -9,14 +9,14 @@ const SidebarList = ({ data, userUid }) => {
 	const router = useRouter()
 
 	const deleteFromDatabase = () => {
-		// console.log(data.slug.length)
+		// console.debug(data.slug.length)
 		if (data.slug.length === 32) {
 			set(ref(db, `${userUid}/${data.type}/${data.slug}`), null)
 				.then(() => {
-					// console.log("REMOVED")
+					// console.debug("REMOVED")
 				})
-				.catch(err => console.log(err))
-			// console.log(router.asPath)
+				.catch(err => console.debug(err))
+			// console.debug(router.asPath)
 			localStorage.removeItem(data.slug)
 			if (router.asPath == `/${data.type}/${data.slug}`) {
 				router.push("/")

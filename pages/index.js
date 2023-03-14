@@ -26,26 +26,26 @@ const Home = () => {
 							let data = Object.entries(snapshot.val())
 							data.map(obj => {
 								let objectArray = Object.values(obj[1])
-								// console.log(objectArray)
+								// console.debug(objectArray)
 								objectArray.map(finalArray => {
-									// console.log(finalArray)
+									// console.debug(finalArray)
 									let ArrayData = JSON.parse(
 										finalArray.storedData
 									)
 									dataListArr.push(ArrayData)
 									setDataList(dataListArr)
-									// console.log(ArrayData)
+									// console.debug(ArrayData)
 								})
 							})
 						} else {
 							setDataList([])
-							// console.log("No data available")
+							// console.debug("No data available")
 						}
 					})
 					.catch(error => {
 						console.error(error)
 					})
-				// console.log(user);
+				// console.debug(user);
 			} else {
 				setLogin(false)
 			}
@@ -67,14 +67,14 @@ const Home = () => {
 			</Head>
 
 			{login && (
-				<div className="container mx-auto p-2 md:p-8 sm:p-4 bg-customwhite text-slate-800">
+				<div className="container mx-auto p-2 md:p-8 sm:p-4 bg-customlight dark:bg-customgray text-slate-800 screenNav">
 					<h3 className="font-bold mb-8 text-center">
 						Welcome to my ExoDocs - Your goto Todo builder and
 						Sharing App!
 					</h3>
 					<div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 gap-4">
 						{dataList.map((data, index) => {
-							// console.log(data.slug.length)
+							// console.debug(data.slug.length)
 							if (data) {
 								if (data.slug.length > 0) {
 									return (

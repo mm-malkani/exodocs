@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react"
-import { FcGoogle } from "react-icons/fc"
 import {
-	signInWithPopup,
 	createUserWithEmailAndPassword,
 	onAuthStateChanged,
+	signInWithPopup,
 } from "@firebase/auth"
-import { useRouter } from "next/router"
 import Link from "next/link"
-import { auth, provider } from "../config/firebaseConfig"
+import { useRouter } from "next/router"
+import React, { useEffect, useState } from "react"
+import { FcGoogle } from "react-icons/fc"
 import { toast } from "react-toastify"
+import { auth, provider } from "../config/firebaseConfig"
 
 const Signup = () => {
 	const router = useRouter()
@@ -38,11 +38,11 @@ const Signup = () => {
 					progress: undefined,
 					theme: "dark",
 				})
-				// console.log(user)
+				// console.debug(user)
 				// alert("Login Successfull")
 			})
 			.catch(err => {
-				console.log(err)
+				console.debug(err)
 				// alert("Login Failed")
 				toast.error("Log in Failed!", {
 					position: "top-center",
@@ -74,7 +74,7 @@ const Signup = () => {
 		}
 		createUserWithEmailAndPassword(auth, email, confirmPassword)
 			.then(() => {
-				// console.log(user)
+				// console.debug(user)
 				// alert("SignUp Successfull")
 				toast.success("Signup Successfull!", {
 					position: "top-center",
@@ -88,7 +88,7 @@ const Signup = () => {
 				})
 			})
 			.catch(err => {
-				console.log(err)
+				console.debug(err)
 				// alert("SignUp Failed")
 				toast.error("Signup Failed!", {
 					position: "top-center",

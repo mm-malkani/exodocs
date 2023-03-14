@@ -8,11 +8,11 @@ import { uid } from "uid"
 import AddTodoModal from "../../components/AddTodoModal"
 import FavouritesButton from "../../components/atoms/FavouritesButton"
 import PublishButton from "../../components/atoms/PublishButton"
-import ColorPicker from "../../components/molecules/ColorPicker"
 import EditTodoModal from "../../components/EditTodoModal"
 import { sendDataToFirebase } from "../../components/functions/sendToDb"
 import KanbanTodo from "../../components/kanbanTodo"
 import LoginFirst from "../../components/LoginFirst"
+import ColorPicker from "../../components/molecules/ColorPicker"
 import OptionsButton from "../../components/molecules/OptionsButton"
 import ViewModal from "../../components/ViewTodoBar"
 import { auth, db } from "../../config/firebaseConfig"
@@ -60,7 +60,7 @@ const Kanban = () => {
 				get(child(dbRef, `${user.uid}/kanban/${slug}`))
 					.then(snapshot => {
 						if (snapshot.exists()) {
-							// console.log(snapshot.val().storedData)
+							// console.debug(snapshot.val().storedData)
 							localStorage.setItem(
 								slug,
 								JSON.stringify(
@@ -72,9 +72,9 @@ const Kanban = () => {
 							setDataStore(data.kanban)
 							setEditableTitle(data.title)
 						} else {
-							// console.log("No data available")
+							// console.debug("No data available")
 							let dataToAdd = { ...dataBase["mockData"] }
-							// console.log(dataToAdd)
+							// console.debug(dataToAdd)
 							dataToAdd.slug = slug
 							dataToAdd.creator = user.email
 							localStorage.setItem(
@@ -89,7 +89,7 @@ const Kanban = () => {
 						}
 					})
 					.catch(error => {
-						console.log(error)
+						console.debug(error)
 					})
 			}
 			localStorage.removeItem("undefined")
@@ -146,12 +146,12 @@ const Kanban = () => {
 
 	// ------------ DELETE COLUMN
 	const deleteColumn = index => {
-		// // console.log(index)
+		// // console.debug(index)
 		// setDataStore(dataStore.splice(index, 1))
-		// // console.log(dataStore)
+		// // console.debug(dataStore)
 		// const { slug } = router.query
 		// setinitialData({ ...initialData, kanban: [...dataStore] })
-		// // console.log(dataStore)
+		// // console.debug(dataStore)
 		// localStorage.setItem(slug, JSON.stringify(initialData))
 		///WORKING
 		const { slug } = router.query
@@ -165,7 +165,7 @@ const Kanban = () => {
 
 	// ------------ FORWARD TODO IN COLUMNS
 	const forwardColumnClicked = (columnIndex, todoIndex) => {
-		// console.log(dataStore.length, columnIndex)
+		// console.debug(dataStore.length, columnIndex)
 		if (dataStore.length === columnIndex + 1) {
 			// alert("Can't Find Next Column")
 			toast.error("Can't Find Next Column!", {
@@ -190,7 +190,7 @@ const Kanban = () => {
 				sendToLocalStorage()
 				handleAutoSaveButton()
 			} catch (error) {
-				console.log(error)
+				console.debug(error)
 			}
 		}
 	}
@@ -220,7 +220,7 @@ const Kanban = () => {
 			todoUpdateTime: "Haven't Updated Yet",
 			label: label,
 		}
-		// console.log(tempDataStore);
+		// console.debug(tempDataStore);
 		try {
 			tempDataStore[0].columnData.splice(0, 0, newTodoData)
 			setDataStore(tempDataStore)
@@ -238,7 +238,7 @@ const Kanban = () => {
 				progress: undefined,
 				theme: "dark",
 			})
-			// console.log(error)
+			// console.debug(error)
 			setModalVisible(false)
 		}
 	}
@@ -264,10 +264,10 @@ const Kanban = () => {
 	// -------------- VIEW TODO
 	const [allTodoInfo, setAllTodoInfo] = useState("")
 	const viewTodoInfo = (columnIndex, todoIndex) => {
-		// console.log(columnIndex, todoIndex)
+		// console.debug(columnIndex, todoIndex)
 		let tempDataStore = [...dataStore]
 		setAllTodoInfo(tempDataStore[columnIndex].columnData[todoIndex])
-		// console.log(allTodoInfo)
+		// console.debug(allTodoInfo)
 		setViewTodoBar(true)
 	}
 
@@ -283,8 +283,8 @@ const Kanban = () => {
 		labelValue
 	) => {
 		const timestamp = Date().toString().slice(0, -30)
-		// console.log(todoTitleValue, todoDescriptionValue, labelValue)
-		// console.log(dataStore)
+		// console.debug(todoTitleValue, todoDescriptionValue, labelValue)
+		// console.debug(dataStore)
 		let tempDataStore = [...dataStore]
 		let newTodoData = {
 			todoId: uid(),
@@ -299,7 +299,7 @@ const Kanban = () => {
 			1,
 			newTodoData
 		)
-		// console.log(tempDataStore[currentIndex].columnData[currentTodoId])
+		// console.debug(tempDataStore[currentIndex].columnData[currentTodoId])
 		setDataStore(tempDataStore)
 		sendToLocalStorage()
 		publishData()
@@ -346,11 +346,11 @@ const Kanban = () => {
 	const dragEnterHandle = (e, columnIndex, todoIndex) => {
 		todoitemDragOver.current = todoIndex
 		dragOverColumnIndex.current = columnIndex
-		// console.log(columnIndex)
+		// console.debug(columnIndex)
 	}
 
 	const dragEndHandle = (e, columnIndex) => {
-		// console.log(dragOverColumnIndex.current, "DRAG OVER INDEX COLUMN")
+		// console.debug(dragOverColumnIndex.current, "DRAG OVER INDEX COLUMN")
 		let tempDataStore = [...dataStore]
 		let todoItemMain =
 			tempDataStore[columnIndex].columnData[todoitemDrag.current]
@@ -390,7 +390,7 @@ const Kanban = () => {
 			todoitemDragOver.current = null
 			dragOverColumnIndex.current = null
 		} catch (err) {
-			console.log(err)
+			console.debug(err)
 		}
 	}
 
@@ -408,7 +408,7 @@ const Kanban = () => {
 		localStorage.setItem(slug, JSON.stringify(tempDataStore))
 		setTimeout(() => {
 			handleAutoSaveButton()
-			console.log("SAVED")
+			console.debug("SAVED")
 		}, 1000)
 	}
 
@@ -466,7 +466,7 @@ const Kanban = () => {
 						)}
 					</div>
 
-					<div className="p-2 h-screen bg-customlight text-customblack">
+					<div className="p-2 h-screen bg-customlight text-customblack dark:bg-customgray">
 						<div className="flex space-x-2 justify-between">
 							<input
 								className="font-semibold p-1 text-sm rounded bg-customwhite w-1/2"
@@ -487,7 +487,7 @@ const Kanban = () => {
 									favourite={initialData.favourite}
 								/>
 								<div>
-									<button className="flex group items-center justify-between text-gray-700 font-medium outline-none hover:bg-customlight py-1 px-1 transition-all duration-200 rounded">
+									<button className="flex group items-center justify-between text-gray-700 font-medium outline-none hover:bg-customlight dark:hover:bg-customgray py-1 px-1 transition-all duration-200 rounded">
 										<svg
 											xmlns="http://www.w3.org/2000/svg"
 											fill="none"
@@ -535,7 +535,7 @@ const Kanban = () => {
 						</div>
 						<div
 							id="kanbanScrollArea"
-							className="flex flex-row space-x-4 w-full min-h-fit py-2 bg-customlight overflow-x-auto"
+							className="flex flex-row space-x-4 w-full min-h-fit py-2 bg-customlight overflow-x-auto dark:bg-customgray"
 						>
 							{dataStore.map((column, index) => {
 								return (
@@ -544,7 +544,7 @@ const Kanban = () => {
 											setFillColorOptions(false)
 										}
 										key={index}
-										className="w-[300px] min-w-[300px] rounded-lg md:w-1/3 h-fit bg-customlight border-2 flex flex-col"
+										className="w-[300px] min-w-[300px] rounded-lg md:w-1/3 h-fit bg-customlight border-2 dark:border-black flex flex-col"
 									>
 										<h1 className="text-center h-12 rounded bg-customlight w-full flex items-center justify-between px-4 text-customblack text-xl font-semibold">
 											<span

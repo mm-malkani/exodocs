@@ -3,7 +3,7 @@ import ContentEditable from "react-contenteditable"
 
 const SharedNewElement = ({ html, tagName, index }) => {
 	return (
-		<div className="group flex bg-white hover:bg-customlight hover:text-custom-gray p-1 items-center justify-between rounded w-full">
+		<div className="group flex bg-white dark:bg-customgray dark:hover:bg-hovergray hover:bg-customlight hover:text-custom-gray p-1 items-center justify-between rounded w-full">
 			<ContentEditable
 				id={index}
 				tagName={tagName}

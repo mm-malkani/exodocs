@@ -3,7 +3,7 @@ import LoginButton from "./atoms/LoginButton"
 
 const LoginFirst = () => {
 	return (
-		<main className="flex-1 overflow-y-auto">
+		<main className="flex-1 overflow-y-auto bg-white text-black dark:bg-slate-600 dark:text-customwhite">
 			{/* Navbar */}
 
 			{/* Content section */}

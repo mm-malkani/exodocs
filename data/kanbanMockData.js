@@ -22,7 +22,7 @@ export const dataBase = {
 						todoDescription: "Todo Description will come here",
 						todoCreationTime: timestamp,
 						todoUpdateTime: "Haven't Updated Yet",
-						label: null,
+						label: "None",
 					},
 				],
 			},

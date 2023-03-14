@@ -13,7 +13,7 @@ const SharedKanbanTodo = ({
 	return (
 		<div className="flex p-4 space-y-2 rounded hover:scale-105 hover:cursor-default transition-all duration-200">
 			<div
-				className={`flex p-4 w-full rounded border-2 border-customgray text-customblack flex-col `}
+				className={`flex p-4 w-full rounded border-2 border-customgray dark:border-gray text-customblack flex-col `}
 			>
 				<div className="flex flex-wrap justify-between w-full">
 					<div className="flex space-x-2 items-center w-10/12">

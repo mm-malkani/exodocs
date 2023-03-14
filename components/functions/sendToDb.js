@@ -13,7 +13,7 @@ export const sendDataToFirebase = (uid, type, slug) => {
 	// Send data to Firebase Realtime Database
 	set(ref(db, `${uid}/${type}/${slug}`), { storedData })
 		.then(() => {
-			console.log("Published!")
+			console.debug("Published!")
 		})
 		.catch(error => {
 			console.error("Error sending data :", error)

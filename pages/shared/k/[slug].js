@@ -1,8 +1,7 @@
 import { child, get, ref } from "firebase/database"
 import Head from "next/head"
 import { useRouter } from "next/router"
-import { useState } from "react"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import ViewModal from "../../../components/ViewTodoBar"
 import { db } from "../../../config/firebaseConfig"
 import { dataBase } from "../../../data/kanbanMockData"
@@ -19,7 +18,7 @@ const Kanban = () => {
 
 	const setAllInfoTodo = (column, todo) => {
 		let allData = dataStore[column].columnData[todo]
-		// console.log(allData)
+		// console.debug(allData)
 		setTodoInfo(allData)
 	}
 
@@ -34,20 +33,20 @@ const Kanban = () => {
 			)
 				.then(snapshot => {
 					if (snapshot.exists()) {
-						// console.log(snapshot.val().storedData)
+						// console.debug(snapshot.val().storedData)
 						let tempDataStore = JSON.parse(
 							snapshot.val().storedData
 						)
 						setInitialData(tempDataStore)
-						// console.log(tempDataStore)
+						// console.debug(tempDataStore)
 						setDataStore(tempDataStore.kanban)
 					} else {
-						// console.log("No data available")
+						// console.debug("No data available")
 						router.push(`${router.asPath}/notFound`)
 					}
 				})
 				.catch(error => {
-					console.log(error)
+					console.debug(error)
 				})
 		}
 		//eslint-disable-next-line
@@ -58,7 +57,7 @@ const Kanban = () => {
 			<Head>
 				<title>{`ExoDocs - ${initialData.title}`}</title>
 			</Head>
-			<div className="p-2 h-screen bg-customlight text-customblack">
+			<div className="p-2 h-screen bg-customlight text-customblack dark:bg-customgray">
 				{viewTodoBar && (
 					<ViewModal
 						setViewTodoBar={setViewTodoBar}
@@ -76,13 +75,13 @@ const Kanban = () => {
 
 				<div
 					id="kanbanScrollArea"
-					className="flex flex-row space-x-4 w-full min-h-fit py-2 bg-customlight overflow-x-auto"
+					className="flex flex-row space-x-4 w-full min-h-fit py-2 dark:bg-customgray bg-customlight overflow-x-auto"
 				>
 					{dataStore.map((column, index) => {
 						return (
 							<div
 								key={index}
-								className="w-[300px] min-w-[300px] rounded-lg md:w-1/3 h-fit bg-customlight border-2 flex flex-col"
+								className="w-[300px] min-w-[300px] rounded-lg md:w-1/3 h-fit bg-customlight border-2 dark:border-black flex flex-col"
 							>
 								<h1 className="text-center h-12 rounded bg-customlight w-full flex items-center justify-between px-4 text-customblack text-xl font-semibold">
 									<span

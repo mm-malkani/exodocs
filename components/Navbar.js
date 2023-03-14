@@ -14,7 +14,7 @@ const Navbar = ({ toggleSidebar }) => {
 			if (user) {
 				setLogin(true)
 				// setUserObject(user)
-				// console.log(user);
+				// console.debug(user);
 			} else {
 				setLogin(false)
 			}
@@ -22,7 +22,7 @@ const Navbar = ({ toggleSidebar }) => {
 	}, [])
 
 	return (
-		<nav className="p-4 overflow-x-hidden text-slate-800 bg-customlight dark:bg-slate-800 dark:text-customwhite border-b-2">
+		<nav className="p-2 sm:p-4 overflow-x-hidden text-slate-800 bg-customlight dark:bg-slate-800 dark:text-customwhite border-b-2 dark:border-b-gray">
 			<div className="flex justify-between items-center">
 				<div className="flex space-x-2">
 					{login && (
@@ -51,7 +51,7 @@ const Navbar = ({ toggleSidebar }) => {
 						<Link href={"/"}>ExoDocs</Link>
 					</h1>
 				</div>
-				{login && <DarkModeButton />}
+				<DarkModeButton />
 				{!login && (
 					<div className="flex space-x-2">
 						<LoginButton />

@@ -11,6 +11,8 @@ module.exports = {
 			colors: {
 				customblack: "#212121",
 				customwhite: "#e4e4e4",
+				customgray: "#c8c8c8",
+				hovergray: "#dcdcdc",
 				"custom-gray": "#383838",
 				customlight: "#f1f3f4",
 				brown: "#A52A2A",
