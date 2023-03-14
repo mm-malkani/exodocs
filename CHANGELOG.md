@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.6.4](https://github.com/abhishekintern/exodocs/compare/v0.6.3...v0.6.4) (2023-03-14)
+
+
+### 🐛 Bug Fixes
+
+* **New Page:** Bug for a new kanban and new page ([7a42fd1](https://github.com/abhishekintern/exodocs/commit/7a42fd13a5d23fbfd379ffbcf47be08bc627b822))
+
 ### [0.6.3](https://github.com/abhishekintern/exodocs/compare/v0.6.2...v0.6.3) (2023-03-14)
 
 ### [0.6.2](https://github.com/abhishekintern/exodocs/compare/v0.6.1...v0.6.2) (2023-03-14)
