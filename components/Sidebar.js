@@ -94,6 +94,7 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar, refresh }) => {
 		let yes = confirm("Are you sure you want to create a new Kanban Board")
 		if (yes) {
 			const id = uid(32)
+			router.push("/")
 			router.push("/kanban/" + id)
 			toggleSidebar(false)
 		}
@@ -102,6 +103,7 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar, refresh }) => {
 		let yes = confirm("Are you sure you want to create a new Page")
 		if (yes) {
 			const id = uid(32)
+			router.push("/")
 			router.push("/pages/" + id)
 			toggleSidebar()
 		}
