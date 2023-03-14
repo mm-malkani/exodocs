@@ -95,7 +95,9 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar, refresh }) => {
 		if (yes) {
 			const id = uid(32)
 			router.push("/")
-			router.push("/kanban/" + id)
+			setTimeout(() => {
+				router.push("/kanban/" + id)
+			}, 100)
 			toggleSidebar(false)
 		}
 	}
@@ -104,7 +106,9 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar, refresh }) => {
 		if (yes) {
 			const id = uid(32)
 			router.push("/")
-			router.push("/pages/" + id)
+			setTimeout(() => {
+				router.push("/pages/" + id)
+			}, 100)
 			toggleSidebar()
 		}
 	}
