@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.6.2](https://github.com/abhishekintern/exodocs/compare/v0.6.1...v0.6.2) (2023-03-14)
+
+
+### :recycle: Code Refactoring
+
+* **Dark Mode:** Enhanced code for dark mode and refactored it ([d2dd018](https://github.com/abhishekintern/exodocs/commit/d2dd0182f2f5bc255098b4b031619ad0f0aed10c))
+
 ### [0.6.1](https://github.com/abhishekintern/exodocs/compare/v0.6.0...v0.6.1) (2023-03-13)
 
 
