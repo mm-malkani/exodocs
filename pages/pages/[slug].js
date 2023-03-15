@@ -7,6 +7,7 @@ import { uid } from "uid"
 import FavouritesButton from "../../components/atoms/FavouritesButton"
 import PublishButton from "../../components/atoms/PublishButton"
 import { sendDataToFirebase } from "../../components/functions/sendToDb"
+import { useDebounced } from "../../components/functions/useDebounced"
 import LoginFirst from "../../components/LoginFirst"
 import OptionsButton from "../../components/molecules/OptionsButton"
 import NewElement from "../../components/NewElement"
@@ -24,6 +25,13 @@ const Post = () => {
 	const [login, setLogin] = useState(false)
 
 	const [user, setUser] = useState("")
+	const [titleCopy, setTitleCopy] = useState()
+	const setDebouncedTitle = useDebounced(val => setTitleCopy(val), 1000)
+
+	useEffect(() => {
+		titleCopy && handleAutoSaveButton()
+		// eslint-disable-next-line
+	}, [titleCopy])
 
 	useEffect(() => {
 		onAuthStateChanged(auth, user => {
@@ -174,7 +182,7 @@ const Post = () => {
 		tempDataStore.data[index].html = html
 		setDataStore(tempDataStore)
 		sendToLocalStorage(tempDataStore)
-		handleAutoSaveButton()
+		// handleAutoSaveButton()
 	}
 
 	const handleEditTitle = value => {
@@ -184,7 +192,7 @@ const Post = () => {
 		setDataStore(tempDataStore)
 		localStorage.setItem(slug, JSON.stringify(tempDataStore))
 		setEditableTitle(value)
-		handleAutoSaveButton()
+		// handleAutoSaveButton()
 	}
 
 	const handleOnKeyDown = (e, index, length) => {
@@ -279,8 +287,11 @@ const Post = () => {
 					</Head>
 					<div className="flex space-x-2 justify-between text-customblack">
 						<input
-							className="font-semibold p-1 text-sm rounded w-1/2 bg-customwhite"
-							onChange={e => handleEditTitle(e.target.value)}
+							className="font-semibold p-1 text-sm rounded w-2/3 bg-customwhite"
+							onChange={e => {
+								handleEditTitle(e.target.value)
+								setDebouncedTitle(e.target.value)
+							}}
 							value={editableTitle}
 						/>
 						<div className="flex items-center space-x-1 justify-center">
@@ -349,6 +360,7 @@ const Post = () => {
 										handleDragEnd,
 										handleDragStart,
 										handleDragEnter,
+										handleAutoSaveButton,
 									}}
 								/>
 							)

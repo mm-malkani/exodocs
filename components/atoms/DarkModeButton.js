@@ -56,13 +56,13 @@ const DarkModeButton = () => {
 				</svg>
 			</div>
 			<label
-				htmlFor="autosave"
+				htmlFor="darkMode"
 				className="flex items-center cursor-pointer"
 			>
 				<div className="relative">
 					<input
 						type="checkbox"
-						id="autosave"
+						id="darkMode"
 						checked={darkModeOn}
 						onChange={handleDarkMode}
 						className="sr-only"

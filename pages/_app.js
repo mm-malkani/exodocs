@@ -76,7 +76,7 @@ function MyApp({ Component, pageProps }) {
 						: screenWidth > 420
 						? "openWidth"
 						: "closeWidth"
-				} transition-all duration-300`}
+				} transition-transform sm:transition-all duration-300`}
 			>
 				<Component {...pageProps} />
 			</div>

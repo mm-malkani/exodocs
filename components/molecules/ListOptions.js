@@ -5,7 +5,7 @@ const ListOptions = ({ caret, index, convertTagName }) => {
 		<ul
 			className={`${
 				caret
-					? "bg-customlight border w-[150px] rounded h-[150px] absolute flex-col flex"
+					? "bg-customlight border w-[150px] rounded h-[180px] absolute flex-col flex"
 					: "hidden"
 			}`}
 		>
@@ -41,6 +41,15 @@ const ListOptions = ({ caret, index, convertTagName }) => {
                             text-center"
 			>
 				Paragraph
+			</li>
+			<li
+				onClick={() => {
+					convertTagName(index, "li")
+				}}
+				className="cursor-pointer rounded hover:bg-customwhite p-1.5
+                            text-center"
+			>
+				List Item
 			</li>
 		</ul>
 	)

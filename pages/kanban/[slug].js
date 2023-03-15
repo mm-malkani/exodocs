@@ -10,6 +10,7 @@ import FavouritesButton from "../../components/atoms/FavouritesButton"
 import PublishButton from "../../components/atoms/PublishButton"
 import EditTodoModal from "../../components/EditTodoModal"
 import { sendDataToFirebase } from "../../components/functions/sendToDb"
+import { useDebounced } from "../../components/functions/useDebounced"
 import KanbanTodo from "../../components/kanbanTodo"
 import LoginFirst from "../../components/LoginFirst"
 import ColorPicker from "../../components/molecules/ColorPicker"
@@ -37,6 +38,10 @@ const Kanban = () => {
 	const [login, setLogin] = useState(false)
 	const [viewTodoBar, setViewTodoBar] = useState(false)
 	const [editTodoBar, setEditTodoBar] = useState(false)
+	const [titleCopy, setTitleCopy] = useState()
+	const setDebouncedTitle = useDebounced(val => setTitleCopy(val), 1000)
+	// eslint-disable-next-line
+	useEffect(() => titleCopy && handleAutoSaveButton(), [titleCopy])
 
 	useEffect(() => {
 		onAuthStateChanged(auth, user => {
@@ -394,7 +399,7 @@ const Kanban = () => {
 		}
 	}
 
-	// ----------------------FOR MOBILE
+	// ----------------------FOR TITLE
 	const handleEditableTitle = eValue => {
 		const { slug } = router.query
 		// setEditableTitle(e.target.value)
@@ -406,10 +411,8 @@ const Kanban = () => {
 		tempDataStore.title = eValue
 		setinitialData(tempDataStore)
 		localStorage.setItem(slug, JSON.stringify(tempDataStore))
-		setTimeout(() => {
-			handleAutoSaveButton()
-			console.debug("SAVED")
-		}, 1000)
+		// handleAutoSaveButton()
+		// console.debug("SAVED")
 	}
 
 	const setFillColor = (color, index) => {
@@ -469,10 +472,13 @@ const Kanban = () => {
 					<div className="p-2 h-screen bg-customlight text-customblack dark:bg-customgray">
 						<div className="flex space-x-2 justify-between">
 							<input
-								className="font-semibold p-1 text-sm rounded bg-customwhite w-1/2"
+								className="font-semibold p-1 text-sm rounded bg-customwhite w-2/3"
 								onChange={e => {
 									handleEditableTitle(e.target.value)
+									setDebouncedTitle(e.target.value)
 								}}
+								// onKeyDown={handleKeyDown}
+								// onKeyUp={e => handleKeyUp(e)}
 								value={editableTitle}
 							/>
 							<div className="flex items-center space-x-1 justify-center">

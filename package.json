@@ -17,6 +17,7 @@
 		"@mdx-js/react": "^2.2.1",
 		"@tailwindcss/line-clamp": "^0.4.2",
 		"firebase": "^9.16.0",
+		"lodash.debounce": "^4.0.8",
 		"match-sorter": "^5.0.0",
 		"next": "13.1.5",
 		"nprogress": "^0.2.0",
