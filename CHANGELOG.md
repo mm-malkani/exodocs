@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.6.6](https://github.com/abhishekintern/exodocs/compare/v0.6.5...v0.6.6) (2023-03-15)
+
+
+### 🚀 Performance Improvements
+
+* **Debounce:** Added Debounce in title and elements ([f4b2858](https://github.com/abhishekintern/exodocs/commit/f4b2858821cfab0aa448081198953333c586ccb2))
+
 ### [0.6.5](https://github.com/abhishekintern/exodocs/compare/v0.6.4...v0.6.5) (2023-03-14)
 
 
