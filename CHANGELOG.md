@@ -1,5 +1,13 @@
 # Changelog
 
+### [0.6.7](https://github.com/abhishekintern/exodocs/compare/v0.6.6...v0.6.7) (2023-03-19)
+
+
+### :recycle: Code Refactoring
+
+* **Kanban and Template:** Code improves and docs added ([efd0a1f](https://github.com/abhishekintern/exodocs/commit/efd0a1f066d1f5d4ccae508097f34fdad5bc59df))
+* **Kanban and Template:** Code improves and docs added ([eaddac1](https://github.com/abhishekintern/exodocs/commit/eaddac154a532aaa8e295f636df54e1afd2e6fe9))
+
 ### [0.6.6](https://github.com/abhishekintern/exodocs/compare/v0.6.5...v0.6.6) (2023-03-15)
 
 
