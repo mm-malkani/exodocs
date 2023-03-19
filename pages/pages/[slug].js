@@ -26,7 +26,7 @@ const Post = () => {
 
 	const [user, setUser] = useState("")
 	const [titleCopy, setTitleCopy] = useState()
-	const setDebouncedTitle = useDebounced(val => setTitleCopy(val), 1000)
+	const setDebouncedTitle = useDebounced(val => setTitleCopy(val), 5000)
 
 	useEffect(() => {
 		titleCopy && handleAutoSaveButton()

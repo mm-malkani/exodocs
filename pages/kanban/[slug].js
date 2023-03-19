@@ -82,7 +82,7 @@ const Kanban = () => {
 	const [viewTodoBar, setViewTodoBar] = useState(false)
 	const [editTodoBar, setEditTodoBar] = useState(false)
 	const [titleCopy, setTitleCopy] = useState()
-	const setDebouncedTitle = useDebounced(val => setTitleCopy(val), 1000)
+	const setDebouncedTitle = useDebounced(val => setTitleCopy(val), 5000)
 	// eslint-disable-next-line
 	useEffect(() => titleCopy && handleAutoSaveButton(), [titleCopy])
 

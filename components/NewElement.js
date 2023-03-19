@@ -22,7 +22,7 @@ const NewElement = ({
 }) => {
 	const [caret, setCaret] = useState(false)
 	const [htmlValue, setHtmlValue] = useState("")
-	const setHtml = useDebounced(val => setHtmlValue(val), 1000)
+	const setHtml = useDebounced(val => setHtmlValue(val), 3000)
 
 	useEffect(() => {
 		if (htmlValue) {
