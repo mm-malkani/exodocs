@@ -17,7 +17,49 @@ import ColorPicker from "../../components/molecules/ColorPicker"
 import OptionsButton from "../../components/molecules/OptionsButton"
 import ViewModal from "../../components/ViewTodoBar"
 import { auth, db } from "../../config/firebaseConfig"
-import { dataBase } from "../../data/kanbanMockData"
+
+const timestamp = Date().toString().slice(0, -30)
+
+const dataBase = {
+	mockData: {
+		createdOn: timestamp,
+		updatedOn: timestamp,
+		creator: "",
+		slug: "",
+		favourite: false,
+		type: "kanban",
+		title: timestamp,
+		kanban: [
+			{
+				columnId: uid(),
+				color: "red",
+				columnName: "Not Started",
+				columnData: [
+					{
+						todoId: uid(),
+						todoHeading: "Add Todo Title",
+						todoDescription: "Todo Description will come here",
+						todoCreationTime: timestamp,
+						todoUpdateTime: "Haven't Updated Yet",
+						label: "None",
+					},
+				],
+			},
+			{
+				columnId: uid(),
+				color: "yellow",
+				columnName: "In-Progress",
+				columnData: [],
+			},
+			{
+				columnId: uid(),
+				color: "green",
+				columnName: "Completed",
+				columnData: [],
+			},
+		],
+	},
+}
 
 const Kanban = () => {
 	const router = useRouter()
@@ -34,6 +76,7 @@ const Kanban = () => {
 	const [fillColorOptions, setFillColorOptions] = useState(false)
 	const [user, setUser] = useState("")
 	const [autoSave, setAutoSave] = useState(true)
+	//eslint-disable-next-line
 	const [userObject, setUserObject] = useState("")
 	const [login, setLogin] = useState(false)
 	const [viewTodoBar, setViewTodoBar] = useState(false)
@@ -47,19 +90,20 @@ const Kanban = () => {
 		onAuthStateChanged(auth, user => {
 			if (user) {
 				setUser(user)
-				if (!userObject) {
-					setUserObject(user)
-				}
 				setUserObject(user)
 				setLogin(true)
 			} else {
 				setLogin(false)
+				setUserObject("")
 			}
 		})
-	}, [userObject])
+	}, [])
 
 	const dbRef = ref(db)
 	useEffect(() => {
+		setinitialData("")
+		setDataStore([])
+		setEditableTitle("")
 		if (slug) {
 			if (user.uid) {
 				get(child(dbRef, `${user.uid}/kanban/${slug}`))
@@ -77,8 +121,11 @@ const Kanban = () => {
 							setDataStore(data.kanban)
 							setEditableTitle(data.title)
 						} else {
+							const dataToAdd = dataBase["mockData"]
+							setinitialData("")
+							setDataStore([])
+							setEditableTitle("")
 							// console.debug("No data available")
-							let dataToAdd = { ...dataBase["mockData"] }
 							// console.debug(dataToAdd)
 							dataToAdd.slug = slug
 							dataToAdd.creator = user.email
@@ -86,10 +133,9 @@ const Kanban = () => {
 								slug,
 								JSON.stringify(dataToAdd)
 							)
-							let data = dataToAdd
-							setinitialData(data)
-							setDataStore(data.kanban)
-							setEditableTitle(data.title)
+							setinitialData(dataToAdd)
+							setDataStore(dataToAdd.kanban)
+							setEditableTitle(dataToAdd.title)
 							sendDataToFirebase(user.uid, "kanban", slug)
 						}
 					})

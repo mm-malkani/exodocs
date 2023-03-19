@@ -97,7 +97,7 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar, refresh }) => {
 			router.push("/")
 			setTimeout(() => {
 				router.push("/kanban/" + id)
-			}, 100)
+			}, 300)
 			toggleSidebar(false)
 		}
 	}
