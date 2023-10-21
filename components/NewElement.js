@@ -27,7 +27,8 @@ const NewElement = ({
 	const setHtml = useDebounced(val => setHtmlValue(val), 3000)
 
 	function copyToClipboard(text) {
-		return new Promise((resolve, reject) => {
+		// es-lint-disable-next-line
+		return new Promise(resolve => {
 			const el = document.createElement("textarea")
 			el.value = text
 			el.setAttribute("readonly", "")
