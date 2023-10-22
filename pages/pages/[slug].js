@@ -17,6 +17,7 @@ const Post = () => {
 	const dbRef = ref(db)
 
 	const [dataStore, setDataStore] = useState(initialData["tempPage"])
+	//eslint-disable-next-line
 	const [autoSave, setAutoSave] = useState(false)
 	const [editableTitle, setEditableTitle] = useState(dataStore.title)
 	const [login, setLogin] = useState(false)
@@ -326,8 +327,6 @@ const Post = () => {
 							</div>
 							<OptionsButton
 								{...{
-									autoSave,
-									setAutoSave,
 									slug,
 								}}
 								userUid={user.uid}

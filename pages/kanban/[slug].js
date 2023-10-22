@@ -74,7 +74,8 @@ const Kanban = () => {
 	const [todoDescription, setTodoDescription] = useState("")
 	const [fillColorOptions, setFillColorOptions] = useState(false)
 	const [user, setUser] = useState("")
-	const [autoSave, setAutoSave] = useState(true)
+	//eslint-disable-next-line
+	const [autoSave, setAutoSave] = useState(false)
 	//eslint-disable-next-line
 	const [userObject, setUserObject] = useState("")
 	const [login, setLogin] = useState(false)
@@ -561,8 +562,6 @@ const Kanban = () => {
 								</div>
 								<OptionsButton
 									{...{
-										autoSave,
-										setAutoSave,
 										slug,
 									}}
 									userUid={user.uid}

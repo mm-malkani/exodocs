@@ -1,7 +1,7 @@
 import React, { useState } from "react"
-import { AutoSaveButton, DeletePageButton, ShareButton } from "../atoms/buttons"
+import { DeletePageButton, ShareButton } from "../atoms/buttons"
 
-const OptionsButton = ({ autoSave, setAutoSave, userUid, type, slug }) => {
+const OptionsButton = ({ userUid, type, slug }) => {
 	const [optionsMenu, setOptionsMenu] = useState(false)
 
 	return (
