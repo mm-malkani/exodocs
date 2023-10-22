@@ -1,10 +1,8 @@
 import { onAuthStateChanged } from "firebase/auth"
 import Link from "next/link"
 import React, { useEffect, useState } from "react"
-import { auth } from "../config/firebaseConfig"
-import DarkModeButton from "./atoms/DarkModeButton"
-import LoginButton from "./atoms/LoginButton"
-import SignUpButton from "./atoms/SignUpButton"
+import { auth } from "../../config/firebaseConfig"
+import { DarkModeButton, LoginButton, SignUpButton } from "../atoms/buttons"
 
 const Navbar = ({ toggleSidebar }) => {
 	const [login, setLogin] = useState("")

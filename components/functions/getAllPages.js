@@ -15,3 +15,5 @@ export const getAllPages = uid => {
 			console.error(error)
 		})
 }
+
+export default getAllPages

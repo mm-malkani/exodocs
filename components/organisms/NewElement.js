@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react"
 import ContentEditable from "react-contenteditable"
 import { toast } from "react-toastify"
-import AddElement from "./atoms/AddElement"
-import ChangeStyle from "./atoms/ChangeStyle"
-import CopyClipboard from "./atoms/CopyClipboard"
-import DeleteElement from "./atoms/DeleteElement"
-import SortElement from "./atoms/SortElement"
-import { useDebounced } from "./functions/useDebounced"
+import { ChangeStyle } from "../atoms"
+import {
+	AddElementButton,
+	CopyClipboardButton,
+	DeleteElementButton,
+	SortElementButton,
+} from "../atoms/buttons"
+import { useDebounced } from "../functions/useDebounced"
 
 const NewElement = ({
 	handleAddElement,
@@ -66,7 +68,7 @@ const NewElement = ({
 	return (
 		<div className="group flex bg-white dark:bg-customgray dark:hover:bg-hovergray hover:bg-customlight hover:text-custom-gray p-1.5 items-center rounded w-full">
 			<div className="flex space-x-1 items-center">
-				<SortElement
+				<SortElementButton
 					{...{
 						handleDragEnter,
 						handleDragStart,
@@ -75,7 +77,7 @@ const NewElement = ({
 					}}
 				/>
 				<div className="flex flex-col sm:flex-row space-x-1">
-					<AddElement {...{ index, handleAddElement }} />
+					<AddElementButton {...{ index, handleAddElement }} />
 
 					<ChangeStyle
 						{...{
@@ -86,7 +88,7 @@ const NewElement = ({
 						}}
 					/>
 
-					<CopyClipboard handleCopy={copy} />
+					<CopyClipboardButton handleCopy={copy} />
 				</div>
 			</div>
 
@@ -102,7 +104,7 @@ const NewElement = ({
 				className="min-w-[60vw] max-w-[60vw] md:max-w-[75vw] md:min-w-[75vw] lg:min-w-[85vw] lg:max-w-[85vw] mx-auto p-2 outline-custom-gray"
 			/>
 
-			<DeleteElement {...{ index, length, handleDeleteElement }} />
+			<DeleteElementButton {...{ index, length, handleDeleteElement }} />
 		</div>
 	)
 }

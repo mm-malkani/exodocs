@@ -1,5 +1,5 @@
 import React from "react"
-import { sendDataToFirebase } from "../functions/sendToDb"
+import { sendDataToFirebase } from "../../functions/sendToDb"
 
 const PublishButton = ({ autoSave, userId, type, slug }) => {
 	return (

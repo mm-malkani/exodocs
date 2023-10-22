@@ -2,7 +2,7 @@ import { onAuthStateChanged, sendPasswordResetEmail } from "firebase/auth"
 import Image from "next/image"
 import React, { useEffect, useState } from "react"
 import { toast } from "react-toastify"
-import LoginFirst from "../components/LoginFirst"
+import { LoginFirst } from "../components/organisms"
 import { auth } from "../config/firebaseConfig"
 
 const Profile = () => {

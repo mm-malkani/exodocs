@@ -3,8 +3,8 @@ import { child, get, ref } from "firebase/database"
 import Head from "next/head"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
-import IndexPageCard from "../components/atoms/IndexPageCard"
-import LoginFirst from "../components/LoginFirst"
+import { IndexPageCard } from "../components/atoms"
+import { LoginFirst } from "../components/organisms"
 import { auth, db } from "../config/firebaseConfig"
 
 const Home = () => {

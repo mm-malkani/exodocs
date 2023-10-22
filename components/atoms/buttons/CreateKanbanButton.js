@@ -1,6 +1,6 @@
 import React from "react"
 
-const CreateKanbanButon = ({ createNewKanban }) => {
+const CreateKanbanButton = ({ createNewKanban }) => {
 	return (
 		<button
 			onClick={createNewKanban}
@@ -25,4 +25,4 @@ const CreateKanbanButon = ({ createNewKanban }) => {
 	)
 }
 
-export default CreateKanbanButon
+export default CreateKanbanButton

@@ -19,3 +19,5 @@ export const sendDataToFirebase = (uid, type, slug) => {
 			console.error("Error sending data :", error)
 		})
 }
+
+export default sendDataToFirebase

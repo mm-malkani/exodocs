@@ -1,5 +1,5 @@
 import React from "react"
-import LoginButton from "./atoms/LoginButton"
+import { LoginButton } from "../atoms/buttons"
 
 const LoginFirst = () => {
 	return (

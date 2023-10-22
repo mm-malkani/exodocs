@@ -4,13 +4,10 @@ import Head from "next/head"
 import { useRouter } from "next/router"
 import { useEffect, useRef, useState } from "react"
 import { uid } from "uid"
-import FavouritesButton from "../../components/atoms/FavouritesButton"
-import PublishButton from "../../components/atoms/PublishButton"
-import { sendDataToFirebase } from "../../components/functions/sendToDb"
-import { useDebounced } from "../../components/functions/useDebounced"
-import LoginFirst from "../../components/LoginFirst"
-import OptionsButton from "../../components/molecules/OptionsButton"
-import NewElement from "../../components/NewElement"
+import { FavouritesButton, PublishButton } from "../../components/atoms/buttons"
+import { sendDataToFirebase, useDebounced } from "../../components/functions"
+import { OptionsButton } from "../../components/molecules"
+import { LoginFirst, NewElement } from "../../components/organisms"
 import { auth, db } from "../../config/firebaseConfig"
 import { initialData } from "../../data/pageInitialDat"
 
@@ -20,7 +17,7 @@ const Post = () => {
 	const dbRef = ref(db)
 
 	const [dataStore, setDataStore] = useState(initialData["tempPage"])
-	const [autoSave, setAutoSave] = useState(true)
+	const [autoSave, setAutoSave] = useState(false)
 	const [editableTitle, setEditableTitle] = useState(dataStore.title)
 	const [login, setLogin] = useState(false)
 

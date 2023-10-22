@@ -2,7 +2,7 @@ import { ref, set } from "firebase/database"
 import { useRouter } from "next/router"
 import React from "react"
 import { toast } from "react-toastify"
-import { db } from "../../config/firebaseConfig"
+import { db } from "../../../config/firebaseConfig"
 
 const DeletePageButton = ({ userUid, type, slug }) => {
 	const router = useRouter()

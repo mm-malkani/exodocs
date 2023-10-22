@@ -5,17 +5,16 @@ import { useRouter } from "next/router"
 import { useEffect, useRef, useState } from "react"
 import { toast } from "react-toastify"
 import { uid } from "uid"
-import AddTodoModal from "../../components/AddTodoModal"
-import FavouritesButton from "../../components/atoms/FavouritesButton"
-import PublishButton from "../../components/atoms/PublishButton"
-import EditTodoModal from "../../components/EditTodoModal"
-import { sendDataToFirebase } from "../../components/functions/sendToDb"
-import { useDebounced } from "../../components/functions/useDebounced"
-import KanbanTodo from "../../components/kanbanTodo"
-import LoginFirst from "../../components/LoginFirst"
-import ColorPicker from "../../components/molecules/ColorPicker"
-import OptionsButton from "../../components/molecules/OptionsButton"
-import ViewModal from "../../components/ViewTodoBar"
+import { FavouritesButton, PublishButton } from "../../components/atoms/buttons"
+import { sendDataToFirebase, useDebounced } from "../../components/functions"
+import { ColorPicker, OptionsButton } from "../../components/molecules"
+import {
+	AddTodoModal,
+	EditTodoModal,
+	KanbanTodo,
+	LoginFirst,
+	ViewModal,
+} from "../../components/organisms"
 import { auth, db } from "../../config/firebaseConfig"
 
 const timestamp = Date().toString().slice(0, -30)

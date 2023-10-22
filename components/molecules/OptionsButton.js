@@ -1,7 +1,5 @@
 import React, { useState } from "react"
-import AutoSaveButton from "../atoms/AutoSaveButton"
-import DeletePageButton from "../atoms/DeletePageButton"
-import ShareButton from "../atoms/ShareButton"
+import { AutoSaveButton, DeletePageButton, ShareButton } from "../atoms/buttons"
 
 const OptionsButton = ({ autoSave, setAutoSave, userUid, type, slug }) => {
 	const [optionsMenu, setOptionsMenu] = useState(false)
@@ -31,7 +29,7 @@ const OptionsButton = ({ autoSave, setAutoSave, userUid, type, slug }) => {
 					optionsMenu ? "scale-100" : "scale-0"
 				} absolute right-full flex flex-col bg-customwhite w-[160px] border-gray border rounded space-y-1 transition-all duration-200`}
 			>
-				<AutoSaveButton {...{ autoSave, setAutoSave }} />
+				{/* <AutoSaveButton {...{ autoSave, setAutoSave }} /> */}
 				<ShareButton {...{ userUid, type, slug }} />
 				<DeletePageButton {...{ userUid, type, slug }} />
 			</div>

@@ -5,11 +5,13 @@ import { useRouter } from "next/router"
 import React, { useEffect, useState } from "react"
 import { toast } from "react-toastify"
 import { uid } from "uid"
-import { auth, db } from "../config/firebaseConfig"
-import CreateKanbanButon from "./atoms/CreateKanbanButon"
-import CreatePageButton from "./atoms/CreatePageButton"
-import SidebarList from "./atoms/SidebarList"
-import SignoutButton from "./atoms/SignoutButton"
+import { auth, db } from "../../config/firebaseConfig"
+import { SidebarList } from "../atoms"
+import {
+	CreateKanbanButton,
+	CreatePageButton,
+	SignoutButton,
+} from "../atoms/buttons"
 
 const Sidebar = ({ isSidebarOpen, toggleSidebar, refresh }) => {
 	const [login, setLogin] = useState("")
@@ -77,7 +79,7 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar, refresh }) => {
 			})
 			.catch(() => {
 				// alert("Signout Failed")
-				toast.erro("Signout Failed!", {
+				toast.error("Signout Failed!", {
 					position: "top-center",
 					autoClose: 3000,
 					hideProgressBar: false,
@@ -186,7 +188,7 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar, refresh }) => {
 							<ul className="flex flex-col space-y-1">
 								<li>
 									<div className="flex items-center">
-										<CreateKanbanButon
+										<CreateKanbanButton
 											{...{ createNewKanban }}
 										/>
 										<CreatePageButton
