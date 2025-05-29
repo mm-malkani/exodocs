@@ -9,15 +9,14 @@ import { getDatabase } from "firebase/database"
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-	apiKey: "AIzaSyCw4Oj3P-4g_eNGLnrl6CjNP0pFZVnkK7M",
-	authDomain: "exodocs-auth.firebaseapp.com",
-	databaseURL:
-		"https://exodocs-auth-default-rtdb.asia-southeast1.firebasedatabase.app",
-	projectId: "exodocs-auth",
-	storageBucket: "exodocs-auth.appspot.com",
-	messagingSenderId: "657546255732",
-	appId: "1:657546255732:web:12959ddea4aff5116fa021",
-}
+  apiKey: "AIzaSyBLfmyHpvEAZ0QZYfhYyIt1DMs8ZwQ1XbQ",
+  authDomain: "exodocs-c6b0a.firebaseapp.com",
+  databaseURL: "https://exodocs-c6b0a-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "exodocs-c6b0a",
+  storageBucket: "exodocs-c6b0a.firebasestorage.app",
+  messagingSenderId: "817944492869",
+  appId: "1:817944492869:web:bfc0e6eabe8d2ef3b45c2c",
+};
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig)
@@ -25,3 +24,5 @@ const app = initializeApp(firebaseConfig)
 export const provider = new GoogleAuthProvider()
 export const auth = getAuth(app)
 export const db = getDatabase(app)
+
+

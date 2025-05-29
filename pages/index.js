@@ -55,10 +55,10 @@ const Home = () => {
 	return (
 		<>
 			<Head>
-				<title>ExoDocs - Professional Docs Sharing App Online</title>
+				<title>ExoDocs - Docs Sharing App Online</title>
 				<meta
 					name="description"
-					content="ExoDocs - Professional Docs Sharing App Online"
+					content="ExoDocs - Docs Sharing App Online"
 				/>
 				<link
 					rel="icon/png"
@@ -69,7 +69,7 @@ const Home = () => {
 			{login && (
 				<div className="container mx-auto p-2 md:p-8 sm:p-4 bg-customlight dark:bg-customgray text-slate-800 screenNav">
 					<h3 className="font-bold mb-8 text-center">
-						Welcome to my ExoDocs - Your goto Todo builder and
+						Welcome to ExoDocs - Your goto Todo builder and
 						Sharing App!
 					</h3>
 					<div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 gap-4">

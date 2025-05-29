@@ -181,11 +181,6 @@ const Login = () => {
 							</Link>
 						</div>
 						<div className="p-2 w-full pt-8 mt-8 border-t border-gray-200 text-center">
-							<p className="leading-normal my-5">
-								All Rights Reserved
-								<br />
-								ExoDocs &copy; 2023
-							</p>
 						</div>
 					</div>
 				</div>

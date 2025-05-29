@@ -5,7 +5,7 @@ export const dataBase = {
 	mockData: {
 		createdOn: timestamp,
 		updatedOn: timestamp,
-		creator: "abhiborana.a@gmail.com",
+		creator: "testuser@gmail.com",
 		slug: "",
 		favourite: false,
 		type: "kanban",

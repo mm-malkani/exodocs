@@ -3,7 +3,7 @@ import React from "react"
 const CopyClipboard = ({ handleCopy }) => {
 	return (
 		<div
-			title="SignOut"
+			title="Copy to clipboard"
 			className="inline-flex items-center justify-start text-sm font-medium rounded cursor-pointer"
 			onClick={handleCopy}
 		>
